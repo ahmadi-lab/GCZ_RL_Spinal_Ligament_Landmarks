@@ -1,9 +1,9 @@
-# GCZ-RL: Geometry-Calibrated Residual Learning for Spinal Ligament Landmarks
+# GCZ-RL: Geometry-Calibrated Residual Learning for Spinal Ligament Landmark Localization on Vertebral Surface Meshes
 
 Code, trained models, predictions, and reproducibility scripts for the manuscript
 
-> M. Ahmadi, M. Lin, Y. Tang, F. D. Vrionis. *Geometry-Calibrated Residual Learning for
-> Anatomy-Constrained Spinal Ligament Landmark Reconstruction on Vertebral Surface Meshes.*
+> M. Ahmadi, M. Lin, Y. Tang, F. D. Vrionis. *GCZ-RL: Geometry-Calibrated Residual Learning for
+> Spinal Ligament Landmark Localization on Vertebral Surface Meshes.*
 > Submitted to *Medical Image Analysis* (2026).
 
 GCZ-RL localizes sparse ligament attachment landmarks (ALL, PLL, LF, ISL, SSL, ITL, CL) on

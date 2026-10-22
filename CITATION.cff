@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the article below and the software itself."
-title: "GCZ-RL: Geometry-calibrated residual learning for spinal ligament landmark reconstruction"
+title: "GCZ-RL: Geometry-calibrated residual learning for spinal ligament landmark localization"
 version: 1.0.0
 date-released: 2026-10-21
 license: MIT
@@ -20,7 +20,7 @@ authors:
     affiliation: "Marcus Neuroscience Institute, Boca Raton Regional Hospital"
 preferred-citation:
   type: article
-  title: "Geometry-Calibrated Residual Learning for Anatomy-Constrained Spinal Ligament Landmark Reconstruction on Vertebral Surface Meshes"
+  title: "GCZ-RL: Geometry-Calibrated Residual Learning for Spinal Ligament Landmark Localization on Vertebral Surface Meshes"
   authors:
     - family-names: Ahmadi
       given-names: Mohsen
