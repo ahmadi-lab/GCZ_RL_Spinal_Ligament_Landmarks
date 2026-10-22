@@ -33,6 +33,7 @@ repository. The table numbers below refer to the revised manuscript.
 | 11 | **References.** SLD is now published (ISBI 2026, DOI 10.1109/ISBI61048.2026.11515825). The Biswas preprint is 2025, not 2026. *World Neurosurg.* is volume 201. Some DOIs were missing. | All 27 DOIs were resolved against Crossref, and author names come from the Crossref records. |
 | 12 | **Highlights.** "Improves … for every class" is false, because PLL is unchanged. "Official SLD" overstates the comparison, because the centerline is substituted. | The highlights were rewritten. |
 | 13 | **CRediT.** "Clinical guidance" is not a CRediT role. | Flagged for the authors. |
+| 14 | **ICP geometry not reproducible across environments.** Recomputing the primary-evaluation alignments from scratch here, with the same code, pinned library versions, and checksum-verified data, changed the atlas of 2 of 14 held-out vertebrae (S01 L3, S02 L3) and the inner model selection of the S01 and S02 folds. The result was GCZ 3.208 mm / 83.1 % and GCZ-RL 2.418 mm / 89.8 %, against 2.879 / 2.150 mm in the paper; SLD and the S03 fold were unchanged. The cause is that atlas selection runs ICP from raw scanner coordinates. Many candidates converge to wrong minima (4–5 mm residuals), and for S02 L3 the lower-residual atlas (1.33 vs 1.51 mm) gave a 4.0 mm worse GCZ error. Forcing single-threaded BLAS does not change this, and the run is deterministic within this environment. | **Disclosed** in the main-text limitations and Supplementary S5. The stored checkpoints regenerate the paper exactly. **Recommended:** make atlas selection robust (centroid or principal-axis pre-alignment, multi-start ICP, orientation check), re-run all analyses, and report variability over seeds. |
 
 ## 3. Data provenance
 
@@ -57,10 +58,12 @@ verified). The analyses were then re-run from this repository:
 | Run | Result |
 |---|---|
 | `scripts/fetch_data.py` | 1678 / 1678 files verified |
-| `run_part2.py` (stored ICP results) | see `VERIFICATION_REPORT.json` |
-| `run_part1.py` (stored ICP results) | see `VERIFICATION_REPORT.json` |
-| `code/verify_all.py` | 9 / 9 checks |
-| `paper/make_paper_numbers.py` | all manuscript values reproduced |
+| `run_part2.py` (stored ICP results) | Every table, prediction file, and the inner selection grid is **byte-identical** to the committed outputs. |
+| `run_part1.py` (stored ICP results) | Table 6 and all 259 prediction sets are identical. The regressor grid differs only in the third decimal of gradient boosting (known run-to-run variation). |
+| `run_leakage_test.py` | PASS: 0 mm difference. It compares 412 points here against 424 in the original environment, because it recomputes the ICP geometry (finding 14). |
+| `code/verify_all.py` | 9 / 9 checks passed |
+| `paper/make_paper_numbers.py` | 46 / 46 manuscript values reproduced |
+| `run_part2.py`, ICP recomputed | GCZ 3.208, GCZ-RL 2.418, SLD 2.224 mm (finding 14) |
 
 ## 5. Open items for the authors
 

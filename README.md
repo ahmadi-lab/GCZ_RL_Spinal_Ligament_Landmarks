@@ -99,8 +99,16 @@ Or run everything with `powershell -ExecutionPolicy Bypass -File RUN_ALL.ps1` on
 `bash run_all.sh` elsewhere.
 
 `--fresh` recomputes the stored ICP geometry and, for Part 2, the SLD output. SLD needs the
-SpineLib files, which you fetch with `python scripts/fetch_spinelib.py`. A fresh Part 2 run
-reproduces the stored predictions byte for byte.
+SpineLib files, which you fetch with `python scripts/fetch_spinelib.py`.
+
+> **Reproducibility note.** With the stored ICP alignments (the default), every number in the
+> paper is regenerated exactly from the public data. This was verified from a clean download.
+> Recomputing the alignments with `--fresh` is deterministic within one environment, but it can
+> select a different atlas vertebra for individual targets in a different environment.
+>
+> In a second environment, 2 of the 14 held-out vertebrae changed atlas. The result was
+> GCZ 3.208 mm and GCZ-RL 2.418 mm, against 2.879 and 2.150 mm in the paper; SLD was
+> unchanged. See Supplementary Section S5 and [docs/CODE_PAPER_AUDIT.md](docs/CODE_PAPER_AUDIT.md).
 
 [docs/PAPER_MAP.md](docs/PAPER_MAP.md) lists, for every table and figure of the paper, the
 script that produces it and its output file.

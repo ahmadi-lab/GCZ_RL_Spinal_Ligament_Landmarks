@@ -1,0 +1,274 @@
+[
+  {
+    "fold": "fold_held_S01",
+    "held_out_subject": "S01",
+    "training_subjects": [
+      "S02",
+      "S03"
+    ],
+    "training_vertebrae": [
+      "S02_L1",
+      "S02_L2",
+      "S02_L3",
+      "S02_L4",
+      "S03_L1",
+      "S03_L2",
+      "S03_L3",
+      "S03_L4",
+      "S03_L5"
+    ],
+    "test_vertebrae": [
+      "S01_L1",
+      "S01_L2",
+      "S01_L3",
+      "S01_L4",
+      "S01_L5"
+    ],
+    "training_samples": 725,
+    "training_samples_per_ligament": {
+      "ALL": 90,
+      "PLL": 90,
+      "LF": 180,
+      "ISL": 148,
+      "SSL": 9,
+      "ITL": 36,
+      "CL": 172
+    },
+    "selection": {
+      "ALL": {
+        "extra_trees": "ET-1",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 3.3595980094922613
+      },
+      "PLL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 2.4898972205272383
+      },
+      "LF": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 4.707515919438046
+      },
+      "ISL": {
+        "extra_trees": "ET-2",
+        "alpha": 1.1,
+        "inner_loso_mae_mm": 4.91958153504165
+      },
+      "SSL": {
+        "extra_trees": "ET-4",
+        "alpha": 0.25,
+        "inner_loso_mae_mm": 3.0181760001696873
+      },
+      "ITL": {
+        "extra_trees": "ET-2",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 2.0736635369375906
+      },
+      "CL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.4,
+        "inner_loso_mae_mm": 5.061969739944835
+      }
+    },
+    "correction_radius_mm": {
+      "ALL": 13.300662730581884,
+      "PLL": 5.998912166141061,
+      "LF": 13.82755981718335,
+      "ISL": 13.813112273011063,
+      "SSL": 11.86374717624932,
+      "ITL": 29.38518096626484,
+      "CL": 15.029430674998249
+    },
+    "gcz_geometry": "computed",
+    "test_atlas_choice": {
+      "S01_L1": "S03_L1 (residual 1.38 mm)",
+      "S01_L2": "S03_L2 (residual 1.56 mm)",
+      "S01_L3": "S03_L2 (residual 1.74 mm)",
+      "S01_L4": "S03_L4 (residual 1.73 mm)",
+      "S01_L5": "S03_L5 (residual 1.75 mm)"
+    },
+    "held_out_annotations_read_before_evaluation": false
+  },
+  {
+    "fold": "fold_held_S02",
+    "held_out_subject": "S02",
+    "training_subjects": [
+      "S01",
+      "S03"
+    ],
+    "training_vertebrae": [
+      "S01_L1",
+      "S01_L2",
+      "S01_L3",
+      "S01_L4",
+      "S01_L5",
+      "S03_L1",
+      "S03_L2",
+      "S03_L3",
+      "S03_L4",
+      "S03_L5"
+    ],
+    "test_vertebrae": [
+      "S02_L1",
+      "S02_L2",
+      "S02_L3",
+      "S02_L4"
+    ],
+    "training_samples": 850,
+    "training_samples_per_ligament": {
+      "ALL": 100,
+      "PLL": 100,
+      "LF": 200,
+      "ISL": 200,
+      "SSL": 10,
+      "ITL": 40,
+      "CL": 200
+    },
+    "selection": {
+      "ALL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 2.784186672137286
+      },
+      "PLL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 2.2582842690956837
+      },
+      "LF": {
+        "extra_trees": "ET-2",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 1.686569427413989
+      },
+      "ISL": {
+        "extra_trees": "ET-4",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 2.3311890605169387
+      },
+      "SSL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 3.227982268347433
+      },
+      "ITL": {
+        "extra_trees": "ET-2",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 1.396687022102436
+      },
+      "CL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 2.5080596422576114
+      }
+    },
+    "correction_radius_mm": {
+      "ALL": 5.464964522541951,
+      "PLL": 5.2255915438275045,
+      "LF": 3.444340148299042,
+      "ISL": 7.100026020182218,
+      "SSL": 7.119899975341982,
+      "ITL": 16.615849099621265,
+      "CL": 6.768219246289694
+    },
+    "gcz_geometry": "computed",
+    "test_atlas_choice": {
+      "S02_L1": "S03_L2 (residual 1.28 mm)",
+      "S02_L2": "S03_L2 (residual 1.14 mm)",
+      "S02_L3": "S03_L3 (residual 1.33 mm)",
+      "S02_L4": "S03_L4 (residual 1.17 mm)"
+    },
+    "held_out_annotations_read_before_evaluation": false
+  },
+  {
+    "fold": "fold_held_S03",
+    "held_out_subject": "S03",
+    "training_subjects": [
+      "S01",
+      "S02"
+    ],
+    "training_vertebrae": [
+      "S01_L1",
+      "S01_L2",
+      "S01_L3",
+      "S01_L4",
+      "S01_L5",
+      "S02_L1",
+      "S02_L2",
+      "S02_L3",
+      "S02_L4"
+    ],
+    "test_vertebrae": [
+      "S03_L1",
+      "S03_L2",
+      "S03_L3",
+      "S03_L4",
+      "S03_L5"
+    ],
+    "training_samples": 765,
+    "training_samples_per_ligament": {
+      "ALL": 90,
+      "PLL": 90,
+      "LF": 180,
+      "ISL": 180,
+      "SSL": 9,
+      "ITL": 36,
+      "CL": 180
+    },
+    "selection": {
+      "ALL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 3.162713397031828
+      },
+      "PLL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 1.8234266367247036
+      },
+      "LF": {
+        "extra_trees": "ET-1",
+        "alpha": 0.0,
+        "inner_loso_mae_mm": 2.1954093697217454
+      },
+      "ISL": {
+        "extra_trees": "ET-4",
+        "alpha": 0.85,
+        "inner_loso_mae_mm": 2.105991522196384
+      },
+      "SSL": {
+        "extra_trees": "ET-1",
+        "alpha": 0.25,
+        "inner_loso_mae_mm": 3.5156463179000523
+      },
+      "ITL": {
+        "extra_trees": "ET-4",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 1.129681424424804
+      },
+      "CL": {
+        "extra_trees": "ET-1",
+        "alpha": 1.2,
+        "inner_loso_mae_mm": 2.3788584495449205
+      }
+    },
+    "correction_radius_mm": {
+      "ALL": 5.916131044736725,
+      "PLL": 3.6435862096381215,
+      "LF": 5.033215279104457,
+      "ISL": 6.336657177541522,
+      "SSL": 7.711843179127159,
+      "ITL": 15.980294924315427,
+      "CL": 5.4447288462753285
+    },
+    "gcz_geometry": "computed",
+    "test_atlas_choice": {
+      "S03_L1": "S01_L1 (residual 2.16 mm)",
+      "S03_L2": "S01_L1 (residual 1.61 mm)",
+      "S03_L3": "S02_L1 (residual 1.46 mm)",
+      "S03_L4": "S01_L1 (residual 1.64 mm)",
+      "S03_L5": "S02_L4 (residual 1.43 mm)"
+    },
+    "held_out_annotations_read_before_evaluation": false
+  }
+]
