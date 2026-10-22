@@ -1,0 +1,9 @@
+ligament,Ridge,KNN,Random forest,Gradient boosting,Extra trees,lowest
+ALL,2.092,1.724,1.755,1.702,1.588,Extra trees
+PLL,2.182,1.881,1.64,1.598,1.365,Extra trees
+LF,3.546,2.744,2.448,2.386,2.125,Extra trees
+ISL,1.981,1.918,1.588,1.622,1.551,Extra trees
+SSL,2.72,2.95,2.383,2.557,1.882,Extra trees
+ITL,4.046,4.085,3.399,3.532,3.17,Extra trees
+CL,4.817,3.7,2.934,2.963,2.578,Extra trees
+Mean,3.055,2.715,2.307,2.337,2.037,Extra trees

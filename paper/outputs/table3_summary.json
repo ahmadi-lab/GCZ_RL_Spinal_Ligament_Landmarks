@@ -1,0 +1,188 @@
+{
+  "as_published": {
+    "Ridge": {
+      "ALL": 2.083,
+      "PLL": 2.181,
+      "LF": 3.76,
+      "ISL": 2.013,
+      "SSL": 2.656,
+      "ITL": 3.816,
+      "CL": 5.214,
+      "Mean": 3.103
+    },
+    "KNN": {
+      "ALL": 1.668,
+      "PLL": 1.909,
+      "LF": 3.653,
+      "ISL": 1.945,
+      "SSL": 2.894,
+      "ITL": 3.833,
+      "CL": 5.214,
+      "Mean": 3.017
+    },
+    "Random forest": {
+      "ALL": 1.66,
+      "PLL": 1.67,
+      "LF": 3.329,
+      "ISL": 1.831,
+      "SSL": 2.307,
+      "ITL": 3.097,
+      "CL": 5.386,
+      "Mean": 2.754
+    },
+    "Gradient boosting": {
+      "ALL": 1.629,
+      "PLL": 1.587,
+      "LF": 3.545,
+      "ISL": 1.918,
+      "SSL": 2.518,
+      "ITL": 3.09,
+      "CL": 5.128,
+      "Mean": 2.774
+    },
+    "Extra trees": {
+      "ALL": 1.507,
+      "PLL": 1.367,
+      "LF": 3.354,
+      "ISL": 1.805,
+      "SSL": 1.928,
+      "ITL": 3.014,
+      "CL": 5.049,
+      "Mean": 2.575
+    },
+    "lowest": {
+      "ALL": "Extra trees",
+      "PLL": "Extra trees",
+      "LF": "Random forest",
+      "ISL": "Extra trees",
+      "SSL": "Extra trees",
+      "ITL": "Extra trees",
+      "CL": "Extra trees",
+      "Mean": "Extra trees"
+    }
+  },
+  "rows_fixed": {
+    "Ridge": {
+      "ALL": 2.083,
+      "PLL": 2.181,
+      "LF": 3.531,
+      "ISL": 1.966,
+      "SSL": 2.656,
+      "ITL": 3.744,
+      "CL": 4.744,
+      "Mean": 2.986
+    },
+    "KNN": {
+      "ALL": 1.668,
+      "PLL": 1.909,
+      "LF": 2.753,
+      "ISL": 1.91,
+      "SSL": 2.894,
+      "ITL": 3.794,
+      "CL": 3.659,
+      "Mean": 2.655
+    },
+    "Random forest": {
+      "ALL": 1.66,
+      "PLL": 1.67,
+      "LF": 2.387,
+      "ISL": 1.569,
+      "SSL": 2.307,
+      "ITL": 3.146,
+      "CL": 2.95,
+      "Mean": 2.241
+    },
+    "Gradient boosting": {
+      "ALL": 1.629,
+      "PLL": 1.587,
+      "LF": 2.347,
+      "ISL": 1.556,
+      "SSL": 2.518,
+      "ITL": 3.228,
+      "CL": 3.055,
+      "Mean": 2.274
+    },
+    "Extra trees": {
+      "ALL": 1.507,
+      "PLL": 1.367,
+      "LF": 2.078,
+      "ISL": 1.537,
+      "SSL": 1.928,
+      "ITL": 2.897,
+      "CL": 2.57,
+      "Mean": 1.984
+    },
+    "lowest": {
+      "ALL": "Extra trees",
+      "PLL": "Extra trees",
+      "LF": "Extra trees",
+      "ISL": "Extra trees",
+      "SSL": "Extra trees",
+      "ITL": "Extra trees",
+      "CL": "Extra trees",
+      "Mean": "Extra trees"
+    }
+  },
+  "rows_fixed_ctx": {
+    "Ridge": {
+      "ALL": 2.092,
+      "PLL": 2.182,
+      "LF": 3.546,
+      "ISL": 1.981,
+      "SSL": 2.72,
+      "ITL": 4.046,
+      "CL": 4.817,
+      "Mean": 3.055
+    },
+    "KNN": {
+      "ALL": 1.724,
+      "PLL": 1.881,
+      "LF": 2.744,
+      "ISL": 1.918,
+      "SSL": 2.95,
+      "ITL": 4.085,
+      "CL": 3.7,
+      "Mean": 2.715
+    },
+    "Random forest": {
+      "ALL": 1.755,
+      "PLL": 1.64,
+      "LF": 2.448,
+      "ISL": 1.588,
+      "SSL": 2.383,
+      "ITL": 3.399,
+      "CL": 2.934,
+      "Mean": 2.307
+    },
+    "Gradient boosting": {
+      "ALL": 1.702,
+      "PLL": 1.598,
+      "LF": 2.386,
+      "ISL": 1.622,
+      "SSL": 2.557,
+      "ITL": 3.532,
+      "CL": 2.963,
+      "Mean": 2.337
+    },
+    "Extra trees": {
+      "ALL": 1.588,
+      "PLL": 1.365,
+      "LF": 2.125,
+      "ISL": 1.551,
+      "SSL": 1.882,
+      "ITL": 3.17,
+      "CL": 2.578,
+      "Mean": 2.037
+    },
+    "lowest": {
+      "ALL": "Extra trees",
+      "PLL": "Extra trees",
+      "LF": "Extra trees",
+      "ISL": "Extra trees",
+      "SSL": "Extra trees",
+      "ITL": "Extra trees",
+      "CL": "Extra trees",
+      "Mean": "Extra trees"
+    }
+  }
+}
