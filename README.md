@@ -54,6 +54,7 @@ part2_patient_loso_14/    primary analysis: patient-level LOSO, leakage test
 paper/                    scripts for every number, table and figure added for the journal paper
 scripts/                  fetch_data.py, fetch_spinelib.py
 docs/                     PAPER_MAP.md (paper item -> script -> output), CODE_PAPER_AUDIT.md
+manuscript/               LaTeX source and PDFs of the paper, cover letter, Statement of Significance
 ```
 
 ## Installation
