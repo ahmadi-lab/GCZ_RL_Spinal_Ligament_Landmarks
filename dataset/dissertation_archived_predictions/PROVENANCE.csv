@@ -1,0 +1,4 @@
+file,content,origin,sha256,note
+gcz_heldout37.csv,Original GCZ predictions used for dissertation Table 4.4 / Figure 4.10,gcz_predictions_37.csv,0deab124dd19e9ebd8011c547faf1264f99e8d43952f3af2cf0a45a3d55b1c80,
+gczrl_extra_trees_heldout37.csv,GCZ-RL (Extra Trees) predictions used for dissertation Table 4.4 / Figure 4.10,"dissertation results folder, 2026-07-09",028ce894c113f044c5f8a6dd394c9245ed029a55539550fee271f583cb9234a0,"only the method label column was renamed to ""GCZ-RL (Extra Trees)"" (1944 rows); all coordinates are character-identical to the original file, sha256 8d384d1374d7a37d180eb4a2f0b69c5655798580db258fc749e0b10c250dac05"
+sld_heldout37.csv,SLD predictions used for dissertation Table 4.4 / Figure 4.10 (June 2026 standalone run),sld_predictions_37.csv,833ac057c83630cb9c57670885add798d4d869fcc9ea10b62201c9daf1e003b3,

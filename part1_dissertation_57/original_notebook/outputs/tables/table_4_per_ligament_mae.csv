@@ -1,0 +1,8 @@
+ligament,initial_MAE,final_MAE,N_gt_10mm_final
+ALL,5.07,4.17,13
+PLL,3.7,3.62,3
+LF,3.21,3.21,14
+ISL,4.43,4.43,15
+SSL,1.86,1.86,0
+ITL,2.68,2.68,0
+CL,3.36,3.36,13

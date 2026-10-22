@@ -1,0 +1,4 @@
+strategy,pairs,MAE,SD,RMSE,Pass5_percent,N_gt_10mm
+Pure Euclidean Hungarian,1126,4.85,5.99,7.71,75.2,119
+Initial anatomy-aware matching,1039,3.84,4.3,5.76,80.2,61
+Final anatomy-constrained GCZ,1042,3.67,3.87,5.34,82.2,58

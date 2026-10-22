@@ -1,0 +1,13 @@
+STEP 3 — Loading test data …
+  Evaluation Patient A (Verse561_L1)  |  228,300 verts  |  7/7 ligs  |  133 GT pts total
+  Evaluation Patient A (Verse561_L2)  |  251,316 verts  |  7/7 ligs  |  142 GT pts total
+  Evaluation Patient A (Verse561_L3)  |  250,488 verts  |  7/7 ligs  |  133 GT pts total
+  Evaluation Patient A (Verse561_L4)  |  249,408 verts  |  7/7 ligs  |  156 GT pts total
+  Evaluation Patient B (Verse581_L1)  |  167,820 verts  |  7/7 ligs  |  113 GT pts total
+  Evaluation Patient B (Verse581_L2)  |  190,212 verts  |  7/7 ligs  |  116 GT pts total
+  Evaluation Patient B (Verse581_L3)  |  217,212 verts  |  7/7 ligs  |  118 GT pts total
+  Evaluation Patient B (Verse581_L4)  |  220,164 verts  |  7/7 ligs  |  119 GT pts total
+  Evaluation Patient B (Verse581_L5)  |  211,128 verts  |  7/7 ligs  |  115 GT pts total
+
+Loaded: 9/9 test cases.
+  Bar chart opened in browser.

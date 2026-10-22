@@ -1,0 +1,108 @@
+STEP 10c — v8c Selective Z-Band (ALL+PLL only)
+====================================================
+  Computing A=pure / B=v5 / C=v8b(all-lig z) / D=v8c(selective z) …
+  Done. Pairs: A=1126  B=1039  C=1042  D=1042
+
+  ─── ① POOLED METRICS ──────────────────────────────────────────────
+  Version                                              MAE      SD    RMSE      Max    Pass%    N>10     N>5
+  ─────────────────────────────────────────────────────────────────────────────────────────────────
+  A — Pure Euclidean Hungarian                        4.85    5.99    7.71    42.58     75.2%     119     279
+  B — v5  (side/quadrant + z-arc penalty)             3.84    4.30    5.76    37.61     80.2%      61     206
+  C — v8b (ALL ligs z-band)   ← ISL/LF hurt           3.84    3.81    5.41    27.49     79.4%      71     215
+  D — v8c (ALL+PLL z-band only) ← selective fix       3.77    3.67    5.26    27.49     79.8%      66     210
+
+  ─── ② PER-LIGAMENT  B=v5  C=v8b  D=v8c ───────────────────────────
+  Lig      B MAE    C MAE    D MAE   C hurt?  v8c rule                           B→D
+  ──────────────────────────────────────────────────────────────────────────────────
+  ALL       5.07     4.17     4.17        ok  L/R + z-band  ← improved         +0.90
+  PLL       3.70     3.62     3.62        ok  global + z-band  ← improved      +0.08
+  LF        3.21     3.58     3.40    HURT ▲  L/R + Euclidean+gate (v5)        -0.19
+  ISL       4.43     4.99     4.80    HURT ▲  global Euclidean+gate (v5)       -0.37
+  SSL       1.86     1.86     1.86        ok  gate only (v5)                   +0.00
+  ITL       2.68     2.68     2.68        ok  L/R + gate (v5)                  +0.00
+  CL        3.36     3.39     3.39        ok  4-quadrant (v5)                  -0.03
+
+  ─── ③ TOP-20 WORST PAIRS (v8c) ─────────────────────────────────────
+  Rk    Case             Lig       Error    minGT  Type                  Diagnosis
+  ────────────────────────────────────────────────────────────────────────────────────────────────────
+  1     Verse581_L5      ALL      27.49mm     3.6mm  ✓ matching-error  Δz=+26mm (IS)
+  2     Verse561_L1      PLL      27.12mm     1.9mm  ✓ matching-error  Δz=-27mm (IS)
+  3     Verse561_L2      ALL      26.94mm     1.4mm  ✓ matching-error  Δz=+27mm (IS)
+  4     Verse561_L4      ALL      26.83mm     3.9mm  ✓ matching-error  Δz=-27mm (IS)
+  5     Verse561_L2      ALL      26.33mm     1.9mm  ✓ matching-error  Δz=-26mm (IS)
+  6     Verse561_L1      ALL      26.00mm     2.5mm  ✓ matching-error  Δz=-25mm (IS)
+  7     Verse581_L2      ALL      25.28mm     1.2mm  ✓ matching-error  Δz=+25mm (IS)
+  8     Verse581_L5      PLL      24.96mm     1.7mm  ✓ matching-error  Δz=+25mm (IS)
+  9     Verse561_L4      PLL      24.64mm     2.4mm  ✓ matching-error  Δz=+25mm (IS)
+  10    Verse581_L1      ALL      24.34mm     2.6mm  ✓ matching-error  Δz=-23mm (IS)
+  11    Verse581_L1      ALL      24.03mm     2.2mm  ✓ matching-error  Δz=-23mm (IS)
+  12    Verse581_L4      ISL      17.24mm     2.0mm  ✓ matching-error  Δz=+16mm (IS)
+  13    Verse581_L1      ISL      16.81mm     6.2mm  ✓ matching-error  Δz=-17mm (IS)
+  14    Verse561_L2      ISL      16.55mm     3.9mm  ✓ matching-error  Δz=+15mm (IS)
+  15    Verse561_L2      ISL      16.10mm     2.6mm  ✓ matching-error  Δz=+13mm (IS)
+  16    Verse581_L5      CL       15.71mm    12.9mm  ✓ pred-failure    Δx=+14mm (LR)
+  17    Verse561_L2      CL       15.63mm     1.4mm  ✓ matching-error  Δz=-15mm (IS)
+  18    Verse581_L3      ISL      15.19mm     8.9mm  ✓ matching-error  Δz=-13mm (IS)
+  19    Verse581_L5      ISL      15.05mm     0.3mm  ✓ matching-error  Δz=+15mm (IS)
+  20    Verse561_L4      LF       14.88mm     1.8mm  ✓ matching-error  Δz=+14mm (IS)
+
+  Breakdown by lig:  ALL:8 | ISL:6 | PLL:3 | CL:2 | LF:1
+  Breakdown by axis: LR=1 | IS=19 | AP=0
+  Matching errors: 19/20  |  Prediction failures: 1/20
+
+  ─── ④ LONG-LINE REMOVAL  (v5 → v8c) ────────────────────────────────
+     Threshold      v5     v8b     v8c    v5→v8c   % removed
+  ────────────────────────────────────────────────────────
+        > 5 mm     206     215     210        -4       -1.9%
+       > 10 mm      61      71      66        -5       -8.2%
+       > 15 mm      32      23      19        13      +40.6%
+       > 20 mm      18      13      11         7      +38.9%
+       > 25 mm      11       8       7         4      +36.4%
+
+  ─── ⑤ RESIDUAL ERROR ANATOMY (v8c top errors) ──────────────────────
+  Errors that v8c band could NOT fix:
+
+  1. [ALL] Verse581_L5 e=27.5mm  Δz=+26mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  2. [PLL] Verse561_L1 e=27.1mm  Δz=-27mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  3. [ALL] Verse561_L2 e=26.9mm  Δz=+27mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  4. [ALL] Verse561_L4 e=26.8mm  Δz=-27mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  5. [ALL] Verse561_L2 e=26.3mm  Δz=-26mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  6. [ALL] Verse561_L1 e=26.0mm  Δz=-25mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  7. [ALL] Verse581_L2 e=25.3mm  Δz=+25mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  8. [PLL] Verse581_L5 e=25.0mm  Δz=+25mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  9. [PLL] Verse561_L4 e=24.6mm  Δz=+25mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+  10. [ALL] Verse581_L1 e=24.3mm  Δz=-23mm (IS)  →  z-band blocked this match — other pred in z-band stole the nearby GT (pred-cluster issue)
+
+  ─── ⑥ LITERATURE COMPARISON WITH v8c ─────────────────────────────
+  Method                         MAE     ±SD     RMSE    Pass%
+  ────────────────────────────────────────────────────────────
+  Al-Dhamari et al.         4.20 mm  ±2.10  4.71       NR
+  Porto / ALPACA            3.51 mm  ±1.85  3.98       NR
+  Kramer et al.             2.84 mm  ±1.42  3.19       NR
+  SLD (specialist)          1.93 mm  ±0.97  2.16       NR
+  GCZ v5                    3.85 mm  ±4.03  5.58    79.2%
+  GCZ v8c (★)               3.77 mm  ±3.67  5.26    79.8% ←
+
+  User targets:  MAE 3.3–3.5mm  RMSE 4.5–4.8mm  Pass >80%
+  ✗  MAE ≤ 3.5mm
+  ✗  RMSE ≤ 4.8mm
+  ✗  Pass ≥ 80%
+  ✓  MAE < Al-Dhamari
+  ✗  RMSE < Al-Dhamari
+
+  v8c summary:  N=1042  MAE=3.77±3.67mm  RMSE=5.26mm  Max=27.49mm  Pass=79.8%  N>10mm=66
+
+  ─── WHY THE 3.3–3.5mm TARGET NEEDS STEP 5 IMPROVEMENT ─────────────
+  Residual large errors (>15mm) in v8c are:
+  • ALL/PLL z-inversions at 25–27mm: pred cloud bunched at one arc end.
+    All nearby GTs stolen by other preds in the same z-band → forced
+    to match distant GT even with z-band. Root: Step 5 template warp.
+  • ISL AP-inversions at 14–24mm: y-distributed spinous-process points.
+    z-band intentionally OFF (would hurt ISL net). Root: atlas AP offset.
+  • LF mixed x-z errors: z-band OFF. Root: per-side FPS distribution.
+
+  Matching-only ceiling estimate: MAE ~3.6mm, RMSE ~5.4mm.
+  To reach MAE 3.3–3.5mm + RMSE 4.5–4.8mm: need Step 5 improvements:
+    1. Per-level atlas selection (current: per-case only, Step 5 table)
+    2. ICP alignment with level-specific scaling
+    3. Or: post-ICP affine per-vertebra level (not global rigid)

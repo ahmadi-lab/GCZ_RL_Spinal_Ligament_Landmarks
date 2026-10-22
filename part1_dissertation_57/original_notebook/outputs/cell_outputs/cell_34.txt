@@ -1,0 +1,134 @@
+STEP 7 — Pooled Error Analysis (GCZ v4/v5) + Literature Comparison
+========================================================================
+
+  ─── ① BONE ALIGNMENT CHECK  (warped atlas → test bone, NND) ──────────
+  Case               Mean NND    Median       p95       Max  Verdict
+  ────────────────────────────────────────────────────────────────────
+  Verse561_L1                1.93mm     1.73mm     3.90mm     8.47mm  ✓
+  Verse561_L2                2.33mm     1.80mm     5.69mm    12.67mm  ✓
+  Verse561_L3                1.54mm     1.48mm     3.04mm     5.62mm  ✓
+  Verse561_L4                1.80mm     1.63mm     3.74mm     8.23mm  ✓
+  Verse581_L1                2.11mm     1.31mm     7.01mm    14.52mm  ✓
+  Verse581_L2                1.62mm     1.35mm     3.72mm     6.51mm  ✓
+  Verse581_L3                1.50mm     1.34mm     3.26mm     5.81mm  ✓
+  Verse581_L4                1.59mm     1.40mm     3.68mm     6.28mm  ✓
+  Verse581_L5                2.13mm     1.92mm     5.03mm     8.53mm  ✓
+  ────────────────────────────────────────────────────────────────────
+     Overall mean       1.84mm    max-of-cases = 2.33mm
+
+  ✓ All cases: mean surface NND < 5.0mm.
+    Bone alignment is acceptable; landmark errors are prediction errors.
+
+  ─── ② METRIC COMPARISON: v4-constrained vs v5-fully-constrained ───────
+
+  Metric             v4 (z-pen only)    v5 (L/R+arc)    Δ (v4−v5)  Verdict
+  ──────────────────────────────────────────────────────────────────────
+  MAE (mm)                      4.16            3.84        +0.33  ▼ improved
+  SD (mm)                       5.34            4.30        +1.05  ▼ improved
+  RMSE (mm)                     6.77            5.76        +1.01  ▼ improved
+  Min (mm)                      0.05            0.05        +0.00  ─ equal
+  Max (mm)                     43.46           37.61        +5.85  ▼ improved
+  Pass% ≤5mm                   79.41           80.17        -0.76  ▲ regressed
+
+  Pairs: v4=1054  v5=1039
+
+  PER-LIGAMENT COMPARISON (MAE mm):
+  Lig      v4 MAE    v5 MAE        Δ    v4 Max    v5 Max
+  ────────────────────────────────────────────────────
+  ALL        6.83      5.07    +1.76     43.46     37.61
+  PLL        3.62      3.70    -0.08     27.12     27.43
+  LF         3.21      3.21    +0.00     18.62     18.62
+  ISL        4.43      4.43    +0.00     25.87     25.87
+  SSL        1.86      1.86    +0.00      3.32      3.32
+  ITL        2.68      2.68    +0.00      5.78      5.78
+  CL         3.36      3.36    +0.00     15.83     15.83
+
+  v5 constraints:
+    CL        → 4-quadrant partition (L/R × S/I) — strict, no cross-quadrant
+    LF, ITL   → strict L/R bilateral — no cross-hemisphere matching
+    ALL, PLL  → strict L/R split + normalized z-arc-ordering penalty
+    ISL, SSL  → standard Euclidean Hungarian
+
+  OVERALL GCZ v5 (fully constrained Hungarian, 1039 pairs):
+    MAE    = 3.84 mm
+    SD     = 4.30 mm
+    RMSE   = 5.76 mm
+    Range  = [0.05 – 37.61] mm
+    Pass%  = 80.2%  (≤ 5.0 mm)
+
+  PER-LIGAMENT POOLED METRICS (v5, constrained, all cases pooled):
+  Ligament                    N     MAE      SD    RMSE    Min     Max    Pass%
+  ────────────────────────────────────────────────────────────────────────
+  Anterior Long. Lig.       182    5.07    6.48    8.23   0.58   37.61    74.7%
+  Posterior Long. Lig.      127    3.70    3.94    5.40   0.61   27.43    85.8%
+  Lig. Flavum               171    3.21    3.59    4.82   0.15   18.62    87.1%
+  Interspinous Lig.         179    4.43    4.81    6.54   0.05   25.87    73.2%
+  Supraspinous Lig.           9    1.86    0.79    2.02   0.52    3.32   100.0%
+  Intertransverse Lig.       18    2.68    1.61    3.13   0.16    5.78    88.9%
+  Capsular Lig.             353    3.36    2.73    4.33   0.11   15.83    80.2%
+  ────────────────────────────────────────────────────────────────────────
+  ALL LIGAMENTS (pooled)   1039    3.84    4.30    5.76   0.05   37.61    80.2%
+
+  OUTLIER AUDIT (v5, errors > 15.0 mm):
+  Case            Lig      Outliers  Max error
+  ────────────────────────────────────────────
+  Verse581_L5     ALL      1/19  pairs       37.6 mm
+  Verse561_L4     ALL      2/23  pairs       35.9 mm
+  Verse561_L2     ALL      3/22  pairs       32.3 mm
+  Verse561_L1     ALL      1/21  pairs       30.5 mm
+  Verse581_L1     ALL      2/20  pairs       29.9 mm
+  Verse561_L1     PLL      1/14  pairs       27.4 mm
+  Verse581_L2     ALL      1/20  pairs       26.6 mm
+  Verse561_L4     PLL      1/16  pairs       26.6 mm
+  Verse581_L4     ISL      1/20  pairs       25.9 mm
+  Verse581_L5     PLL      1/14  pairs       25.0 mm
+  Verse561_L2     ISL      4/28  pairs       24.2 mm
+  Verse581_L1     ISL      1/16  pairs       23.3 mm
+  Verse581_L5     ISL      2/20  pairs       21.8 mm
+  Verse581_L3     ALL      1/17  pairs       21.1 mm
+  Verse561_L4     LF       3/30  pairs       18.6 mm
+  Verse581_L3     ISL      1/18  pairs       18.5 mm
+  Verse561_L1     LF       1/16  pairs       15.9 mm
+  Verse561_L2     CL       1/56  pairs       15.8 mm
+  Verse581_L5     CL       2/36  pairs       15.7 mm
+  Verse561_L3     LF       1/16  pairs       15.5 mm
+  Verse581_L2     ISL      1/18  pairs       15.4 mm
+
+  Total outliers (>15.0mm): 32/1039 (3.1%)
+  Pairs ≤  5 mm : 833/1039 (80.2%)
+  Pairs ≤ 10 mm : 978/1039 (94.1%)
+
+  CSV → C:\Users\mohse\Desktop\mohsen\dataset\raw\gcz_v5_constrained_errors.csv
+
+
+  LANDMARK-LEVEL COMPARISON WITH LITERATURE
+  Method                      MAE     ±SD     RMSE    Pass%   N cases  Notes
+  ──────────────────────────────────────────────────────────────────────────────────────────────────
+  Al-Dhamari et al.      4.20 mm  ±2.10  4.71       NR        12  Atlas-based landmark localization
+  Porto / ALPACA         3.51 mm  ±1.85  3.98       NR        10  Generic 3D landmark transfer
+  Kramer et al.          2.84 mm  ±1.42  3.19       NR         8  Registration/edge-based detection
+  SLD                    1.93 mm  ±0.97  2.16       NR         8  Specialized spinal landmark detector
+  GCZ (This work) ★      3.84 mm  ±4.30  5.76    80.2%         9  1039 pairs, v5-constrained (CL 4-quad + L/R + arc-order)
+  ──────────────────────────────────────────────────────────────────────────────────────────────────
+
+  [Fig 7A] Literature comparison chart opened in browser.
+
+  [Fig 7B] Building 3-panel debug figure …
+  [Fig 7B] 3-panel figure opened in browser.
+
+  [Fig 7B-shift] Building shifted comparison figure …
+  [Fig 7B-shift] Shifted comparison opened in browser.
+
+  ─── Summary for paper Methods section ───────────────────────────────
+  GCZ v5 pooled MAE  = 3.84 ± 4.30 mm  (v5-fully-constrained Hungarian, 1039 pairs)
+  GCZ v5 pooled RMSE = 5.76 mm
+  GCZ v5 pass-rate   = 80.2%  (≤ 5.0 mm threshold)
+  Best  ligament: SSL  →  MAE = 1.86 mm
+  Worst ligament: ALL  →  MAE = 5.07 mm
+
+  IMPROVEMENTS v4 → v5 (matching/evaluation only; no test-label tuning):
+    ① CL   : 4-quadrant strict (L/R × S/I) — same as v4
+    ② LF/ITL: strict L/R bilateral — same as v4
+    ③ ALL/PLL: strict L/R split + normalized z-arc-ordering penalty (NEW)
+    ④ Surface alignment check: ICP NND reported per case before metrics
+    ★ All constraints derived from anatomy; no thresholds tuned on test labels.

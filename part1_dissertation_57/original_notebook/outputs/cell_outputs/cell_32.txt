@@ -1,0 +1,45 @@
+STEP 5 — GCZ Prediction (v4): threshold-constrained benchmark transfer + CL 4-quadrant
+==============================================================================
+  Threshold calibration            : 20 labeled calibration vertebrae
+  Benchmark atlas                  : original Verse005 L1–L5 atlas
+  Full held-out test partition     : 37 vertebrae
+  Primary quantitative subset      : 9 complete-landmark lumbar vertebrae
+  Primary subset                   : Verse561 L1–L4 + Verse581 L1–L5
+  Current execution                : primary complete-landmark subset used for manuscript metrics
+  Leakage status                   : calibration/held-out split already validated in Cell 1
+  Note                             : Do not interpret the 9-case subset as the full 37-case held-out partition.
+
+  Sub-step 5A: ICP benchmark selection + full registration → test bone
+  Case                Best ref   Residual    Before   Reduction
+  ────────────────────────────────────────────────────────────────
+  Verse561_L1           Verse005_L1             1.900 mm    431.4 mm       99.6% ←SAME-LEVEL
+  Verse561_L2           Verse005_L3             2.304 mm    450.7 mm       99.5% ←L3
+  Verse561_L3           Verse005_L1             1.516 mm    381.3 mm       99.6% ←L1
+  Verse561_L4           Verse005_L1             1.825 mm    359.2 mm       99.5% ←L1
+  Verse581_L1           Verse005_L1             2.127 mm    483.7 mm       99.6% ←SAME-LEVEL
+  Verse581_L2           Verse005_L1             1.597 mm    515.6 mm       99.7% ←L1
+  Verse581_L3           Verse005_L1             1.501 mm    550.6 mm       99.7% ←L1
+  Verse581_L4           Verse005_L1             1.571 mm    586.1 mm       99.7% ←L1
+  Verse581_L5           Verse005_L1             2.134 mm    617.0 mm       99.7% ←L1
+
+  Sub-step 5B+C (v4): threshold-constrained benchmark transfer + CL 4-quadrant + bilateral ITL/LF
+  Predictions ready for 9 test cases.
+  CL: 4-quadrant (L/R × Superior/Inferior facets)
+  ITL, LF: bilateral L/R  |  Max snap distance: 15.0 mm
+
+  [Fig 5A] Pipeline steps for Verse561_L3 opened in browser.
+
+  [Fig 5B] Expert GT vs GCZ Predicted comparison panels …
+  [Fig 5B] Comparison figure opened in browser.
+
+  ● circles (left)  = Expert GT  (original 3D Slicer annotations)
+  ● circles (right) = GCZ v4 prediction
+
+  ALGORITHMIC SUMMARY:
+    ① Threshold regions learned from 20 labeled calibration vertebrae
+    ② Benchmark transfer uses original Verse005 L1–L5 atlas
+    ③ Best-atlas selection among Verse005 L1–L5 using quick ICP residual
+    ④ CL 4-quadrant split: L/R × Superior/Inferior
+    ⑤ ITL/LF: bilateral L/R split
+    ⑥ Snap-distance filter: 15.0 mm
+    ★ No test-label thresholding or post-hoc result manipulation.

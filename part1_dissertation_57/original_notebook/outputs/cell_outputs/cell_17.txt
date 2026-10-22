@@ -1,0 +1,6 @@
+Table 3 — Physical bounding box (mapped to [0,1]³ in Step 3)
+ Patient X range (mm) Y range (mm) Z range (mm) X origin (mm) Y origin (mm) Z origin (mm)
+Verse005        105.0        102.4        180.1         -46.2         150.7        -237.8
+Verse581         95.0         93.1        177.5         -27.7         136.6        -741.3
+
+After Step 3: all differences above are eliminated — rules use [0,1]³ only.

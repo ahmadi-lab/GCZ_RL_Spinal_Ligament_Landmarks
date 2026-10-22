@@ -1,0 +1,2 @@
+After AABB normalisation the 2 spinal columns align remarkably well.
+This validates the normalisation and makes zone rules patient-independent.

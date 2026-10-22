@@ -1,0 +1,68 @@
+<#
+  GCZ-RL - reproduce the paper with one command (Windows PowerShell).
+
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1                 # Part 1 + Part 2 + checks + paper numbers
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Part 2         # primary LOSO only
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Fresh          # also recompute ICP geometry and SLD
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 25 min) and the original notebook
+
+  Raw data: fetched automatically into dataset\raw unless GCZRL_RAW_ROOT points to an existing copy.
+#>
+param([ValidateSet('1', '2', 'all')][string]$Part = 'all', [switch]$Fresh, [switch]$Slow)
+
+$ErrorActionPreference = 'Stop'
+$Root = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location $Root
+$Py = Join-Path $Root '.venv\Scripts\python.exe'
+$env:PYTHONIOENCODING = 'utf-8'; $env:MPLBACKEND = 'Agg'; $env:PYTHONHASHSEED = '0'
+New-Item -ItemType Directory -Force (Join-Path $Root 'logs') | Out-Null
+$Log = Join-Path $Root ("logs\run_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
+
+function Say([string]$t) { $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $t; Write-Host $l; Add-Content $Log $l }
+
+function Run([string]$Name, [string[]]$PyArgs) {
+    Say "START $Name"
+    $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    & $Py @PyArgs 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $Log -Append | Where-Object { $_ -match '^\[|PASS|FAIL|MISMATCH|verified|reproduced|Error|Traceback' }
+    $code = $LASTEXITCODE; $ErrorActionPreference = $prev
+    if ($code -ne 0) { Say "FAILED $Name (exit $code) - see $Log"; exit $code }
+    Say "OK $Name"
+}
+
+if (-not (Test-Path $Py)) {
+    Say 'Creating Python 3.11 environment (.venv) ...'
+    if (Get-Command uv -ErrorAction SilentlyContinue) {
+        & uv venv --python 3.11 .venv; & uv pip install --python $Py -r requirements.txt
+    } else {
+        & py -3.11 -m venv .venv; & $Py -m pip install -r requirements.txt
+    }
+}
+
+$RawRoot = if ($env:GCZRL_RAW_ROOT) { $env:GCZRL_RAW_ROOT } else { Join-Path $Root 'dataset\raw' }
+if (-not (Test-Path (Join-Path $RawRoot 'VerSe_Ligaments_GT'))) {
+    Run 'Fetch and verify raw data' @('scripts\fetch_data.py', '--out', $RawRoot)
+}
+if ($Fresh -and -not (Test-Path (Join-Path $Root 'code\third_party\SpineLib'))) {
+    Run 'Fetch SpineLib (SLD)' @('scripts\fetch_spinelib.py')
+}
+
+$f = @(); if ($Fresh) { $f = @('--fresh') }
+if ($Part -in @('1', 'all')) {
+    Run 'Part 1 (development, 57 vertebrae)' (@('part1_dissertation_57\run_part1.py') + $f)
+    if ($Slow) {
+        Run 'Original notebook (matching diagnostic, alignment)' @('part1_dissertation_57\original_notebook\run_original_notebook.py')
+        Run 'Original notebook tables' @('part1_dissertation_57\original_notebook\extract_tables.py')
+        Run 'Table 3 regressor comparison' @('paper\table3_regressor_comparison.py')
+    }
+}
+if ($Part -in @('2', 'all')) {
+    Run 'Part 2 (primary LOSO, 14 vertebrae)' (@('part2_patient_loso_14\run_part2.py') + $f)
+    Run 'Part 2 leakage test' @('part2_patient_loso_14\run_leakage_test.py')
+}
+if ($Part -eq 'all') {
+    Run 'Verification' @('code\verify_all.py')
+    Run 'Paper numbers' @('paper\make_paper_numbers.py')
+    Run 'Figure 6' @('paper\fig6_qualitative_loso.py')
+    Run 'Graphical abstract' @('paper\graphical_abstract.py')
+}
+Say 'DONE'

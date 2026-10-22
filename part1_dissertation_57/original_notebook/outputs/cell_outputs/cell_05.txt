@@ -1,0 +1,4 @@
+Available patients in vertebrae: ['Verse005', 'Verse581']
+Verse005 levels shown: ['L1', 'L2', 'L3', 'L4', 'L5']
+Verse581 levels shown: ['L1', 'L2', 'L3', 'L4', 'L5']
+HTML saved → C:\Users\mohse\Desktop\mohsen\dataset\raw\VerSe_Ligaments_GT\figures_white_bg\spine_verse561_verse581_bone.html

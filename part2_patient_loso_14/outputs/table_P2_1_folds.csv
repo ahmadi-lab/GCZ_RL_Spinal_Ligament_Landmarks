@@ -1,0 +1,4 @@
+held_out_subject,training_subjects,training_vertebrae,test_vertebrae,training_samples,samples_ALL,samples_PLL,samples_LF,samples_ISL,samples_SSL,samples_ITL,samples_CL
+S01,S02 + S03,9,5,741,90,90,180,164,9,36,172
+S02,S01 + S03,10,4,836,100,100,200,186,10,40,200
+S03,S01 + S02,9,5,765,90,90,180,180,9,36,180

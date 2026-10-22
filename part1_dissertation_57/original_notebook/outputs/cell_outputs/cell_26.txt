@@ -1,0 +1,12 @@
+==============================================================
+  GCZ Pipeline — Real VerSe Dataset  (no synthetic data)
+==============================================================
+  Calibration : 20 validated specimens — split-driven, no held-out overlap
+  Held-out    : 37 validated specimens
+  Primary eval: 9 complete-landmark lumbar cases — Verse561 L1-L4 + Verse581 L1-L5
+  ICP ref.    : Verse005 L3
+  Ligaments   : ['ALL', 'PLL', 'LF', 'ISL', 'SSL', 'ITL', 'CL']
+  GT root     : C:\Users\mohse\Desktop\mohsen\dataset\raw\VerSe_Ligaments_GT
+
+  Loader functions:  _load_mesh()  _load_gt()  _icp()  _apply()
+  Run Step 1 → Step 6 cells in order.

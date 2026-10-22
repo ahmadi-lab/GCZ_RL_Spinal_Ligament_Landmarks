@@ -1,0 +1,11 @@
+{
+  "held_out_subject": "S02",
+  "corruption": "Gaussian noise, SD 25 mm, added to every S02 landmark",
+  "recomputed": "GCZ geometry and GCZ-RL training of the S02 fold, from scratch, with clean and with corrupted S02 labels",
+  "points_compared": 424,
+  "points_clean_run": 424,
+  "points_corrupted_run": 424,
+  "max_abs_coordinate_difference_mm": 0.0,
+  "tolerance_mm": 1e-09,
+  "predictions_unchanged": true
+}

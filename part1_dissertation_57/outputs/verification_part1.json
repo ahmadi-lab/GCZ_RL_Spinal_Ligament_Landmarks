@@ -1,0 +1,113 @@
+{
+  "regenerated_vs_archived_predictions": {
+    "GCZ": {
+      "case_ligament_sets_compared": 259,
+      "identical_sets_tol_1um": 259,
+      "sets_missing_in_one": 0,
+      "sets_with_different_point_count": 0,
+      "max_point_deviation_mm": 8.437045351153962e-05,
+      "median_set_max_deviation_mm": 6.512305310834939e-05
+    },
+    "GCZ-RL": {
+      "case_ligament_sets_compared": 259,
+      "identical_sets_tol_1um": 259,
+      "sets_missing_in_one": 0,
+      "sets_with_different_point_count": 0,
+      "max_point_deviation_mm": 8.038996050998429e-14,
+      "median_set_max_deviation_mm": 5.684341886080802e-14
+    }
+  },
+  "table_4_4_MAE_minus_dissertation": {
+    "GCZ": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    },
+    "GCZ-RL": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    },
+    "SLD": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    }
+  },
+  "table_4_4_Pass5_minus_dissertation": {
+    "GCZ": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    },
+    "GCZ-RL": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    },
+    "SLD": {
+      "ALL": 0.0,
+      "PLL": 0.0,
+      "LF": 0.0,
+      "ISL": 0.0,
+      "SSL": 0.0,
+      "ITL": 0.0,
+      "CL": 0.0,
+      "Mean": 0.0
+    }
+  },
+  "table_4_4_matches_dissertation": true,
+  "training_vertebrae": [
+    "S01_L1",
+    "S01_L2",
+    "S01_L3",
+    "S01_L4",
+    "S01_L5",
+    "S02_C3",
+    "S02_C4",
+    "S02_C5",
+    "S02_C6",
+    "S02_C7",
+    "S02_T1",
+    "S02_T2",
+    "S02_T3",
+    "S02_T4",
+    "S02_T5",
+    "S02_T6",
+    "S02_T7",
+    "S02_T8",
+    "S02_T9",
+    "S02_T10"
+  ],
+  "held_out_annotations_used_for_training": false,
+  "training_samples": 1683,
+  "features": 36,
+  "figure_4_11_file": "figure_4_11_landmarks_S03_L3.png",
+  "seconds": 206,
+  "sha256_final_model": "8591781149a507e9e536b90264393c121ce32e80e9b74264cf0a4113b31604e1"
+}

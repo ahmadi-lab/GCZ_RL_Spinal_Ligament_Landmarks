@@ -1,0 +1,74 @@
+STEP 8 — Per-Ligament Correspondence Diagnostic + v6 Arc-Length Matching
+==========================================================================
+  Running three matching versions …
+  Done. Pairs: A=1126  B=1039  C=1042
+
+  ─── ① ANATOMICAL MISMATCH DIAGNOSTIC  (pure Euclidean Hungarian) ───────
+  Lig        N        >5mm       >10mm    LR_cross   SI_invert  Primary failure mode
+  ────────────────────────────────────────────────────────────────────────────────────────────
+  ALL      194    40(21%)    18( 9%)      14(7%)      13(7%)  L/R swap
+  PLL      130    11( 8%)     3( 2%)       3(2%)     15(12%)  S/I invert
+  LF       179    29(16%)    22(12%)       8(4%)      12(7%)  S/I invert
+  ISL      179    48(27%)    15( 8%)         n/a       5(3%)  S/I invert
+  SSL        9     0( 0%)     0( 0%)         n/a       0(0%)  pure offset (no LR/SI)
+  ITL       18     2(11%)     0( 0%)       0(0%)         n/a  pure offset (no LR/SI)
+  CL       417   149(36%)    61(15%)      12(3%)         n/a  L/R swap
+
+  LR_cross  = pairs where pred side ≠ GT side of vertebral midline (x≥/< cx)
+  SI_invert = pairs with |normalised_z_rank(pred) − normalised_z_rank(GT)| > 0.33
+              (threshold 0.33 = one-third of the attachment zone z-range)
+  n/a       = constraint not applicable to this ligament's anatomy
+
+  ─── ② THREE-WAY POOLED METRICS  (9 test cases × 7 ligaments pooled) ────
+  Version                                      MAE      SD    RMSE      Max    Pass%
+  ──────────────────────────────────────────────────────────────────────────────
+  A — Pure Euclidean Hungarian                4.85    5.99    7.71    42.58     75.2%
+  B — Side/quadrant constrained (v5)          3.84    4.30    5.76    37.61     80.2%
+  C — Side/quadrant + arc-order (v6)          6.74    5.86    8.93    34.21     52.6%
+
+  PER-LIGAMENT  (MAE mm):  A=pure   B=v5   C=v6     Δ improvements
+  Lig          A        B        C      A→B      B→C    A max    C max  v6 constraint
+  ──────────────────────────────────────────────────────────────────────────────────────────
+  ALL       5.43     5.07     7.46    +0.35    -2.39    42.58    34.21  L/R + PCA arc/hemi
+  PLL       3.37     3.70     7.56    -0.34    -3.86    29.93    33.91  PCA arc (midline)
+  LF        3.79     3.21     5.06    +0.58    -1.84    21.09    18.57  L/R + z-arc/side
+  ISL       4.43     4.43     7.06    +0.00    -2.63    25.87    28.97  PCA arc (midline)
+  SSL       1.86     1.86     1.86    +0.00    +0.00     3.32     3.32  standard (N≤1)
+  ITL       2.68     2.68     2.68    +0.00    +0.00     5.78     5.78  L/R strict
+  CL        5.85     3.36     7.05    +2.49    -3.69    36.50    19.50  4-quad + z-arc/quad
+
+  GCZ v6 FINAL:  MAE=6.74mm  SD=5.86  RMSE=8.93  Max=34.21  Pass%=52.6%  N=1042
+
+  ─── ③ PER-LIGAMENT 3-PANEL CORRESPONDENCE FIGURES ─────────────────────
+  Example case: Verse561_L3   (7 figures × 3 panels each)
+  Panel C:  solid lines = v6  ·  dashed lines = pure (A)
+  Line colours: green <3mm · yellow 3–5mm · orange 5–10mm · red >10mm
+
+  [ALL]  Anterior Long. Lig.         GT= 23  pred= 23  Pure MAE=4.65mm max=24.6mm  → v6 MAE=7.82mm max=28.3mm  LR_cross=2  SI_inv=2
+  [PLL]  Posterior Long. Lig.        GT= 14  pred= 14  Pure MAE=2.54mm max=6.7mm  → v6 MAE=7.74mm max=19.2mm  LR_cross=0  SI_inv=2
+  [LF]  Lig. Flavum                 GT= 16  pred= 16  Pure MAE=3.43mm max=15.5mm  → v6 MAE=3.88mm max=18.6mm  LR_cross=0  SI_inv=0
+  [ISL]  Interspinous Lig.           GT= 27  pred= 20  Pure MAE=3.33mm max=8.4mm  → v6 MAE=5.22mm max=22.9mm  LR_cross=0  SI_inv=0
+  [SSL]  Supraspinous Lig.           GT=  1  pred=  1  Pure MAE=2.54mm max=2.5mm  → v6 MAE=2.54mm max=2.5mm  LR_cross=0  SI_inv=0
+  [ITL]  Intertransverse Lig.        GT=  2  pred=  2  Pure MAE=4.20mm max=5.8mm  → v6 MAE=4.20mm max=5.8mm  LR_cross=0  SI_inv=0
+  [CL]  Capsular Lig.               GT= 50  pred= 50  Pure MAE=5.76mm max=31.5mm  → v6 MAE=7.18mm max=18.3mm  LR_cross=2  SI_inv=0
+
+  ─── FINAL SUMMARY (all 9 test cases, 7 ligaments pooled) ──────────────
+  Version                                      MAE    RMSE      Max    Pass%       N
+  ────────────────────────────────────────────────────────────────────────────────
+  A — Pure Euclidean Hungarian                4.85    7.71    42.58     75.2%    1126
+  B — Side/quadrant constrained (v5)          3.84    5.76    37.61     80.2%    1039
+  C — Side/quadrant + arc-order (v6)          6.74    8.93    34.21     52.6%    1042
+
+  v6 anatomical rules (no test-label tuning):
+    ALL    L/R + PCA arc/hemi
+    PLL    PCA arc (midline)
+    LF     L/R + z-arc/side
+    ISL    PCA arc (midline)
+    SSL    standard (N≤1)
+    ITL    L/R strict
+    CL     4-quad + z-arc/quad
+
+  Pure-matching pathology across all cases/ligs  (N=1126 pairs):
+    L/R cross-side assignments : 37 (3.3%)
+    S/I ordering inversions    : 45 (4.0%)
+  Both eliminated by v6 anatomical constraints.

@@ -1,0 +1,45 @@
+table,item,regenerated,paper,matches
+1,Curated annotated vertebrae,57.0,57.0,True
+1,Calibration specimens,20.0,20.0,True
+1,Held-out partition,37.0,37.0,True
+2,mean surface distance (mm),1.84,1.84,True
+2,max per-case mean < 5 mm,1.0,1.0,True
+3,Pure Euclidean Hungarian: pairs,1126.0,1126.0,True
+3,Pure Euclidean Hungarian: MAE,4.85,4.85,True
+3,Pure Euclidean Hungarian: SD,5.99,5.99,True
+3,Pure Euclidean Hungarian: RMSE,7.71,7.71,True
+3,Pure Euclidean Hungarian: Pass5_percent,75.2,75.2,True
+3,Pure Euclidean Hungarian: N_gt_10mm,119.0,119.0,True
+3,Initial anatomy-aware matching: pairs,1039.0,1039.0,True
+3,Initial anatomy-aware matching: MAE,3.84,3.84,True
+3,Initial anatomy-aware matching: SD,4.3,4.3,True
+3,Initial anatomy-aware matching: RMSE,5.76,5.76,True
+3,Initial anatomy-aware matching: Pass5_percent,80.2,80.2,True
+3,Initial anatomy-aware matching: N_gt_10mm,61.0,61.0,True
+3,Final anatomy-constrained GCZ: pairs,1042.0,1042.0,True
+3,Final anatomy-constrained GCZ: MAE,3.67,3.67,True
+3,Final anatomy-constrained GCZ: SD,3.87,3.87,True
+3,Final anatomy-constrained GCZ: RMSE,5.34,5.34,True
+3,Final anatomy-constrained GCZ: Pass5_percent,82.2,82.2,True
+3,Final anatomy-constrained GCZ: N_gt_10mm,58.0,58.0,True
+4,ALL: initial_MAE,5.07,5.07,True
+4,ALL: final_MAE,4.17,4.17,True
+4,ALL: N_gt_10mm_final,13.0,13.0,True
+4,PLL: initial_MAE,3.7,3.7,True
+4,PLL: final_MAE,3.62,3.62,True
+4,PLL: N_gt_10mm_final,3.0,3.0,True
+4,LF: initial_MAE,3.21,3.21,True
+4,LF: final_MAE,3.21,3.21,True
+4,LF: N_gt_10mm_final,14.0,14.0,True
+4,ISL: initial_MAE,4.43,4.43,True
+4,ISL: final_MAE,4.43,4.43,True
+4,ISL: N_gt_10mm_final,15.0,15.0,True
+4,SSL: initial_MAE,1.86,1.86,True
+4,SSL: final_MAE,1.86,1.86,True
+4,SSL: N_gt_10mm_final,0.0,0.0,True
+4,ITL: initial_MAE,2.68,2.68,True
+4,ITL: final_MAE,2.68,2.68,True
+4,ITL: N_gt_10mm_final,0.0,0.0,True
+4,CL: initial_MAE,3.36,3.36,True
+4,CL: final_MAE,3.36,3.36,True
+4,CL: N_gt_10mm_final,13.0,13.0,True

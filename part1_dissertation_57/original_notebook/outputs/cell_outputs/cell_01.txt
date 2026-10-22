@@ -1,0 +1,16 @@
+Libraries loaded.
+  trimesh 4.12.0
+  plotly  7.1.0
+  numpy   2.4.6
+
+Pipeline scope:
+  Manuscript target : 57 vertebrae = 20 calibration + 37 held-out
+  Detected under BASE: 57 vertebrae
+  Calibration split : 20 cases
+  Held-out split    : 37 cases
+  Manifest list     : 57 manuscript cases
+  Split manifest out: C:\Users\mohse\Desktop\mohsen\part1_dissertation_57\original_notebook\outputs\gcz_57_split_manifest_USED_BY_NOTEBOOK.csv
+  Primary subset    : 9 complete-landmark lumbar vertebrae
+  Current BASE      : C:\Users\mohse\Desktop\mohsen\dataset\raw\VerSe_Ligaments_GT
+
+Plotly renderer: browser, fast CDN HTML mode: True

@@ -1,0 +1,38 @@
+cell,first_line,seconds,error,saved_output_chars,new_output_chars,identical_to_saved_output
+1,"import os, warnings, json, glob, re",23.7,False,627,627,False
+3,# Vertebra STL meshes,27.4,False,499,543,True
+4,# 2-row subplot helper (one patient per row: Patient A and Patient B),0.0,False,24,24,True
+5,# ── Patient A & B — White-background spine figure ───────────────────,30.5,False,313,291,True
+7,# Fig 1a — 3-row individual view,19.4,False,0,0,True
+8,# Fig 1b — Overlay: both patients in the same scene,2.4,False,131,131,True
+9,# Table 1 — Dataset organization and representative display cases,0.0,False,966,966,True
+11,# Fig 2a — 3-row mesh quality view,2.3,False,0,0,True
+12,# Fig 2b — Grouped bar chart: total vertices and faces per patient,0.5,False,0,0,True
+13,# Table 2 — Mesh statistics,0.2,False,795,795,True
+15,# Fig 3a — 3-row normalised bones,21.5,False,0,0,True
+16,"# Fig 3b — OVERLAY: both patients in [0,1]^3 — KEY comparison!",2.2,False,144,144,True
+17,# Table 3 — Physical bounding box extents,0.0,False,408,408,True
+18,# ════════════════════════════════════════════════════════════════════,0.4,False,263,263,True
+20,# Compute midplanes,3.3,False,0,0,True
+21,# Fig 4b — Normalized midplane positions: publication-quality grouped ,1.0,False,212,190,True
+22,# Table 4 — Normalized midplane positions (Patient A & Patient B),0.0,False,433,433,True
+23,# Table 4 — Midplane positions,0.0,False,395,395,True
+24,# ════════════════════════════════════════════════════════════════════,11.6,False,161,181,False
+26,# ====================================================================,0.0,False,674,652,True
+27,# ====================================================================,50.2,False,5992,5992,True
+28,# ====================================================================,29.3,False,1516,1516,True
+29,# ====================================================================,15.6,False,886,886,True
+30,# ====================================================================,27.6,False,1709,1709,True
+31,# ====================================================================,2.1,False,870,870,True
+32,# ====================================================================,131.9,False,2715,2715,True
+33,# ====================================================================,0.2,False,7230,7208,False
+34,# ====================================================================,5.8,False,7203,7181,False
+35,# ====================================================================,0.2,False,3661,3661,True
+36,# ====================================================================,77.4,False,4880,4880,True
+37,# ====================================================================,6.7,False,9420,9420,True
+38,# ====================================================================,59.8,False,6998,6998,True
+39,# ====================================================================,4.3,False,6778,6778,True
+40,# ====================================================================,0.1,False,7548,7548,True
+41,# ====================================================================,0.0,False,5415,5415,True
+42,# ====================================================================,0.0,False,692,692,True
+43,# ====================================================================,1.9,False,172,288,False

@@ -1,0 +1,2 @@
+Notice: patients differ in physical size and scanner Z position.
+These differences are eliminated by AABB normalisation in Step 3.

@@ -1,0 +1,4 @@
+method,vertebrae,MAE_mm,Pass5_percent,reference_coverage_percent,symmetric_nn_distance_mm,all_reference_points_within_5mm_percent,missing_ligament_outputs
+GCZ,14,2.879,86.02,58.357,3.448,72.067,0
+GCZ-RL,14,2.15,92.653,58.357,2.719,78.42,0
+SLD,14,2.224,90.241,67.042,2.938,77.624,0

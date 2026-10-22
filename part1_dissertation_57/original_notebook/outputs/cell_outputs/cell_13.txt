@@ -1,0 +1,12 @@
+Table 2 — Mesh statistics per patient and vertebral level
+ Patient Level Vertices  Faces BBox X (mm) BBox Y (mm) BBox Z (mm)
+Verse005    L1  113,724 37,908        78.6        85.0        53.8
+Verse005    L2  128,172 42,724        86.7        91.1        53.7
+Verse005    L3  138,624 46,208        96.4        94.8        57.7
+Verse005    L4  144,768 48,256       100.2        98.5        50.8
+Verse005    L5  152,844 50,948       105.0        92.5        55.6
+Verse581    L1  167,820 55,940        53.4        74.6        49.4
+Verse581    L2  190,212 63,404        77.8        79.5        54.0
+Verse581    L3  217,212 72,404        93.1        82.6        52.1
+Verse581    L4  220,164 73,388        94.7        81.6        47.2
+Verse581    L5  211,128 70,376        87.0        81.4        43.6

@@ -1,0 +1,39 @@
+{
+  "sld_state": "computed",
+  "sld_diagnostics": {
+    "S01": {
+      "errors": [],
+      "seconds": 44.1,
+      "levels": [
+        "L5",
+        "L4",
+        "L3",
+        "L2",
+        "L1"
+      ]
+    },
+    "S02": {
+      "errors": [],
+      "seconds": 44.0,
+      "levels": [
+        "L4",
+        "L3",
+        "L2",
+        "L1"
+      ]
+    },
+    "S03": {
+      "errors": [],
+      "seconds": 47.0,
+      "levels": [
+        "L5",
+        "L4",
+        "L3",
+        "L2",
+        "L1"
+      ]
+    }
+  },
+  "folds_completed": 3,
+  "seconds": 369
+}

@@ -1,0 +1,111 @@
+{
+  "GCZ": {
+    "macro_mae": 2.879,
+    "pass5_case_avg": 86.0,
+    "pass5_pooled_within_class": 86.0,
+    "n_ref": 2165,
+    "n_pred": 742,
+    "pooled_coverage_pct": 34.3,
+    "closest_point_pred_to_ref": 2.873,
+    "closest_point_ref_to_pred": 4.024,
+    "symmetric_nn": 3.448,
+    "ref_within_5mm_pct": 72.1
+  },
+  "GCZ-RL": {
+    "macro_mae": 2.15,
+    "pass5_case_avg": 92.7,
+    "pass5_pooled_within_class": 92.7,
+    "n_ref": 2165,
+    "n_pred": 742,
+    "pooled_coverage_pct": 34.3,
+    "closest_point_pred_to_ref": 2.14,
+    "closest_point_ref_to_pred": 3.297,
+    "symmetric_nn": 2.719,
+    "ref_within_5mm_pct": 78.4
+  },
+  "SLD": {
+    "macro_mae": 2.224,
+    "pass5_case_avg": 90.4,
+    "pass5_pooled_within_class": 90.2,
+    "n_ref": 2165,
+    "n_pred": 938,
+    "pooled_coverage_pct": 43.3,
+    "closest_point_pred_to_ref": 1.787,
+    "closest_point_ref_to_pred": 4.089,
+    "symmetric_nn": 2.938,
+    "ref_within_5mm_pct": 77.6
+  },
+  "vertebrae_improved_GCZRL_vs_GCZ": 13,
+  "ITL_GCZRL_errors_mm": {
+    "Verse005_L4": 0.61,
+    "Verse561_L1": 0.62,
+    "Verse005_L2": 0.64,
+    "Verse581_L4": 0.68,
+    "Verse581_L1": 0.74,
+    "Verse005_L1": 0.88,
+    "Verse581_L5": 1.23,
+    "Verse005_L3": 1.3,
+    "Verse581_L2": 1.32,
+    "Verse581_L3": 2.12,
+    "Verse561_L2": 2.2,
+    "Verse561_L3": 2.32,
+    "Verse005_L5": 4.96,
+    "Verse561_L4": 5.53
+  },
+  "GCZRL_vs_GCZ": {
+    "macro_mae_difference_mm": -0.729,
+    "bootstrap_ci95_mm": [
+      -1.078,
+      -0.381
+    ],
+    "wilcoxon_p": 3.7807163505791815e-06,
+    "cases": 98,
+    "GCZRL_lower": 45,
+    "other_lower": 15,
+    "ties": 38
+  },
+  "GCZRL_vs_SLD": {
+    "macro_mae_difference_mm": -0.074,
+    "bootstrap_ci95_mm": [
+      -0.386,
+      0.228
+    ],
+    "wilcoxon_p": 0.3522732573784626,
+    "cases": 98,
+    "GCZRL_lower": 39,
+    "other_lower": 59,
+    "ties": 0
+  },
+  "mesh_vertices_median": 33445.0,
+  "atlas_residual_mm": {
+    "mean": 1.56,
+    "min": 1.14,
+    "max": 2.16
+  },
+  "atlas_same_level": 7,
+  "zones_inside_pct": 90.0,
+  "zones_inside_pct_by_class": {
+    "ALL": 96.7,
+    "PLL": 83.7,
+    "LF": 87.4,
+    "ISL": 94.5,
+    "SSL": 85.7,
+    "ITL": 92.9,
+    "CL": 88.1
+  },
+  "zones_inside_pct_by_level": {
+    "L1": 87.5,
+    "L2": 96.9,
+    "L3": 95.1,
+    "L4": 89.5,
+    "L5": 76.2
+  },
+  "dev_GCZ_input_to_GCZRL": {
+    "macro_mae": 3.704,
+    "pass5_pooled": 80.8
+  },
+  "dev_GCZRL_vs_its_input": {
+    "cases": 189,
+    "wilcoxon_p": 6.098057130488625e-16
+  }
+}

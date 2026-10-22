@@ -1,0 +1,2 @@
+Available cases in all_mps: ['Verse005', 'Verse581']
+PNG saved → C:\Users\mohse\Desktop\mohsen\dataset\raw\VerSe_Ligaments_GT\figures_white_bg\fig4b_midplane_positions_verse561_verse581.png

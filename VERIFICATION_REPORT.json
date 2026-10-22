@@ -1,0 +1,50 @@
+{
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "P1 Table 4.4 equals the dissertation (all MAE and Pass@5 values)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "P1 GCZ predictions identical to the dissertation predictions",
+      "passed": true,
+      "detail": "259/259 point sets"
+    },
+    {
+      "check": "P1 GCZ-RL predictions identical to the dissertation predictions",
+      "passed": true,
+      "detail": "259/259 point sets"
+    },
+    {
+      "check": "P1 GCZ-RL metrics recomputed from coordinates",
+      "passed": true,
+      "detail": "27 vertebrae, MAE 2.946, Pass@5 88.1"
+    },
+    {
+      "check": "P1 final models are Extra Trees",
+      "passed": true,
+      "detail": "ET-1, ET-2, ET-4"
+    },
+    {
+      "check": "P2 three folds, held-out subject never in training",
+      "passed": true,
+      "detail": "S01: train 9, test 5; S02: train 10, test 4; S03: train 9, test 5"
+    },
+    {
+      "check": "P2 every selected and saved model is ExtraTreesRegressor",
+      "passed": true,
+      "detail": "S01: ['ExtraTreesRegressor']; S02: ['ExtraTreesRegressor']; S03: ['ExtraTreesRegressor']"
+    },
+    {
+      "check": "P2 metrics recomputed from coordinates",
+      "passed": true,
+      "detail": "14 vertebrae, max diff 4.9e-04"
+    },
+    {
+      "check": "P2 leakage test: corrupting held-out annotations leaves predictions unchanged",
+      "passed": true,
+      "detail": "max difference 0.0e+00 mm over 424 points"
+    }
+  ]
+}

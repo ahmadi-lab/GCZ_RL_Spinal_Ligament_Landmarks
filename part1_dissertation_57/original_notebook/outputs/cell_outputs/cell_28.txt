@@ -1,0 +1,25 @@
+STEP 2 — Loading calibration data (20 validated calibration vertebrae) …
+  Verse005_L1  |  113,724 verts  |  187 GT landmark pts total
+  Verse005_L2  |  128,172 verts  |  221 GT landmark pts total
+  Verse005_L3  |  138,624 verts  |  216 GT landmark pts total
+  Verse005_L4  |  144,768 verts  |  192 GT landmark pts total
+  Verse005_L5  |  152,844 verts  |  204 GT landmark pts total
+  Verse561_C3  |  87,792 verts  |  162 GT landmark pts total
+  Verse561_C4  |  84,360 verts  |  156 GT landmark pts total
+  Verse561_C5  |  91,080 verts  |  159 GT landmark pts total
+  Verse561_C6  |  92,544 verts  |  167 GT landmark pts total
+  Verse561_C7  |  99,732 verts  |  161 GT landmark pts total
+  Verse561_T1  |  111,228 verts  |  149 GT landmark pts total
+  Verse561_T2  |  122,232 verts  |  155 GT landmark pts total
+  Verse561_T3  |  116,940 verts  |  162 GT landmark pts total
+  Verse561_T4  |  126,072 verts  |  167 GT landmark pts total
+  Verse561_T5  |  131,268 verts  |  179 GT landmark pts total
+  Verse561_T6  |  131,736 verts  |  168 GT landmark pts total
+  Verse561_T7  |  140,700 verts  |  203 GT landmark pts total
+  Verse561_T8  |  139,992 verts  |  156 GT landmark pts total
+  Verse561_T9  |  151,416 verts  |  138 GT landmark pts total
+  Verse561_T10  |  158,580 verts  |  150 GT landmark pts total
+
+Loaded: 20/20 calibration cases.
+Calibration label audit: PASS — 20/20 calibration cases have all ligament annotations.
+  Figure opened in browser — expert GT landmarks on all loaded calibration vertebrae.

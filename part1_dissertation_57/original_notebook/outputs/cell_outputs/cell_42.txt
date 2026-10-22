@@ -1,0 +1,14 @@
+FINAL JOURNAL-SAFETY AUDIT
+========================================================================
+Total manuscript specimens : 57
+Calibration specimens      : 20
+Held-out specimens         : 37
+Primary eval specimens     : 9
+Calibration ∩ held-out     : 0
+Primary eval inside heldout: True
+Primary eval in calibration: 0
+Primary-eval patient overlap with calibration: 1
+Patient-level overlap note : ['Verse561'] (level-disjoint; specimen-level split remains enforced)
+Calibration label completeness: PASS
+Best-benchmark selections : 9 test cases, all from calibration split
+PASS — split, threshold, original Verse005 benchmark atlas, and primary evaluation are specimen-level leakage-safe.

@@ -1,0 +1,68 @@
+STEP 1 — Dataset Inventory
+======================================================================
+Case                   Split   Mesh    Verts    ALL    PLL     LF    ISL    SSL    ITL     CL
+---------------------------------------------------------------------------------------------
+Verse005_L1            Calib   ✓     113,724     33     20     32     21      1      2     78
+Verse005_L2            Calib   ✓     128,172     36     20     34     36      1      2     92
+Verse005_L3            Calib   ✓     138,624     38     26     32     29      1      2     88
+Verse005_L4            Calib   ✓     144,768     32     20     32     24      1      2     81
+Verse005_L5            Calib   ✓     152,844     35     23     40     22      1      2     81
+Verse561_C3            Calib   ✓      87,792     30     30     29     16      1      2     54
+Verse561_C4            Calib   ✓      84,360     30     30     28     16      1      2     49
+Verse561_C5            Calib   ✓      91,080     30     30     28     16      1      2     52
+Verse561_C6            Calib   ✓      92,544     30     30     28     16      1      2     60
+Verse561_C7            Calib   ✓      99,732     30     30     28     16      1      2     54
+Verse561_T1            Calib   ✓     111,228     30     20     28     16      1      2     52
+Verse561_T2            Calib   ✓     122,232     30     20     28     16      1      2     58
+Verse561_T3            Calib   ✓     116,940     30     20     23     16      1      2     70
+Verse561_T4            Calib   ✓     126,072     29     20     18     34      1      2     63
+Verse561_T5            Calib   ✓     131,268     35     17     23     39      1      2     62
+Verse561_T6            Calib   ✓     131,736     31     19     21     24      1      2     70
+Verse561_T7            Calib   ✓     140,700     37     26     28     33      1      2     76
+Verse561_T8            Calib   ✓     139,992     25     19     22     23      1      2     64
+Verse561_T9            Calib   ✓     151,416     25     16     17     23      1      2     54
+Verse561_T10           Calib   ✓     158,580     25     17     19     22      1      2     64
+Bc11701_C3             Held-out ✓      78,456      –      –      –      –      –      –      –
+Bc11701_C4             Held-out ✓      77,844      –      –      –      –      –      –      –
+Bc11701_C5             Held-out ✓      81,816      –      –      –      –      –      –      –
+Bc11701_C6             Held-out ✓      85,908      –      –      –      –      –      –      –
+Bc11701_C7             Held-out ✓      97,152      –      –      –      –      –      –      –
+Bc11702_C3             Held-out ✓      44,760      –      –      –      –      –      –      –
+Bc11702_C4             Held-out ✓      46,224      –      –      –      –      –      –      –
+Bc11702_C5             Held-out ✓      51,600      –      –      –      –      –      –      –
+Bc11702_C6             Held-out ✓      55,644      –      –      –      –      –      –      –
+Bc11702_C7             Held-out ✓      66,456      –      –      –      –      –      –      –
+Verse561_T11           Held-out ✓     166,116     22     17     19     21      1      2     49
+Verse561_T12           Held-out ✓     193,632     24     16     18     26      1      2     56
+Verse561_L1            Held-out ✓     228,300     23     14     17     25      1      2     51
+Verse561_L2            Held-out ✓     251,316     22     14     16     28      1      2     59
+Verse561_L3            Held-out ✓     250,488     23     14     16     27      1      2     50
+Verse561_L4            Held-out ✓     249,408     25     16     32     25      1      2     55
+Verse581_C3            Held-out ✓      86,736     12     13     14     16      1      2     37
+Verse581_C4            Held-out ✓      83,256     13     13     16     18      1      2     41
+Verse581_C5            Held-out ✓      90,972     14     12     17     15      1      2     35
+Verse581_C6            Held-out ✓     102,228     15     12     16     19      1      2     37
+Verse581_C7            Held-out ✓     125,040     19     14     16     19      1      2     38
+Verse581_T1            Held-out ✓     118,764     16     13     14     19      1      2     36
+Verse581_T2            Held-out ✓     113,952     18     14     20     20      1      2     35
+Verse581_T3            Held-out ✓     112,140     18     14     20     18      1      2     34
+Verse581_T4            Held-out ✓     115,692     18     12     19     22      1      2     38
+Verse581_T5            Held-out ✓     114,552     21     13     19     19      1      2     36
+Verse581_T6            Held-out ✓     118,344     21     14     22     20      1      2     40
+Verse581_T7            Held-out ✓     122,544     20     13     15     19      1      2     37
+Verse581_T8            Held-out ✓     130,608     19     14     22     18      1      2     42
+Verse581_T9            Held-out ✓     137,628     20     14     17     20      1      2     45
+Verse581_T10           Held-out ✓     147,396     22     17     22     18      1      2     50
+Verse581_T11           Held-out ✓     150,264     20     13     22     17      1      2     39
+Verse581_L1            Held-out ✓     167,820     20     15     19     17      1      2     39
+Verse581_L2            Held-out ✓     190,212     21     15     18     18      1      2     41
+Verse581_L3            Held-out ✓     217,212     19     14     22     18      1      2     42
+Verse581_L4            Held-out ✓     220,164     20     14     21     20      1      2     41
+Verse581_L5            Held-out ✓     211,128     21     14     18     20      1      2     39
+---------------------------------------------------------------------------------------------
+  Total: 57/57 cases with mesh loaded
+  Calibration: 20 cases
+  Held-out:    37 cases
+
+  Column = GT control points per ligament (– = not annotated)
+  SSL has a single file (no I/S split); ITL/CL are bilateral (L+R).

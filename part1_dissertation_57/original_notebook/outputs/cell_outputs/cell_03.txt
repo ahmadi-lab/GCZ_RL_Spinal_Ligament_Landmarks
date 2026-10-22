@@ -1,0 +1,10 @@
+  Verse005: ['L1', 'L2', 'L3', 'L4', 'L5']
+  Verse581: ['L1', 'L2', 'L3', 'L4', 'L5']
+
+Detected GT ligament folders:
+  Verse005: ['L1', 'L2', 'L3', 'L4', 'L5']
+  Verse581: ['L1', 'L2', 'L3', 'L4', 'L5']
+WARNING: Output folder not found for Verse005: C:\Users\mohse\Desktop\mohsen\part1_dissertation_57\original_notebook\outputs\mesh_based_output_verse005
+WARNING: Output folder not found for Verse581: C:\Users\mohse\Desktop\mohsen\part1_dissertation_57\original_notebook\outputs\mesh_based_output_verse581
+
+All available display data loaded.

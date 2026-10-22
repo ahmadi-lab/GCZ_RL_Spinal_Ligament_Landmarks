@@ -1,0 +1,15 @@
+Table 1 — Dataset organization and evaluation use
+                          Subset / item  No.                                                                                           Use
+            Curated annotated vertebrae   57                              Available annotated vertebral specimens from VerSe_Ligaments_GT.
+                  Calibration specimens   20           Used only for threshold estimation and ICP-derived benchmark/template construction.
+                     Held-out partition   37        Reserved for testing, visualization, and final evaluation; never used for calibration.
+Primary complete-landmark lumbar subset    9 Verse561 L1–L4 and Verse581 L1–L5; used for the reported landmark-level quantitative metrics.
+
+Representative visualization cases kept in the notebook:
+  Display Patient A: Verse005 L1–L5
+  Display Patient B: Verse581 L1–L5
+
+No-leakage status:
+  Calibration cases: 20
+  Held-out cases   : 37
+  Overlap          : 0

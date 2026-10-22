@@ -1,0 +1,36 @@
+  Benchmark atlas : Verse005 L1-L5 (5 labeled lumbar vertebrae)
+  Threshold calib. : 20 labeled calibration specimens are handled in the threshold cell
+  Leakage check    : PASS — Verse005 benchmark atlas is not in the held-out test set
+
+STEP 4 — Building original Verse005 lumbar reference template
+==============================================================
+  Reference bone : Verse005_L3  (138,624 vertices)
+  Template points: 10 per ligament area (Farthest-Point Sampling)
+
+  ICP alignment results (Verse005 atlas bones → reference):
+  Case             Before (mm)    After (mm)    Improvement
+  ────────────────────────────────────────────────────────
+  Verse005_L1                 44.78         1.261          97.2%
+  Verse005_L2                 17.27         0.927          94.6%
+  Verse005_L4                 16.18         1.166          92.8%
+  Verse005_L5                 40.24         3.003          92.5%
+
+  Building FPS template (10 pts/lig from pooled calibration GT):
+  Lig     Pooled   → FPS   Coverage (mm)
+  ──────────────────────────────────────
+  ALL        174      10          15.17 mm
+  PLL        109      10           8.62 mm
+  LF         170      10          13.07 mm
+  ISL        132      10          10.63 mm
+  SSL          5       5           3.71 mm
+  ITL         10      10           7.05 mm
+  CL         420      10          18.06 mm
+
+  Template surface-snapped — all template points lie exactly on reference bone.
+
+  [Fig A] ICP before/after opened in browser.
+  [Fig B] Template landmark visualisation …
+  [Fig B] Template figure opened in browser.
+
+  Template ready (surface-snapped).  Each ligament: 10 representative
+  points on the reference bone.  Proceed to Step 5.

@@ -1,0 +1,4 @@
+split,vertebrae,with_expert_annotations,annotations_used_in_evaluation,subjects
+Calibration,20,20,20,"S01, S02"
+Held-out test,37,37,27,"S02, S03, S04, S05"
+Total,57,57,47,S01-S05
