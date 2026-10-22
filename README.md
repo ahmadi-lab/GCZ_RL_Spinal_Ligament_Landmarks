@@ -4,7 +4,7 @@ Code, trained models, predictions, and reproducibility scripts for the manuscrip
 
 > M. Ahmadi, M. Lin, Y. Tang, F. D. Vrionis. *GCZ-RL: Geometry-Calibrated Residual Learning for
 > Spinal Ligament Landmark Localization on Vertebral Surface Meshes.*
-> Submitted to *Medical Image Analysis* (2026).
+> 2026.
 
 GCZ-RL localizes sparse ligament attachment landmarks (ALL, PLL, LF, ISL, SSL, ITL, CL) on
 vertebral surface meshes. It works in three steps:

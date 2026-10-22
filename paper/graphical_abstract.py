@@ -1,4 +1,4 @@
-"""Graphical abstract (MedIA: >= 1328 px wide, readable at 13 cm).
+"""Graphical abstract (journal requirement: >= 1328 px wide, readable at 13 cm).
 
 Panel A: calibrated candidate regions on held-out vertebra S03 L4 (zones from S01 + S02).
 Panel B: GCZ landmarks and their GCZ-RL corrections on the same vertebra.

@@ -1,6 +1,6 @@
 # Paper item → script → output
 
-Numbering follows the Medical Image Analysis manuscript. Abbreviations: `P1` =
+Numbering follows the journal manuscript. Abbreviations: `P1` =
 `part1_dissertation_57`, `P2` = `part2_patient_loso_14`, `NB` =
 `P1/original_notebook` (the original analysis notebook, executed unchanged by
 `run_original_notebook.py`).

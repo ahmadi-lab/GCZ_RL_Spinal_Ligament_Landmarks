@@ -1,6 +1,6 @@
 # Code ↔ manuscript audit (October 2026)
 
-This audit was run before the *Medical Image Analysis* submission. Every number, equation, and
+This audit was run before the journal submission. Every number, equation, and
 method statement of the manuscript was compared with the code and the saved outputs of this
 repository. The table numbers below refer to the revised manuscript.
 
