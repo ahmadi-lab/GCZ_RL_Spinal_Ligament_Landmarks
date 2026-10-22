@@ -35,7 +35,6 @@ nested inside the training subjects.
 - **GCZ-RL vs GCZ.** Difference −0.729 mm, 95% vertebra-level bootstrap CI −1.078 to −0.381;
   Wilcoxon p < 0.001. Every held-out subject improved.
 - **GCZ-RL vs SLD.** Difference −0.074 mm, CI −0.386 to 0.228; p = 0.35, not significant.
-- **Data leakage.** A test with corrupted held-out labels left all 424 predictions unchanged.
 
 MAE is the mean Euclidean distance after one-to-one Hungarian matching. Pass@5 is averaged
 over vertebra–class cases.
