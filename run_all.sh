@@ -23,5 +23,6 @@ fi
 "$PY" code/verify_all.py
 "$PY" paper/make_paper_numbers.py
 "$PY" paper/fig6_qualitative_loso.py
+"$PY" paper/check_fig6.py
 "$PY" paper/graphical_abstract.py
 echo DONE

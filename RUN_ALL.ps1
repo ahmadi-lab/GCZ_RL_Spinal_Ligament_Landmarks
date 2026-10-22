@@ -63,6 +63,7 @@ if ($Part -eq 'all') {
     Run 'Verification' @('code\verify_all.py')
     Run 'Paper numbers' @('paper\make_paper_numbers.py')
     Run 'Figure 6' @('paper\fig6_qualitative_loso.py')
+    Run 'Figure 6 check' @('paper\check_fig6.py')
     Run 'Graphical abstract' @('paper\graphical_abstract.py')
 }
 Say 'DONE'

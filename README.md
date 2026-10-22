@@ -92,6 +92,7 @@ python code/verify_all.py                          # independent checks -> VERIF
 python paper/make_paper_numbers.py                 # statistics, Supplementary S2-S4; checks every quoted value
 python paper/table3_regressor_comparison.py        # Table 3 and Supplementary Table S6 (about 25 min)
 python paper/fig6_qualitative_loso.py              # Fig. 6
+python paper/check_fig6.py                         # Fig. 6 points = saved predictions; caption numbers
 python paper/graphical_abstract.py                 # graphical abstract
 ```
 

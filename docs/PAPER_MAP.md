@@ -18,6 +18,7 @@ Numbering follows the Medical Image Analysis manuscript. Abbreviations: `P1` =
 | Fig. 1, 3–5 | Method schematics | — (drawn) | manuscript source `figs/` |
 | Fig. 2 | Preprocessing; panel D midplane positions | `NB` cells 21–24 | figure only |
 | Fig. 6 | Qualitative, three orthogonal views | `paper/fig6_qualitative_loso.py` | `paper/outputs/fig6_qualitative_loso_S03_L4.png` |
+| Fig. 6 caption | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
 | Fig. 7 | Development analysis chart | values of Table 6 | `P1/outputs/figure_4_10_heldout_results.png` (same data) |
 | Graphical abstract | — | `paper/graphical_abstract.py` | `paper/outputs/graphical_abstract.{png,pdf}` |
 
