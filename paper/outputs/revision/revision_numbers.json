@@ -1,0 +1,535 @@
+{
+  "atlas": {
+    "same_level": 7,
+    "cross_level": 7,
+    "same_level_GCZ_mm": 3.073,
+    "cross_level_GCZ_mm": 2.686,
+    "same_level_GCZRL_mm": 2.203,
+    "cross_level_GCZRL_mm": 2.098,
+    "spearman_residual_vs_GCZ": [
+      0.244,
+      0.401
+    ],
+    "spearman_residual_vs_GCZRL": [
+      0.253,
+      0.383
+    ],
+    "changed_in_second_env": [
+      "S01_L3",
+      "S02_L3"
+    ],
+    "GCZRL_improved_over_GCZ_vertebrae": 13
+  },
+  "compactness": {
+    "by_class": [
+      {
+        "ligament": "ALL",
+        "vertebrae": 14,
+        "n_ref": 368,
+        "inside_selection_pct": 96.7,
+        "inside_projection_pct": 96.7,
+        "projection_vertices_median": 6041.0,
+        "projection_vertex_fraction_pct": "18.7 (17.6-20.6)",
+        "projection_area_fraction_pct": "20.3 (19.5-21.5)",
+        "projection_area_fraction_median": 20.3,
+        "projection_area_fraction_by_subject": {
+          "S01": 21.9,
+          "S02": 20.6,
+          "S03": 18.2
+        },
+        "selection_area_fraction_median": 20.3
+      },
+      {
+        "ligament": "PLL",
+        "vertebrae": 14,
+        "n_ref": 239,
+        "inside_selection_pct": 83.7,
+        "inside_projection_pct": 83.7,
+        "projection_vertices_median": 2891.0,
+        "projection_vertex_fraction_pct": "8.8 (8.0-9.3)",
+        "projection_area_fraction_pct": "9.7 (8.9-11.5)",
+        "projection_area_fraction_median": 9.7,
+        "projection_area_fraction_by_subject": {
+          "S01": 9.6,
+          "S02": 11.3,
+          "S03": 8.4
+        },
+        "selection_area_fraction_median": 9.7
+      },
+      {
+        "ligament": "LF",
+        "vertebrae": 14,
+        "n_ref": 349,
+        "inside_selection_pct": 87.4,
+        "inside_projection_pct": 87.4,
+        "projection_vertices_median": 5254.5,
+        "projection_vertex_fraction_pct": "18.4 (16.3-19.4)",
+        "projection_area_fraction_pct": "17.7 (16.4-18.3)",
+        "projection_area_fraction_median": 17.7,
+        "projection_area_fraction_by_subject": {
+          "S01": 19.0,
+          "S02": 17.8,
+          "S03": 16.4
+        },
+        "selection_area_fraction_median": 17.7
+      },
+      {
+        "ligament": "ISL",
+        "vertebrae": 14,
+        "n_ref": 330,
+        "inside_selection_pct": 94.5,
+        "inside_projection_pct": 94.5,
+        "projection_vertices_median": 2764.0,
+        "projection_vertex_fraction_pct": "8.5 (7.4-9.8)",
+        "projection_area_fraction_pct": "8.1 (7.1-8.4)",
+        "projection_area_fraction_median": 8.1,
+        "projection_area_fraction_by_subject": {
+          "S01": 8.2,
+          "S02": 7.6,
+          "S03": 8.4
+        },
+        "selection_area_fraction_median": 8.1
+      },
+      {
+        "ligament": "SSL",
+        "vertebrae": 14,
+        "n_ref": 14,
+        "inside_selection_pct": 85.7,
+        "inside_projection_pct": 85.7,
+        "projection_vertices_median": 124.5,
+        "projection_vertex_fraction_pct": "0.3 (0.3-0.4)",
+        "projection_area_fraction_pct": "0.4 (0.3-0.5)",
+        "projection_area_fraction_median": 0.4,
+        "projection_area_fraction_by_subject": {
+          "S01": 0.3,
+          "S02": 0.4,
+          "S03": 0.5
+        },
+        "selection_area_fraction_median": 0.4
+      },
+      {
+        "ligament": "ITL",
+        "vertebrae": 14,
+        "n_ref": 28,
+        "inside_selection_pct": 92.9,
+        "inside_projection_pct": 92.9,
+        "projection_vertices_median": 34.5,
+        "projection_vertex_fraction_pct": "0.1 (0.1-0.1)",
+        "projection_area_fraction_pct": "0.1 (0.1-0.1)",
+        "projection_area_fraction_median": 0.1,
+        "projection_area_fraction_by_subject": {
+          "S01": 0.1,
+          "S02": 0.1,
+          "S03": 0.1
+        },
+        "selection_area_fraction_median": 40.0
+      },
+      {
+        "ligament": "CL",
+        "vertebrae": 14,
+        "n_ref": 837,
+        "inside_selection_pct": 88.1,
+        "inside_projection_pct": 88.1,
+        "projection_vertices_median": 8467.5,
+        "projection_vertex_fraction_pct": "27.9 (24.0-30.8)",
+        "projection_area_fraction_pct": "26.9 (22.8-28.1)",
+        "projection_area_fraction_median": 26.9,
+        "projection_area_fraction_by_subject": {
+          "S01": 24.2,
+          "S02": 28.7,
+          "S03": 26.7
+        },
+        "selection_area_fraction_median": 26.9
+      }
+    ],
+    "inside_selection_pct_all": 90.0,
+    "inside_projection_pct_all": 90.0,
+    "mesh_vertices_median": 33445.0,
+    "mesh_area_median_mm2": 13799.0,
+    "area_fraction_median_all_cases": 10.1
+  },
+  "ablation_complete_vs_saved_max_dev_mm": 5.684341886080802e-14,
+  "ablation": [
+    {
+      "configuration": "GCZ",
+      "macro_mae_mm": 2.879,
+      "pass5_case_avg_pct": 86.0,
+      "ref_to_pred_mm": 4.024,
+      "pred_to_ref_mm": 2.873,
+      "ref_within_5mm_pct": 72.1,
+      "MAE_ALL": 2.605,
+      "MAE_PLL": 1.863,
+      "MAE_LF": 1.918,
+      "MAE_ISL": 2.291,
+      "MAE_SSL": 2.917,
+      "MAE_ITL": 6.262,
+      "MAE_CL": 2.302,
+      "admissible_vertex_pct": 97.2,
+      "mean_distance_to_surface_mm": 0.0
+    },
+    {
+      "configuration": "GCZ + projection only (no residual)",
+      "macro_mae_mm": 2.31,
+      "pass5_case_avg_pct": 91.6,
+      "ref_to_pred_mm": 3.455,
+      "pred_to_ref_mm": 2.304,
+      "ref_within_5mm_pct": 77.7,
+      "MAE_ALL": 2.605,
+      "MAE_PLL": 1.863,
+      "MAE_LF": 1.918,
+      "MAE_ISL": 2.291,
+      "MAE_SSL": 2.917,
+      "MAE_ITL": 2.279,
+      "MAE_CL": 2.302,
+      "admissible_vertex_pct": 99.7,
+      "mean_distance_to_surface_mm": 0.0,
+      "wilcoxon_p_vs_GCZ": 0.0033456181158508813
+    },
+    {
+      "configuration": "GCZ + raw residual",
+      "macro_mae_mm": 2.698,
+      "pass5_case_avg_pct": 90.2,
+      "ref_to_pred_mm": 3.83,
+      "pred_to_ref_mm": 2.684,
+      "ref_within_5mm_pct": 75.7,
+      "MAE_ALL": 2.375,
+      "MAE_PLL": 1.694,
+      "MAE_LF": 1.943,
+      "MAE_ISL": 2.411,
+      "MAE_SSL": 2.871,
+      "MAE_ITL": 5.222,
+      "MAE_CL": 2.369,
+      "admissible_vertex_pct": 0.0,
+      "mean_distance_to_surface_mm": 0.567,
+      "wilcoxon_p_vs_GCZ": 0.42630350323819566
+    },
+    {
+      "configuration": "GCZ + bounded residual",
+      "macro_mae_mm": 2.698,
+      "pass5_case_avg_pct": 90.2,
+      "ref_to_pred_mm": 3.83,
+      "pred_to_ref_mm": 2.684,
+      "ref_within_5mm_pct": 75.7,
+      "MAE_ALL": 2.375,
+      "MAE_PLL": 1.694,
+      "MAE_LF": 1.943,
+      "MAE_ISL": 2.411,
+      "MAE_SSL": 2.871,
+      "MAE_ITL": 5.222,
+      "MAE_CL": 2.369,
+      "admissible_vertex_pct": 0.0,
+      "mean_distance_to_surface_mm": 0.567,
+      "wilcoxon_p_vs_GCZ": 0.42630350323819566
+    },
+    {
+      "configuration": "GCZ + bounded residual + projection",
+      "macro_mae_mm": 2.132,
+      "pass5_case_avg_pct": 94.3,
+      "ref_to_pred_mm": 3.296,
+      "pred_to_ref_mm": 2.116,
+      "ref_within_5mm_pct": 80.0,
+      "MAE_ALL": 2.165,
+      "MAE_PLL": 1.6,
+      "MAE_LF": 1.82,
+      "MAE_ISL": 2.238,
+      "MAE_SSL": 2.726,
+      "MAE_ITL": 2.15,
+      "MAE_CL": 2.227,
+      "admissible_vertex_pct": 99.7,
+      "mean_distance_to_surface_mm": 0.0,
+      "wilcoxon_p_vs_GCZ": 1.8195470203352506e-05
+    },
+    {
+      "configuration": "GCZ-RL (complete)",
+      "macro_mae_mm": 2.15,
+      "pass5_case_avg_pct": 92.7,
+      "ref_to_pred_mm": 3.297,
+      "pred_to_ref_mm": 2.14,
+      "ref_within_5mm_pct": 78.4,
+      "MAE_ALL": 2.382,
+      "MAE_PLL": 1.863,
+      "MAE_LF": 1.912,
+      "MAE_ISL": 2.226,
+      "MAE_SSL": 2.692,
+      "MAE_ITL": 1.796,
+      "MAE_CL": 2.18,
+      "admissible_vertex_pct": 99.7,
+      "mean_distance_to_surface_mm": 0.0,
+      "wilcoxon_p_vs_GCZ": 3.7807163505791815e-06
+    }
+  ],
+  "interpretability": {
+    "points": 742,
+    "by_class": [
+      {
+        "ligament": "ALL",
+        "points": 140,
+        "true_residual_mean_mm": 2.6,
+        "pred_clipped_mean_mm": 1.43,
+        "median_cosine": 0.28,
+        "pct_cosine_positive": 72.9,
+        "pct_closer_after_clipped": 47.9
+      },
+      {
+        "ligament": "PLL",
+        "points": 140,
+        "true_residual_mean_mm": 1.86,
+        "pred_clipped_mean_mm": 0.91,
+        "median_cosine": 0.54,
+        "pct_cosine_positive": 67.1,
+        "pct_closer_after_clipped": 61.4
+      },
+      {
+        "ligament": "LF",
+        "points": 140,
+        "true_residual_mean_mm": 1.92,
+        "pred_clipped_mean_mm": 0.91,
+        "median_cosine": 0.33,
+        "pct_cosine_positive": 66.4,
+        "pct_closer_after_clipped": 53.6
+      },
+      {
+        "ligament": "ISL",
+        "points": 140,
+        "true_residual_mean_mm": 2.29,
+        "pred_clipped_mean_mm": 1.11,
+        "median_cosine": 0.26,
+        "pct_cosine_positive": 63.6,
+        "pct_closer_after_clipped": 45.7
+      },
+      {
+        "ligament": "SSL",
+        "points": 14,
+        "true_residual_mean_mm": 2.92,
+        "pred_clipped_mean_mm": 2.59,
+        "median_cosine": 0.75,
+        "pct_cosine_positive": 85.7,
+        "pct_closer_after_clipped": 42.9
+      },
+      {
+        "ligament": "ITL",
+        "points": 28,
+        "true_residual_mean_mm": 6.26,
+        "pred_clipped_mean_mm": 3.78,
+        "median_cosine": 0.47,
+        "pct_cosine_positive": 82.1,
+        "pct_closer_after_clipped": 53.6
+      },
+      {
+        "ligament": "CL",
+        "points": 140,
+        "true_residual_mean_mm": 2.3,
+        "pred_clipped_mean_mm": 1.17,
+        "median_cosine": 0.24,
+        "pct_cosine_positive": 60.7,
+        "pct_closer_after_clipped": 48.6
+      }
+    ],
+    "pct_cosine_positive_all": 67.1,
+    "pct_closer_after_clipped_all": 51.3,
+    "permutation_increase_mm": {
+      "Normalized position": {
+        "mean": 0.189,
+        "min": 0.11,
+        "max": 0.332
+      },
+      "Candidate-region relation": {
+        "mean": 0.168,
+        "min": 0.044,
+        "max": 0.247
+      },
+      "Anatomical context (level, class)": {
+        "mean": 0.2,
+        "min": 0.038,
+        "max": 0.378
+      },
+      "Local surface geometry": {
+        "mean": 0.117,
+        "min": 0.089,
+        "max": 0.147
+      },
+      "Offset from class prior": {
+        "mean": 0.066,
+        "min": 0.048,
+        "max": 0.098
+      }
+    },
+    "permutation_baseline_error_mm": {
+      "S01": 2.367,
+      "S02": 2.202,
+      "S03": 2.501
+    },
+    "impurity_group_share": {
+      "Normalized position": 0.255,
+      "Candidate-region relation": 0.377,
+      "Anatomical context (level, class)": 0.077,
+      "Local surface geometry": 0.098,
+      "Offset from class prior": 0.193
+    },
+    "impurity_top10": [
+      {
+        "feature": "position in y_n band",
+        "importance": 0.119
+      },
+      {
+        "feature": "direction to prior y",
+        "importance": 0.08
+      },
+      {
+        "feature": "x_n",
+        "importance": 0.059
+      },
+      {
+        "feature": "signed lateral position",
+        "importance": 0.057
+      },
+      {
+        "feature": "direction to prior x",
+        "importance": 0.057
+      },
+      {
+        "feature": "distance to region box boundary",
+        "importance": 0.051
+      },
+      {
+        "feature": "vertebral level",
+        "importance": 0.034
+      },
+      {
+        "feature": "|x_n-0.5|",
+        "importance": 0.034
+      },
+      {
+        "feature": "z_n",
+        "importance": 0.033
+      },
+      {
+        "feature": "z_n (repeat)",
+        "importance": 0.033
+      }
+    ]
+  },
+  "no_side_constraint": {
+    "macro_mae_mm": 3.076,
+    "pass5_case_avg_pct": 92.7,
+    "ref_to_pred_mm": 4.223,
+    "pred_to_ref_mm": 2.056,
+    "ref_within_5mm_pct": 78.4,
+    "MAE_ALL": 2.382,
+    "MAE_PLL": 1.863,
+    "MAE_LF": 1.912,
+    "MAE_ISL": 2.226,
+    "MAE_SSL": 2.692,
+    "MAE_ITL": 8.279,
+    "MAE_CL": 2.18,
+    "ITL_cases_both_points_one_side": 2,
+    "selection": {
+      "S01": {
+        "ALL": [
+          "ET-4",
+          0.55
+        ],
+        "PLL": [
+          "ET-1",
+          0.0
+        ],
+        "LF": [
+          "ET-1",
+          0.0
+        ],
+        "ISL": [
+          "ET-3",
+          0.7
+        ],
+        "SSL": [
+          "ET-1",
+          0.25
+        ],
+        "ITL": [
+          "ET-2",
+          1.2
+        ],
+        "CL": [
+          "ET-2",
+          0.25
+        ]
+      },
+      "S02": {
+        "ALL": [
+          "ET-3",
+          0.25
+        ],
+        "PLL": [
+          "ET-1",
+          0.0
+        ],
+        "LF": [
+          "ET-1",
+          0.4
+        ],
+        "ISL": [
+          "ET-2",
+          0.7
+        ],
+        "SSL": [
+          "ET-2",
+          0.4
+        ],
+        "ITL": [
+          "ET-1",
+          1.1
+        ],
+        "CL": [
+          "ET-1",
+          0.0
+        ]
+      },
+      "S03": {
+        "ALL": [
+          "ET-1",
+          0.0
+        ],
+        "PLL": [
+          "ET-1",
+          0.0
+        ],
+        "LF": [
+          "ET-1",
+          0.0
+        ],
+        "ISL": [
+          "ET-4",
+          0.85
+        ],
+        "SSL": [
+          "ET-1",
+          0.25
+        ],
+        "ITL": [
+          "ET-4",
+          1.2
+        ],
+        "CL": [
+          "ET-1",
+          1.2
+        ]
+      }
+    }
+  },
+  "ablation_clipped_points": {
+    "clipped": 0,
+    "points": 742
+  },
+  "GCZRL_vs_projection_only": {
+    "difference_mm": -0.16,
+    "bootstrap_ci95_mm": [
+      -0.234,
+      -0.085
+    ],
+    "wilcoxon_p": 9.674500317584873e-06,
+    "cases": 98,
+    "lower": 45,
+    "higher": 15,
+    "ties": 38
+  }
+}

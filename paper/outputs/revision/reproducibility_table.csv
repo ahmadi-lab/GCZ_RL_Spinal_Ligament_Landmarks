@@ -1,0 +1,67 @@
+claim,reported,reproduced,level,artifact,abs_difference,status
+Primary cohort: vertebrae,14.0,14.0,B,fold_details.json,0.0,verified
+Primary cohort: subjects,3.0,3.0,B,fold_details.json,0.0,verified
+GCZ macro MAE (mm),2.879,2.879,B,table_P2_2_overall.csv,0.0,verified
+GCZ-RL macro MAE (mm),2.15,2.15,B,table_P2_2_overall.csv,0.0,verified
+SLD macro MAE (mm),2.224,2.224,B,table_P2_2_overall.csv,0.0,verified
+GCZ to GCZ-RL error reduction (%),25.3,25.3,B,table_P2_2_overall.csv,0.0,verified
+GCZ Pass@5 (%),86.0,86.0,A,paper_numbers.json,0.0,verified
+GCZ-RL Pass@5 (%),92.7,92.7,A,paper_numbers.json,0.0,verified
+SLD Pass@5 (%),90.4,90.4,A,paper_numbers.json,0.0,verified
+GCZ reference points within 5 mm (%),72.1,72.1,A,paper_numbers.json,0.0,verified
+GCZ-RL reference points within 5 mm (%),78.4,78.4,A,paper_numbers.json,0.0,verified
+SLD reference points within 5 mm (%),77.6,77.6,A,paper_numbers.json,0.0,verified
+GCZ-RL R-to-P closest point (mm),3.297,3.297,A,paper_numbers.json,0.0,verified
+SLD R-to-P closest point (mm),4.089,4.089,A,paper_numbers.json,0.0,verified
+GCZ R-to-P closest point (mm),4.024,4.024,A,paper_numbers.json,0.0,verified
+SLD P-to-R closest point (mm),1.787,1.787,A,paper_numbers.json,0.0,verified
+GCZ-RL P-to-R closest point (mm),2.14,2.14,A,paper_numbers.json,0.0,verified
+Reference landmarks inside candidate regions (%),90.0,90.0,A,paper_numbers.json,0.0,verified
+GCZ-RL minus GCZ (mm),-0.729,-0.729,A,paper_numbers.json,0.0,verified
+"  95% bootstrap CI, lower (mm)",-1.078,-1.078,A,paper_numbers.json,0.0,verified
+"  95% bootstrap CI, upper (mm)",-0.381,-0.381,A,paper_numbers.json,0.0,verified
+  Wilcoxon p (reported as < 0.001),0.001,3.7807163505791815e-06,A,paper_numbers.json,0.0,verified
+GCZ-RL minus SLD (mm),-0.074,-0.074,A,paper_numbers.json,0.0,verified
+  Wilcoxon p,0.35,0.35,A,paper_numbers.json,0.0,verified
+Vertebrae improved by GCZ-RL over GCZ,13.0,13.0,A,paper_numbers.json,0.0,verified
+S01: GCZ macro MAE (mm),3.784,3.784,B,table_P2_4_per_subject.csv,0.0,verified
+S01: GCZ-RL macro MAE (mm),2.315,2.315,B,table_P2_4_per_subject.csv,0.0,verified
+S01: reduction (%),38.8,38.8,B,per_vertebra_per_ligament_metrics.csv,0.0,verified
+S02: GCZ macro MAE (mm),2.208,2.208,B,table_P2_4_per_subject.csv,0.0,verified
+S02: GCZ-RL macro MAE (mm),1.986,1.986,B,table_P2_4_per_subject.csv,0.0,verified
+S02: reduction (%),10.1,10.0,B,per_vertebra_per_ligament_metrics.csv,0.1,corrected to 10.0 (rounding)
+S03: GCZ macro MAE (mm),2.512,2.512,B,table_P2_4_per_subject.csv,0.0,verified
+S03: GCZ-RL macro MAE (mm),2.117,2.117,B,table_P2_4_per_subject.csv,0.0,verified
+S03: reduction (%),15.7,15.7,B,per_vertebra_per_ligament_metrics.csv,0.0,verified
+ALL: GCZ MAE (mm),2.605,2.605,B,table_P2_3_per_ligament.csv,0.0,verified
+ALL: SLD MAE (mm),1.658,1.658,B,table_P2_3_per_ligament.csv,0.0,verified
+ALL: GCZ-RL MAE (mm),2.382,2.382,B,table_P2_3_per_ligament.csv,0.0,verified
+PLL: GCZ MAE (mm),1.863,1.863,B,table_P2_3_per_ligament.csv,0.0,verified
+PLL: SLD MAE (mm),2.445,2.445,B,table_P2_3_per_ligament.csv,0.0,verified
+PLL: GCZ-RL MAE (mm),1.863,1.863,B,table_P2_3_per_ligament.csv,0.0,verified
+LF: GCZ MAE (mm),1.918,1.918,B,table_P2_3_per_ligament.csv,0.0,verified
+LF: SLD MAE (mm),4.997,4.997,B,table_P2_3_per_ligament.csv,0.0,verified
+LF: GCZ-RL MAE (mm),1.912,1.912,B,table_P2_3_per_ligament.csv,0.0,verified
+ISL: GCZ MAE (mm),2.291,2.291,B,table_P2_3_per_ligament.csv,0.0,verified
+ISL: SLD MAE (mm),2.039,2.039,B,table_P2_3_per_ligament.csv,0.0,verified
+ISL: GCZ-RL MAE (mm),2.226,2.226,B,table_P2_3_per_ligament.csv,0.0,verified
+SSL: GCZ MAE (mm),2.917,2.917,B,table_P2_3_per_ligament.csv,0.0,verified
+SSL: SLD MAE (mm),1.968,1.968,B,table_P2_3_per_ligament.csv,0.0,verified
+SSL: GCZ-RL MAE (mm),2.692,2.692,B,table_P2_3_per_ligament.csv,0.0,verified
+ITL: GCZ MAE (mm),6.262,6.262,B,table_P2_3_per_ligament.csv,0.0,verified
+ITL: SLD MAE (mm),0.873,0.873,B,table_P2_3_per_ligament.csv,0.0,verified
+ITL: GCZ-RL MAE (mm),1.796,1.796,B,table_P2_3_per_ligament.csv,0.0,verified
+CL: GCZ MAE (mm),2.302,2.302,B,table_P2_3_per_ligament.csv,0.0,verified
+CL: SLD MAE (mm),1.591,1.591,B,table_P2_3_per_ligament.csv,0.0,verified
+CL: GCZ-RL MAE (mm),2.18,2.18,B,table_P2_3_per_ligament.csv,0.0,verified
+Leakage test: max coordinate difference (mm),0.0,0.0,C,table_P2_5_leakage_test.json,0.0,verified
+Leakage test: points compared,424.0,424.0,C,table_P2_5_leakage_test.json,0.0,verified
+Development: GCZ macro MAE (mm),3.708,3.708,B,table_4_4_heldout_results.csv,0.0,verified
+Development: GCZ Pass@5 (%),79.8,79.8,B,table_4_4_heldout_results.csv,0.0,verified
+Development: GCZ-RL macro MAE (mm),2.946,2.946,B,table_4_4_heldout_results.csv,0.0,verified
+Development: GCZ-RL Pass@5 (%),88.1,88.1,B,table_4_4_heldout_results.csv,0.0,verified
+Calibration comparison: Extra trees mean MAE (mm),2.037,2.037,B,table3_rows_fixed_ctx.csv,0.0,verified
+Calibration comparison: Random forest mean MAE (mm),2.307,2.307,B,table3_rows_fixed_ctx.csv,0.0,verified
+Calibration comparison: Gradient boosting mean MAE (mm),2.337,2.337,B,table3_rows_fixed_ctx.csv,0.0,verified
+Second environment: GCZ macro MAE (mm),3.208,3.208,C (archived),sensitivity_fresh_icp/table_P2_2_overall.csv,0.0,verified
+Second environment: GCZ-RL macro MAE (mm),2.418,2.418,C (archived),sensitivity_fresh_icp/table_P2_2_overall.csv,0.0,verified

@@ -25,4 +25,9 @@ fi
 "$PY" paper/fig6_qualitative_loso.py
 "$PY" paper/check_fig6.py
 "$PY" paper/graphical_abstract.py
+"$PY" paper/revision_analyses.py
+"$PY" paper/revision_figures.py
+"$PY" paper/revision_tables.py
+"$PY" paper/reproducibility_check.py
+"$PY" -m unittest discover -s tests
 echo DONE

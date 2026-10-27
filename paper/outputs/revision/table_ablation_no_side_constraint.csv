@@ -1,0 +1,2 @@
+configuration,macro_mae_mm,pass5_case_avg_pct,ref_to_pred_mm,pred_to_ref_mm,ref_within_5mm_pct,MAE_ALL,MAE_PLL,MAE_LF,MAE_ISL,MAE_SSL,MAE_ITL,MAE_CL,ITL_cases_both_points_one_side
+GCZ-RL without side constraint (nested re-run),3.076,92.7,4.223,2.056,78.4,2.382,1.863,1.912,2.226,2.692,8.279,2.18,2

@@ -65,5 +65,10 @@ if ($Part -eq 'all') {
     Run 'Figure 6' @('paper\fig6_qualitative_loso.py')
     Run 'Figure 6 check' @('paper\check_fig6.py')
     Run 'Graphical abstract' @('paper\graphical_abstract.py')
+    Run 'Revision analyses (component evaluation)' @('paper\revision_analyses.py')
+    Run 'Revision figures' @('paper\revision_figures.py')
+    Run 'Revision tables' @('paper\revision_tables.py')
+    Run 'Reproducibility check' @('paper\reproducibility_check.py')
+    Run 'Unit tests' @('-m', 'unittest', 'discover', '-s', 'tests')
 }
 Say 'DONE'
