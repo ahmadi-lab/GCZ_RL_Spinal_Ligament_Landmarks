@@ -16,9 +16,10 @@ vertebral surface meshes. It works in three steps:
 3. **Bounded correction.** It corrects each landmark with a bounded Extra Trees residual and
    projects it back onto its region.
 
-Every output is a mesh vertex inside a calibrated region of its class. In the primary evaluation,
-740 of 742 outputs lie in the projection region; the other two are ITL points that keep their
-GCZ position because the region has no vertex on their side.
+Every final prediction is a vertex of the target surface. Corrected landmarks are projected into
+the admissible region of their class (740 of 742 points in the primary evaluation); the other two
+are ITL points that keep their GCZ position under the side-preserving rule, because the region has
+no vertex on their side.
 
 ![Graphical abstract](paper/outputs/graphical_abstract.png)
 

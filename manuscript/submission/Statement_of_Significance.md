@@ -19,7 +19,7 @@ subtitle: "GCZ-RL: Geometry-Calibrated Residual Learning for Spinal Ligament Lan
 
 ## Question 4 — Novelty
 
-GCZ-RL localizes sparse spinal ligament attachment landmarks on vertebral surface meshes by learning annotation-calibrated admissible regions and a bounded residual correction of rigid atlas transfer. Every corrected output is projected onto the admissible region of its class, so the learned component refines a geometrically valid estimate and cannot move a landmark outside that region; a bilateral point whose region has no vertex on its side keeps its GCZ position (Introduction, contributions 1 and 2; Sections 3.4–3.10).
+GCZ-RL localizes sparse spinal ligament attachment landmarks on vertebral surface meshes by learning annotation-calibrated admissible regions and a bounded residual correction of rigid atlas transfer. Every corrected landmark is projected onto the admissible region of its class, with a side-preserving fallback for bilateral landmarks, and all final predictions remain on the target vertebral surface; the learned component therefore refines a geometrically valid estimate (Introduction, contributions 1 and 2; Sections 3.4–3.10).
 
 ## Question 5 — Difference from the authors' prior publications
 
