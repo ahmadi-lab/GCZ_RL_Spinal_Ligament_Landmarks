@@ -175,6 +175,10 @@ def ablation(res, gt):
     # complete GCZ-RL against the strongest geometry-only configuration (GCZ projected, no residual)
     res["GCZRL_vs_projection_only"] = paired(macro_by_case(dfs["GCZ-RL (complete)"]),
                                              macro_by_case(dfs["GCZ + projection only (no residual)"]))
+    res["macro_mae_by_subject"] = {
+        s: {subj: r(x[~x.missing_prediction].groupby("ligament").mae_mm.mean().mean())
+            for subj, x in dfs[s].groupby("subject")}
+        for s in ("GCZ", "GCZ + projection only (no residual)", "GCZ-RL (complete)")}
     return stages
 
 

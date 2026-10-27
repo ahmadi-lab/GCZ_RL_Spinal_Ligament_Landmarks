@@ -531,5 +531,22 @@
     "lower": 45,
     "higher": 15,
     "ties": 38
+  },
+  "macro_mae_by_subject": {
+    "GCZ": {
+      "S01": 3.784,
+      "S02": 2.208,
+      "S03": 2.512
+    },
+    "GCZ + projection only (no residual)": {
+      "S01": 2.563,
+      "S02": 2.042,
+      "S03": 2.273
+    },
+    "GCZ-RL (complete)": {
+      "S01": 2.315,
+      "S02": 1.986,
+      "S03": 2.117
+    }
   }
 }

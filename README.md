@@ -16,7 +16,9 @@ vertebral surface meshes. It works in three steps:
 3. **Bounded correction.** It corrects each landmark with a bounded Extra Trees residual and
    projects it back onto its region.
 
-Every output is a mesh vertex at an anatomically admissible site.
+Every output is a mesh vertex inside a calibrated region of its class. In the primary evaluation,
+740 of 742 outputs lie in the projection region; the other two are ITL points that keep their
+GCZ position because the region has no vertex on their side.
 
 ![Graphical abstract](paper/outputs/graphical_abstract.png)
 
@@ -134,8 +136,9 @@ its complete configuration reproduces the saved GCZ-RL predictions exactly.
 | GCZ + bounded residual + projection | 2.132 |
 | **GCZ-RL (complete, nested blend weights)** | **2.150** |
 
-- **Strongest geometry-only configuration.** GCZ-RL improves on it by −0.160 mm (95% CI −0.234
-  to −0.085; Wilcoxon p < 0.001).
+- **Strongest geometry-only configuration.** GCZ-RL improves on it for each of the three
+  held-out subjects; over all cases the difference is −0.160 mm (95% vertebra-level bootstrap CI
+  −0.234 to −0.085; Wilcoxon p < 0.001 over the 98 vertebra–class cases of this cohort).
 - **Candidate regions.** The regions contain 90.0% of the held-out reference landmarks while
   covering a median of 0.1–26.9% of the vertebral surface area.
 - **Learned residuals.** They point in the direction of the true residual for 67.1% of

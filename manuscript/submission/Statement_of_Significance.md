@@ -19,7 +19,7 @@ subtitle: "GCZ-RL: Geometry-Calibrated Residual Learning for Spinal Ligament Lan
 
 ## Question 4 — Novelty
 
-GCZ-RL localizes sparse spinal ligament attachment landmarks on vertebral surface meshes by learning annotation-calibrated admissible regions and a bounded residual correction of rigid atlas transfer. Every output is projected onto the admissible region of its class, so the learned component refines a geometrically valid estimate and cannot move a landmark outside that region (Introduction, contributions 1 and 2; Sections 3.4–3.7).
+GCZ-RL localizes sparse spinal ligament attachment landmarks on vertebral surface meshes by learning annotation-calibrated admissible regions and a bounded residual correction of rigid atlas transfer. Every corrected output is projected onto the admissible region of its class, so the learned component refines a geometrically valid estimate and cannot move a landmark outside that region; a bilateral point whose region has no vertex on its side keeps its GCZ position (Introduction, contributions 1 and 2; Sections 3.4–3.10).
 
 ## Question 5 — Difference from the authors' prior publications
 
@@ -36,7 +36,7 @@ GCZ-RL localizes sparse spinal ligament attachment landmarks on vertebral surfac
 
 ## Question 7 — Comparison with the state of the art
 
-GCZ-RL is significantly better than the geometry-only GCZ baseline. It is not significantly different from SLD, the dedicated state-of-the-art detector.
+GCZ-RL is better than the geometry-only GCZ baseline for each of the three held-out subjects, with paired tests over the evaluated vertebra–class cases supporting the difference within this cohort. It is not significantly different from SLD, the dedicated state-of-the-art detector.
 
 - **Metrics.** Mean Euclidean error after one-to-one Hungarian matching (MAE) and Pass@5. Point coverage and matching-independent closest-point metrics in both directions are also reported.
 - **Data and protocol.** 14 lumbar vertebrae of 3 subjects, evaluated by leave-one-subject-out with nested model selection.
@@ -111,7 +111,13 @@ Yes. It is given in the following places:
 
 ## Question 16 — Use of large language models
 
-**[AUTHORS: answer this question accurately before submission.]**
+**[AUTHORS: confirm and edit]** Yes. Claude (Anthropic) was used to:
+
+- reformat the manuscript to the journal template;
+- check that reported numbers agree with the released code and saved outputs;
+- improve language.
+
+Every number in the manuscript was regenerated from the released code. Every reference was checked against its DOI record (Crossref). The authors reviewed all text. The statement appears in the section "Declaration of generative AI and AI-assisted technologies in the manuscript preparation process".
 
 ## Question 17 — Patient-identifying information
 
