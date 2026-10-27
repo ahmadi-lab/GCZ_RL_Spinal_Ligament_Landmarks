@@ -54,6 +54,7 @@ part2_patient_loso_14/    primary analysis: patient-level LOSO, leakage test
 paper/                    scripts for every number, table and figure added for the journal paper
 scripts/                  fetch_data.py, fetch_spinelib.py
 docs/                     PAPER_MAP.md (paper item -> script -> output), CODE_PAPER_AUDIT.md
+tests/                    unit tests of the geometric constraints and the metrics
 manuscript/               LaTeX source and PDFs of the paper, cover letter, Statement of Significance
 ```
 
@@ -87,13 +88,18 @@ path limit). See [dataset/README.md](dataset/README.md) for the subject mapping 
 ```bash
 python part2_patient_loso_14/run_part2.py          # primary LOSO (Tables 4-5), minutes with stored ICP results
 python part2_patient_loso_14/run_leakage_test.py   # data-leakage test
-python part1_dissertation_57/run_part1.py          # development analysis (Table 6)
+python part1_dissertation_57/run_part1.py          # development analysis (Table 9)
 python code/verify_all.py                          # independent checks -> VERIFICATION_REPORT.json
-python paper/make_paper_numbers.py                 # statistics, Supplementary S2-S4; checks every quoted value
+python paper/make_paper_numbers.py                 # statistics, Table 6, Supplementary S2-S4; checks every quoted value
 python paper/table3_regressor_comparison.py        # Table 3 and Supplementary Table S6 (about 25 min)
 python paper/fig6_qualitative_loso.py              # Fig. 6
 python paper/check_fig6.py                         # Fig. 6 points = saved predictions; caption numbers
 python paper/graphical_abstract.py                 # graphical abstract
+python paper/revision_analyses.py                  # component analyses (Section 4.4, Supplementary S8-S11)
+python paper/revision_figures.py                   # Fig. 7, Fig. S3
+python paper/revision_tables.py                    # table rows of Tables 6-8 and S10-S14 -> manuscript/tables
+python paper/reproducibility_check.py              # 66 reported claims vs regenerated values (Table S15)
+python -m unittest discover -s tests               # geometric constraints and metrics
 ```
 
 Or run everything with `powershell -ExecutionPolicy Bypass -File RUN_ALL.ps1` on Windows, or
@@ -113,6 +119,32 @@ SpineLib files, which you fetch with `python scripts/fetch_spinelib.py`.
 
 [docs/PAPER_MAP.md](docs/PAPER_MAP.md) lists, for every table and figure of the paper, the
 script that produces it and its output file.
+
+## Component analyses
+
+`paper/revision_analyses.py` examines each part of the method on the primary evaluation, using
+the stored ICP geometry and the fold models written by `run_part2.py`. It selects nothing, and
+its complete configuration reproduces the saved GCZ-RL predictions exactly.
+
+| Configuration | MAE (mm) |
+|---|---|
+| GCZ (geometry only) | 2.879 |
+| GCZ + projection onto the calibrated regions (strongest geometry-only configuration) | 2.310 |
+| GCZ + bounded residual, no projection | 2.698 |
+| GCZ + bounded residual + projection | 2.132 |
+| **GCZ-RL (complete, nested blend weights)** | **2.150** |
+
+- **Strongest geometry-only configuration.** GCZ-RL improves on it by −0.160 mm (95% CI −0.234
+  to −0.085; Wilcoxon p < 0.001).
+- **Candidate regions.** The regions contain 90.0% of the held-out reference landmarks while
+  covering a median of 0.1–26.9% of the vertebral surface area.
+- **Learned residuals.** They point in the direction of the true residual for 67.1% of
+  held-out points.
+- **Atlas choice.** The ICP residual of the selected atlas is not associated with landmark
+  error (Spearman ρ = 0.24).
+
+Outputs are in `paper/outputs/revision/`. `paper/reproducibility_check.py` verifies 66 main
+claims of the paper against the regenerated outputs.
 
 ## Notes on the evaluation
 

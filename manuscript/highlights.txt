@@ -2,6 +2,6 @@ Highlights
 
 - Ligament attachment landmarks are localized from vertebral surface meshes alone.
 - Calibrated zones keep every prediction on an anatomically admissible surface site.
-- Bounded Extra Trees residuals cut atlas-transfer error from 2.88 to 2.15 mm.
+- Zone-constrained residual refinement cut atlas-transfer error from 2.88 to 2.15 mm.
 - Every held-out subject improved under nested leave-one-subject-out validation.
 - Accuracy is comparable to SLD on the same vertebrae, with complementary strengths.

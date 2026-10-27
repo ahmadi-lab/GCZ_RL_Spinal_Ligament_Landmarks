@@ -76,3 +76,23 @@ verified). The analyses were then re-run from this repository:
 4. **Paths in the original notebook.** The original notebook keeps the local absolute paths of
    the machine it was run on, as a record of provenance. Decide whether to keep them in the
    public release.
+
+## 6. Verification for the revision (2026-10-27)
+
+Before the manuscript was revised, the data were fetched again (1678 / 1678 files verified) and
+every analysis was re-run from commit `17d5661` with the pinned environment.
+
+| Run | Result |
+|---|---|
+| `paper/make_paper_numbers.py` | 46 / 46 manuscript values reproduced |
+| `run_part2.py` (stored ICP results) | Predictions, metrics, and selections byte-identical to the committed outputs |
+| `run_part1.py` (stored ICP results) | Table 4.4 exact; 259 / 259 point sets identical; final-model checksum unchanged |
+| `paper/table3_regressor_comparison.py` | All values identical |
+| `code/verify_all.py` | 9 / 9 checks passed |
+| `run_leakage_test.py` | PASS (412 points, as in finding 14) |
+| `paper/reproducibility_check.py` | 66 / 66 claims verified; the S02 reduction is 10.0 %, not 10.1 % (it had been computed from rounded means) |
+
+The component analyses of the revision (`paper/revision_analyses.py`) reproduce the saved
+GCZ-RL predictions from the stored geometry and fold models with a maximum coordinate difference
+of 6e-14 mm. Files that differ between runs only in provenance (time stamps, `"gcz_geometry":
+"checkpoint"`) were kept at their committed versions.
