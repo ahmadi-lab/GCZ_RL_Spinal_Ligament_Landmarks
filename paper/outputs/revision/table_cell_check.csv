@@ -1,0 +1,548 @@
+table,row,column,printed,code,ok
+Table 1,Annotated vertebrae,1,57,57,True
+Table 1,"Patient-level cohort (primary, LOSO)",1,14,14,True
+Table 1,Independent subjects (primary),1,3,3,True
+Table 1,Vertebra--class cases (primary),1,98,98,True
+Table 1,Reference points (primary),1,2165,2165,True
+Table 1,Calibration vertebrae (development),1,20,20,True
+Table 1,Held-out vertebrae (development),1,37,37,True
+Table 1,Ligament classes,1,7,7,True
+Table 2,"Primary (LOSO), selected atlas",1,14 lumbar,14 lumbar,True
+Table 2,"Primary (LOSO), selected atlas",2,1.56 (1.14--2.16),1.56 (1.14--2.16),True
+Table 2,"Development, after ICP",1,9 lumbar,9 lumbar,True
+Table 2,"Development, after ICP",2,1.84 (1.50--2.33),1.84 (1.50--2.33),True
+Table 3,ALL,1,2.092,2.092,True
+Table 3,ALL,2,1.724,1.724,True
+Table 3,ALL,3,1.755,1.755,True
+Table 3,ALL,4,1.702,1.702,True
+Table 3,ALL,5,1.588,1.588,True
+Table 3,ALL,bold,[4],[4],True
+Table 3,PLL,1,2.182,2.182,True
+Table 3,PLL,2,1.881,1.881,True
+Table 3,PLL,3,1.640,1.640,True
+Table 3,PLL,4,1.598,1.598,True
+Table 3,PLL,5,1.365,1.365,True
+Table 3,PLL,bold,[4],[4],True
+Table 3,LF,1,3.546,3.546,True
+Table 3,LF,2,2.744,2.744,True
+Table 3,LF,3,2.448,2.448,True
+Table 3,LF,4,2.386,2.386,True
+Table 3,LF,5,2.125,2.125,True
+Table 3,LF,bold,[4],[4],True
+Table 3,ISL,1,1.981,1.981,True
+Table 3,ISL,2,1.918,1.918,True
+Table 3,ISL,3,1.588,1.588,True
+Table 3,ISL,4,1.622,1.622,True
+Table 3,ISL,5,1.551,1.551,True
+Table 3,ISL,bold,[4],[4],True
+Table 3,SSL,1,2.720,2.720,True
+Table 3,SSL,2,2.950,2.950,True
+Table 3,SSL,3,2.383,2.383,True
+Table 3,SSL,4,2.557,2.557,True
+Table 3,SSL,5,1.882,1.882,True
+Table 3,SSL,bold,[4],[4],True
+Table 3,ITL,1,4.046,4.046,True
+Table 3,ITL,2,4.085,4.085,True
+Table 3,ITL,3,3.399,3.399,True
+Table 3,ITL,4,3.532,3.532,True
+Table 3,ITL,5,3.170,3.170,True
+Table 3,ITL,bold,[4],[4],True
+Table 3,CL,1,4.817,4.817,True
+Table 3,CL,2,3.700,3.700,True
+Table 3,CL,3,2.934,2.934,True
+Table 3,CL,4,2.963,2.963,True
+Table 3,CL,5,2.578,2.578,True
+Table 3,CL,bold,[4],[4],True
+Table 3,Mean,1,3.055,3.055,True
+Table 3,Mean,2,2.715,2.715,True
+Table 3,Mean,3,2.307,2.307,True
+Table 3,Mean,4,2.337,2.337,True
+Table 3,Mean,5,2.037,2.037,True
+Table 3,Mean,bold,[4],[4],True
+Table S6,"Mean, published protocol",1,3.103,3.103,True
+Table S6,"Mean, published protocol",2,3.017,3.017,True
+Table S6,"Mean, published protocol",3,2.754,2.754,True
+Table S6,"Mean, published protocol",4,2.774,2.774,True
+Table S6,"Mean, published protocol",5,2.575,2.575,True
+Table S6,"Mean, validation rows corrected",1,2.986,2.986,True
+Table S6,"Mean, validation rows corrected",2,2.655,2.655,True
+Table S6,"Mean, validation rows corrected",3,2.241,2.241,True
+Table S6,"Mean, validation rows corrected",4,2.274,2.274,True
+Table S6,"Mean, validation rows corrected",5,1.984,1.984,True
+Table S6,"Mean, rows and fold quantities corrected (Table 3)",1,3.055,3.055,True
+Table S6,"Mean, rows and fold quantities corrected (Table 3)",2,2.715,2.715,True
+Table S6,"Mean, rows and fold quantities corrected (Table 3)",3,2.307,2.307,True
+Table S6,"Mean, rows and fold quantities corrected (Table 3)",4,2.337,2.337,True
+Table S6,"Mean, rows and fold quantities corrected (Table 3)",5,2.037,2.037,True
+Table S6,LF,1,3.546 (3.760),3.546 (3.760),True
+Table S6,LF,2,2.744 (3.653),2.744 (3.653),True
+Table S6,LF,3,2.448 (3.329),2.448 (3.329),True
+Table S6,LF,4,2.386 (3.545),2.386 (3.545),True
+Table S6,LF,5,2.125 (3.354),2.125 (3.354),True
+Table S6,ISL,1,1.981 (2.013),1.981 (2.013),True
+Table S6,ISL,2,1.918 (1.945),1.918 (1.945),True
+Table S6,ISL,3,1.588 (1.831),1.588 (1.831),True
+Table S6,ISL,4,1.622 (1.918),1.622 (1.918),True
+Table S6,ISL,5,1.551 (1.805),1.551 (1.805),True
+Table S6,ITL,1,4.046 (3.816),4.046 (3.816),True
+Table S6,ITL,2,4.085 (3.833),4.085 (3.833),True
+Table S6,ITL,3,3.399 (3.097),3.399 (3.097),True
+Table S6,ITL,4,3.532 (3.090),3.532 (3.090),True
+Table S6,ITL,5,3.170 (3.014),3.170 (3.014),True
+Table S6,CL,1,4.817 (5.214),4.817 (5.214),True
+Table S6,CL,2,3.700 (5.214),3.700 (5.214),True
+Table S6,CL,3,2.934 (5.386),2.934 (5.386),True
+Table S6,CL,4,2.963 (5.128),2.963 (5.128),True
+Table S6,CL,5,2.578 (5.049),2.578 (5.049),True
+Table 4,ALL,1,2.605,2.605,True
+Table 4,ALL,2,1.658,1.658,True
+Table 4,ALL,3,2.382,2.382,True
+Table 4,ALL,4,92.1,92.1,True
+Table 4,ALL,5,99.5,99.5,True
+Table 4,ALL,6,97.1,97.1,True
+Table 4,ALL,bold,"[1, 4]","[1, 4]",True
+Table 4,PLL,1,1.863,1.863,True
+Table 4,PLL,2,2.445,2.445,True
+Table 4,PLL,3,1.863,1.863,True
+Table 4,PLL,4,100.0,100.0,True
+Table 4,PLL,5,88.8,88.8,True
+Table 4,PLL,6,100.0,100.0,True
+Table 4,PLL,bold,"[0, 2, 3, 5]","[0, 2, 3, 5]",True
+Table 4,LF,1,1.918,1.918,True
+Table 4,LF,2,4.997,4.997,True
+Table 4,LF,3,1.912,1.912,True
+Table 4,LF,4,97.9,97.9,True
+Table 4,LF,5,59.5,59.5,True
+Table 4,LF,6,97.9,97.9,True
+Table 4,LF,bold,"[2, 3, 5]","[2, 3, 5]",True
+Table 4,ISL,1,2.291,2.291,True
+Table 4,ISL,2,2.039,2.039,True
+Table 4,ISL,3,2.226,2.226,True
+Table 4,ISL,4,87.1,87.1,True
+Table 4,ISL,5,93.4,93.4,True
+Table 4,ISL,6,87.9,87.9,True
+Table 4,ISL,bold,"[1, 4]","[1, 4]",True
+Table 4,SSL,1,2.917,2.917,True
+Table 4,SSL,2,1.968,1.968,True
+Table 4,SSL,3,2.692,2.692,True
+Table 4,SSL,4,78.6,78.6,True
+Table 4,SSL,5,92.9,92.9,True
+Table 4,SSL,6,78.6,78.6,True
+Table 4,SSL,bold,"[1, 4]","[1, 4]",True
+Table 4,ITL,1,6.262,6.262,True
+Table 4,ITL,2,0.873,0.873,True
+Table 4,ITL,3,1.796,1.796,True
+Table 4,ITL,4,53.6,53.6,True
+Table 4,ITL,5,100.0,100.0,True
+Table 4,ITL,6,92.9,92.9,True
+Table 4,ITL,bold,"[1, 4]","[1, 4]",True
+Table 4,CL,1,2.302,2.302,True
+Table 4,CL,2,1.591,1.591,True
+Table 4,CL,3,2.180,2.180,True
+Table 4,CL,4,92.9,92.9,True
+Table 4,CL,5,99.1,99.1,True
+Table 4,CL,6,94.3,94.3,True
+Table 4,CL,bold,"[1, 4]","[1, 4]",True
+Table 4,Macro mean,1,2.879,2.879,True
+Table 4,Macro mean,2,2.224,2.224,True
+Table 4,Macro mean,3,2.150,2.150,True
+Table 4,Macro mean,4,86.0,86.0,True
+Table 4,Macro mean,5,90.4,90.4,True
+Table 4,Macro mean,6,92.7,92.7,True
+Table 4,Macro mean,bold,"[2, 5]","[2, 5]",True
+Table 5,S01,1,9,9,True
+Table 5,S01,2,5,5,True
+Table 5,S01,3,3.784,3.784,True
+Table 5,S01,4,1.766,1.766,True
+Table 5,S01,5,2.315,2.315,True
+Table 5,S01,bold,[3],[3],True
+Table 5,S02,1,10,10,True
+Table 5,S02,2,4,4,True
+Table 5,S02,3,2.208,2.208,True
+Table 5,S02,4,2.262,2.262,True
+Table 5,S02,5,1.986,1.986,True
+Table 5,S02,bold,[4],[4],True
+Table 5,S03,1,9,9,True
+Table 5,S03,2,5,5,True
+Table 5,S03,3,2.512,2.512,True
+Table 5,S03,4,2.652,2.652,True
+Table 5,S03,5,2.117,2.117,True
+Table 5,S03,bold,[4],[4],True
+Table 9,ALL,1,3.050,3.050,True
+Table 9,ALL,2,86.7%,86.7%,True
+Table 9,ALL,3,2.708,2.708,True
+Table 9,ALL,4,88.1%,88.1%,True
+Table 9,ALL,5,2.750,2.750,True
+Table 9,ALL,6,90.4%,90.4%,True
+Table 9,ALL,bold,"[2, 5]","[2, 5]",True
+Table 9,PLL,1,2.329,2.329,True
+Table 9,PLL,2,92.6%,92.6%,True
+Table 9,PLL,3,2.164,2.164,True
+Table 9,PLL,4,94.4%,94.4%,True
+Table 9,PLL,5,2.246,2.246,True
+Table 9,PLL,6,91.8%,91.8%,True
+Table 9,PLL,bold,"[2, 3]","[2, 3]",True
+Table 9,LF,1,4.110,4.110,True
+Table 9,LF,2,67.0%,67.0%,True
+Table 9,LF,3,2.933,2.933,True
+Table 9,LF,4,88.5%,88.5%,True
+Table 9,LF,5,4.814,4.814,True
+Table 9,LF,6,60.9%,60.9%,True
+Table 9,LF,bold,"[2, 3]","[2, 3]",True
+Table 9,ISL,1,2.495,2.495,True
+Table 9,ISL,2,91.2%,91.2%,True
+Table 9,ISL,3,2.277,2.277,True
+Table 9,ISL,4,94.6%,94.6%,True
+Table 9,ISL,5,4.560,4.560,True
+Table 9,ISL,6,69.5%,69.5%,True
+Table 9,ISL,bold,"[2, 3]","[2, 3]",True
+Table 9,SSL,1,2.921,2.921,True
+Table 9,SSL,2,85.2%,85.2%,True
+Table 9,SSL,3,2.681,2.681,True
+Table 9,SSL,4,88.9%,88.9%,True
+Table 9,SSL,5,1.739,1.739,True
+Table 9,SSL,6,100.0%,100.0%,True
+Table 9,SSL,bold,"[4, 5]","[4, 5]",True
+Table 9,ITL,1,5.614,5.614,True
+Table 9,ITL,2,72.2%,72.2%,True
+Table 9,ITL,3,4.434,4.434,True
+Table 9,ITL,4,81.5%,81.5%,True
+Table 9,ITL,5,3.485,3.485,True
+Table 9,ITL,6,76.7%,76.7%,True
+Table 9,ITL,bold,"[3, 4]","[3, 4]",True
+Table 9,CL,1,5.437,5.437,True
+Table 9,CL,2,63.7%,63.7%,True
+Table 9,CL,3,3.426,3.426,True
+Table 9,CL,4,80.7%,80.7%,True
+Table 9,CL,5,1.630,1.630,True
+Table 9,CL,6,99.0%,99.0%,True
+Table 9,CL,bold,"[4, 5]","[4, 5]",True
+Table 9,Mean,1,3.708,3.708,True
+Table 9,Mean,2,79.8%,79.8%,True
+Table 9,Mean,3,2.946,2.946,True
+Table 9,Mean,4,88.1%,88.1%,True
+Table 9,Mean,5,3.032,3.032,True
+Table 9,Mean,6,84.0%,84.0%,True
+Table 9,Mean,bold,"[2, 3]","[2, 3]",True
+Table S2,ALL,1,368,368,True
+Table S2,ALL,2,140,140,True
+Table S2,ALL,3,38.0,38.0,True
+Table S2,ALL,4,140,140,True
+Table S2,ALL,5,38.0,38.0,True
+Table S2,ALL,6,196,196,True
+Table S2,ALL,7,53.3,53.3,True
+Table S2,PLL,1,239,239,True
+Table S2,PLL,2,140,140,True
+Table S2,PLL,3,58.6,58.6,True
+Table S2,PLL,4,140,140,True
+Table S2,PLL,5,58.6,58.6,True
+Table S2,PLL,6,196,196,True
+Table S2,PLL,7,82.0,82.0,True
+Table S2,LF,1,349,349,True
+Table S2,LF,2,140,140,True
+Table S2,LF,3,40.1,40.1,True
+Table S2,LF,4,140,140,True
+Table S2,LF,5,40.1,40.1,True
+Table S2,LF,6,132,132,True
+Table S2,LF,7,37.8,37.8,True
+Table S2,ISL,1,330,330,True
+Table S2,ISL,2,140,140,True
+Table S2,ISL,3,42.4,42.4,True
+Table S2,ISL,4,140,140,True
+Table S2,ISL,5,42.4,42.4,True
+Table S2,ISL,6,196,196,True
+Table S2,ISL,7,59.4,59.4,True
+Table S2,SSL,1,14,14,True
+Table S2,SSL,2,14,14,True
+Table S2,SSL,3,100.0,100.0,True
+Table S2,SSL,4,14,14,True
+Table S2,SSL,5,100.0,100.0,True
+Table S2,SSL,6,14,14,True
+Table S2,SSL,7,100.0,100.0,True
+Table S2,ITL,1,28,28,True
+Table S2,ITL,2,28,28,True
+Table S2,ITL,3,100.0,100.0,True
+Table S2,ITL,4,28,28,True
+Table S2,ITL,5,100.0,100.0,True
+Table S2,ITL,6,28,28,True
+Table S2,ITL,7,100.0,100.0,True
+Table S2,CL,1,837,837,True
+Table S2,CL,2,140,140,True
+Table S2,CL,3,16.7,16.7,True
+Table S2,CL,4,140,140,True
+Table S2,CL,5,16.7,16.7,True
+Table S2,CL,6,176,176,True
+Table S2,CL,7,21.0,21.0,True
+Table S2,S01,1,1020,1020,True
+Table S2,S01,2,265,265,True
+Table S2,S01,3,26.0,26.0,True
+Table S2,S01,4,265,265,True
+Table S2,S01,5,26.0,26.0,True
+Table S2,S01,6,337,337,True
+Table S2,S01,7,33.0,33.0,True
+Table S2,S02,1,564,564,True
+Table S2,S02,2,212,212,True
+Table S2,S02,3,37.6,37.6,True
+Table S2,S02,4,212,212,True
+Table S2,S02,5,37.6,37.6,True
+Table S2,S02,6,264,264,True
+Table S2,S02,7,46.8,46.8,True
+Table S2,S03,1,581,581,True
+Table S2,S03,2,265,265,True
+Table S2,S03,3,45.6,45.6,True
+Table S2,S03,4,265,265,True
+Table S2,S03,5,45.6,45.6,True
+Table S2,S03,6,337,337,True
+Table S2,S03,7,58.0,58.0,True
+Table S2,All,1,2165,2165,True
+Table S2,All,2,742,742,True
+Table S2,All,3,34.3,34.3,True
+Table S2,All,4,742,742,True
+Table S2,All,5,34.3,34.3,True
+Table S2,All,6,938,938,True
+Table S2,All,7,43.3,43.3,True
+Table S3,ALL,1,2.605,2.605,True
+Table S3,ALL,2,2.382,2.382,True
+Table S3,ALL,3,1.521,1.521,True
+Table S3,ALL,4,3.989,3.989,True
+Table S3,ALL,5,3.798,3.798,True
+Table S3,ALL,6,3.175,3.175,True
+Table S3,ALL,7,3.297,3.297,True
+Table S3,ALL,8,3.090,3.090,True
+Table S3,ALL,9,2.348,2.348,True
+Table S3,ALL,10,70.5,70.5,True
+Table S3,ALL,11,75.4,75.4,True
+Table S3,ALL,12,78.4,78.4,True
+Table S3,ALL,bold,"[2, 5, 8, 11]","[2, 5, 8, 11]",True
+Table S3,PLL,1,1.846,1.846,True
+Table S3,PLL,2,1.846,1.846,True
+Table S3,PLL,3,1.177,1.177,True
+Table S3,PLL,4,2.329,2.329,True
+Table S3,PLL,5,2.329,2.329,True
+Table S3,PLL,6,1.969,1.969,True
+Table S3,PLL,7,2.087,2.087,True
+Table S3,PLL,8,2.087,2.087,True
+Table S3,PLL,9,1.573,1.573,True
+Table S3,PLL,10,97.2,97.2,True
+Table S3,PLL,11,97.2,97.2,True
+Table S3,PLL,12,92.3,92.3,True
+Table S3,PLL,bold,"[2, 5, 8, 9, 10]","[2, 5, 8, 9, 10]",True
+Table S3,LF,1,1.918,1.918,True
+Table S3,LF,2,1.912,1.912,True
+Table S3,LF,3,4.015,4.015,True
+Table S3,LF,4,3.334,3.334,True
+Table S3,LF,5,3.323,3.323,True
+Table S3,LF,6,9.829,9.829,True
+Table S3,LF,7,2.626,2.626,True
+Table S3,LF,8,2.618,2.618,True
+Table S3,LF,9,6.922,6.922,True
+Table S3,LF,10,80.8,80.8,True
+Table S3,LF,11,80.8,80.8,True
+Table S3,LF,12,34.3,34.3,True
+Table S3,LF,bold,"[1, 4, 7, 9, 10]","[1, 4, 7, 9, 10]",True
+Table S3,ISL,1,2.262,2.262,True
+Table S3,ISL,2,2.173,2.173,True
+Table S3,ISL,3,1.367,1.367,True
+Table S3,ISL,4,3.706,3.706,True
+Table S3,ISL,5,3.621,3.621,True
+Table S3,ISL,6,3.143,3.143,True
+Table S3,ISL,7,2.984,2.984,True
+Table S3,ISL,8,2.897,2.897,True
+Table S3,ISL,9,2.255,2.255,True
+Table S3,ISL,10,77.0,77.0,True
+Table S3,ISL,11,77.3,77.3,True
+Table S3,ISL,12,82.1,82.1,True
+Table S3,ISL,bold,"[2, 5, 8, 11]","[2, 5, 8, 11]",True
+Table S3,SSL,1,2.917,2.917,True
+Table S3,SSL,2,2.692,2.692,True
+Table S3,SSL,3,1.968,1.968,True
+Table S3,SSL,4,2.917,2.917,True
+Table S3,SSL,5,2.692,2.692,True
+Table S3,SSL,6,1.968,1.968,True
+Table S3,SSL,7,2.917,2.917,True
+Table S3,SSL,8,2.692,2.692,True
+Table S3,SSL,9,1.968,1.968,True
+Table S3,SSL,10,78.6,78.6,True
+Table S3,SSL,11,78.6,78.6,True
+Table S3,SSL,12,92.9,92.9,True
+Table S3,SSL,bold,"[2, 5, 8, 11]","[2, 5, 8, 11]",True
+Table S3,ITL,1,6.262,6.262,True
+Table S3,ITL,2,1.796,1.796,True
+Table S3,ITL,3,0.873,0.873,True
+Table S3,ITL,4,6.262,6.262,True
+Table S3,ITL,5,1.796,1.796,True
+Table S3,ITL,6,0.873,0.873,True
+Table S3,ITL,7,6.262,6.262,True
+Table S3,ITL,8,1.796,1.796,True
+Table S3,ITL,9,0.873,0.873,True
+Table S3,ITL,10,53.6,53.6,True
+Table S3,ITL,11,92.9,92.9,True
+Table S3,ITL,12,100.0,100.0,True
+Table S3,ITL,bold,"[2, 5, 8, 11]","[2, 5, 8, 11]",True
+Table S3,CL,1,2.302,2.302,True
+Table S3,CL,2,2.180,2.180,True
+Table S3,CL,3,1.591,1.591,True
+Table S3,CL,4,5.631,5.631,True
+Table S3,CL,5,5.522,5.522,True
+Table S3,CL,6,7.664,7.664,True
+Table S3,CL,7,3.966,3.966,True
+Table S3,CL,8,3.851,3.851,True
+Table S3,CL,9,4.628,4.628,True
+Table S3,CL,10,46.8,46.8,True
+Table S3,CL,11,46.9,46.9,True
+Table S3,CL,12,63.4,63.4,True
+Table S3,CL,bold,"[2, 4, 7, 11]","[2, 4, 7, 11]",True
+Table S3,Mean over cases,1,2.873,2.873,True
+Table S3,Mean over cases,2,2.140,2.140,True
+Table S3,Mean over cases,3,1.787,1.787,True
+Table S3,Mean over cases,4,4.024,4.024,True
+Table S3,Mean over cases,5,3.297,3.297,True
+Table S3,Mean over cases,6,4.089,4.089,True
+Table S3,Mean over cases,7,3.448,3.448,True
+Table S3,Mean over cases,8,2.719,2.719,True
+Table S3,Mean over cases,9,2.938,2.938,True
+Table S3,Mean over cases,10,72.1,72.1,True
+Table S3,Mean over cases,11,78.4,78.4,True
+Table S3,Mean over cases,12,77.6,77.6,True
+Table S3,Mean over cases,bold,"[2, 4, 7, 10]","[2, 4, 7, 10]",True
+Table S4,ALL,1,368,368,True
+Table S4,ALL,2,96.7,96.7,True
+Table S4,ALL,3,6041,6041,True
+Table S4,ALL,4,6041,6041,True
+Table S4,ALL,5,0/14,0/14,True
+Table S4,ALL,6,0/14,0/14,True
+Table S4,ALL,7,0,0,True
+Table S4,PLL,1,239,239,True
+Table S4,PLL,2,83.7,83.7,True
+Table S4,PLL,3,2891,2891,True
+Table S4,PLL,4,2891,2891,True
+Table S4,PLL,5,0/14,0/14,True
+Table S4,PLL,6,0/14,0/14,True
+Table S4,PLL,7,0,0,True
+Table S4,LF,1,349,349,True
+Table S4,LF,2,87.4,87.4,True
+Table S4,LF,3,5254.5,5254.5,True
+Table S4,LF,4,5254.5,5254.5,True
+Table S4,LF,5,0/14,0/14,True
+Table S4,LF,6,0/14,0/14,True
+Table S4,LF,7,0,0,True
+Table S4,ISL,1,330,330,True
+Table S4,ISL,2,94.5,94.5,True
+Table S4,ISL,3,2764,2764,True
+Table S4,ISL,4,2764,2764,True
+Table S4,ISL,5,0/14,0/14,True
+Table S4,ISL,6,0/14,0/14,True
+Table S4,ISL,7,0,0,True
+Table S4,SSL,1,14,14,True
+Table S4,SSL,2,85.7,85.7,True
+Table S4,SSL,3,124.5,124.5,True
+Table S4,SSL,4,124.5,124.5,True
+Table S4,SSL,5,5/14,5/14,True
+Table S4,SSL,6,5/14,5/14,True
+Table S4,SSL,7,0,0,True
+Table S4,ITL,1,28,28,True
+Table S4,ITL,2,92.9,92.9,True
+Table S4,ITL,3,10990,10990,True
+Table S4,ITL,4,34.5,34.5,True
+Table S4,ITL,5,14/14,14/14,True
+Table S4,ITL,6,14/14,14/14,True
+Table S4,ITL,7,2,2,True
+Table S4,CL,1,837,837,True
+Table S4,CL,2,88.1,88.1,True
+Table S4,CL,3,8467.5,8467.5,True
+Table S4,CL,4,8467.5,8467.5,True
+Table S4,CL,5,0/14,0/14,True
+Table S4,CL,6,0/14,0/14,True
+Table S4,CL,7,0,0,True
+Table S4,All,1,2165,2165,True
+Table S4,All,2,90.0,90.0,True
+Table S4,All,3,--,--,True
+Table S4,All,4,--,--,True
+Table S4,All,5,19/98,19/98,True
+Table S4,All,6,19/98,19/98,True
+Table S4,All,7,2,2,True
+Table S7,Pure Euclidean Hungarian,1,1126,1126,True
+Table S7,Pure Euclidean Hungarian,2,98.3,98.3,True
+Table S7,Pure Euclidean Hungarian,3,4.85,4.85,True
+Table S7,Pure Euclidean Hungarian,4,5.99,5.99,True
+Table S7,Pure Euclidean Hungarian,5,7.71,7.71,True
+Table S7,Pure Euclidean Hungarian,6,75.2,75.2,True
+Table S7,Pure Euclidean Hungarian,7,119,119,True
+Table S7,Initial anatomy-aware matching,1,1039,1039,True
+Table S7,Initial anatomy-aware matching,2,90.7,90.7,True
+Table S7,Initial anatomy-aware matching,3,3.84,3.84,True
+Table S7,Initial anatomy-aware matching,4,4.30,4.30,True
+Table S7,Initial anatomy-aware matching,5,5.76,5.76,True
+Table S7,Initial anatomy-aware matching,6,80.2,80.2,True
+Table S7,Initial anatomy-aware matching,7,61,61,True
+Table S7,Final anatomy-constrained,1,1042,1042,True
+Table S7,Final anatomy-constrained,2,91.0,91.0,True
+Table S7,Final anatomy-constrained,3,3.67,3.67,True
+Table S7,Final anatomy-constrained,4,3.87,3.87,True
+Table S7,Final anatomy-constrained,5,5.34,5.34,True
+Table S7,Final anatomy-constrained,6,82.2,82.2,True
+Table S7,Final anatomy-constrained,7,58,58,True
+Table S8,ALL,1,5.07,5.07,True
+Table S8,ALL,2,4.17,4.17,True
+Table S8,ALL,3,13,13,True
+Table S8,PLL,1,3.70,3.70,True
+Table S8,PLL,2,3.62,3.62,True
+Table S8,PLL,3,3,3,True
+Table S8,LF,1,3.21,3.21,True
+Table S8,LF,2,3.21,3.21,True
+Table S8,LF,3,14,14,True
+Table S8,ISL,1,4.43,4.43,True
+Table S8,ISL,2,4.43,4.43,True
+Table S8,ISL,3,15,15,True
+Table S8,SSL,1,1.86,1.86,True
+Table S8,SSL,2,1.86,1.86,True
+Table S8,SSL,3,0,0,True
+Table S8,ITL,1,2.68,2.68,True
+Table S8,ITL,2,2.68,2.68,True
+Table S8,ITL,3,0,0,True
+Table S8,CL,1,3.36,3.36,True
+Table S8,CL,2,3.36,3.36,True
+Table S8,CL,3,13,13,True
+Table S9,ALL,1,"ET-4, 0.55","ET-4, 0.55",True
+Table S9,ALL,2,3.234,3.234,True
+Table S9,ALL,3,"ET-3, 0.25","ET-3, 0.25",True
+Table S9,ALL,4,3.886,3.886,True
+Table S9,ALL,5,"ET-1, 0","ET-1, 0",True
+Table S9,ALL,6,3.163,3.163,True
+Table S9,PLL,1,"ET-1, 0","ET-1, 0",True
+Table S9,PLL,2,2.188,2.188,True
+Table S9,PLL,3,"ET-1, 0","ET-1, 0",True
+Table S9,PLL,4,3.427,3.427,True
+Table S9,PLL,5,"ET-1, 0","ET-1, 0",True
+Table S9,PLL,6,1.823,1.823,True
+Table S9,LF,1,"ET-1, 0","ET-1, 0",True
+Table S9,LF,2,4.482,4.482,True
+Table S9,LF,3,"ET-1, 0.40","ET-1, 0.40",True
+Table S9,LF,4,1.873,1.873,True
+Table S9,LF,5,"ET-1, 0","ET-1, 0",True
+Table S9,LF,6,2.195,2.195,True
+Table S9,ISL,1,"ET-3, 0.70","ET-3, 0.70",True
+Table S9,ISL,2,4.603,4.603,True
+Table S9,ISL,3,"ET-2, 0.70","ET-2, 0.70",True
+Table S9,ISL,4,2.325,2.325,True
+Table S9,ISL,5,"ET-4, 0.85","ET-4, 0.85",True
+Table S9,ISL,6,2.106,2.106,True
+Table S9,SSL,1,"ET-1, 0.25","ET-1, 0.25",True
+Table S9,SSL,2,2.745,2.745,True
+Table S9,SSL,3,"ET-2, 0.40","ET-2, 0.40",True
+Table S9,SSL,4,3.309,3.309,True
+Table S9,SSL,5,"ET-1, 0.25","ET-1, 0.25",True
+Table S9,SSL,6,3.516,3.516,True
+Table S9,ITL,1,"ET-2, 1.20","ET-2, 1.20",True
+Table S9,ITL,2,2.218,2.218,True
+Table S9,ITL,3,"ET-1, 1.20","ET-1, 1.20",True
+Table S9,ITL,4,1.694,1.694,True
+Table S9,ITL,5,"ET-4, 1.20","ET-4, 1.20",True
+Table S9,ITL,6,1.130,1.130,True
+Table S9,CL,1,"ET-2, 0.25","ET-2, 0.25",True
+Table S9,CL,2,4.780,4.780,True
+Table S9,CL,3,"ET-1, 0","ET-1, 0",True
+Table S9,CL,4,2.882,2.882,True
+Table S9,CL,5,"ET-1, 1.20","ET-1, 1.20",True
+Table S9,CL,6,2.379,2.379,True
+text,Supplementary text: reference landmarks of the nine diagnostic vertebrae,,1145,1145,True

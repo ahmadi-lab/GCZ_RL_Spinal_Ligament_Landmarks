@@ -78,6 +78,7 @@ if ($Part -eq 'all') {
     Run 'Revision tables' @('paper\revision_tables.py')
     Run 'Reproducibility check' @('paper\reproducibility_check.py')
     Run 'Numbers of the text against the outputs' @('paper\check_text_numbers.py')
+    Run 'Every cell of the typed tables against the outputs' @('paper\check_tables.py')
     Run 'Manuscript figures and tables' @('paper\build_manuscript_assets.py')
     Run 'Unit tests' @('-m', 'unittest', 'discover', '-s', 'tests')
 }

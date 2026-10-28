@@ -110,11 +110,11 @@ Trained model: `models/gczrl_extra_trees_final.joblib`.
   (`model_comparison_per_ligament.csv` of the archived results) gives the same 3.329 mm and selects
   Random Forest for LF. Gradient Boosting for LF is 3.545 mm in the code and 3.544 mm in the
   dissertation (rounding). All other cells agree with the dissertation.
-* Computer dependence of Table 4.3: the Gradient Boosting column is not bit-identical across
-  computers. On the computer used for the current outputs it differs from the values above by at
-  most 0.029 mm (ALL 1.627, PLL 1.583, LF 3.543, ISL 1.919, CL 5.157 mm; 35 of 315 grid rows,
-  all Gradient Boosting). No family ranking changes, and the Extra Trees, Ridge, KNN and Random
-  Forest columns, Table 4.4 and all predictions are reproduced exactly.
+* Thread dependence of Table 4.3: histogram gradient boosting is now fitted with one OpenMP
+  thread, and the whole table, including the Gradient Boosting column, is reproduced exactly from
+  run to run. Earlier multi-threaded runs differed in that column by at most 0.029 mm (for example
+  LF 3.543, ISL 1.919, CL 5.157 mm; 35 of 315 grid rows, all Gradient Boosting) without changing
+  any family ranking. The paper (Table 3, Supplementary Table S6) uses the reproduced values.
 
 ## 6. Notes on individual tables
 

@@ -59,7 +59,7 @@ verified). The analyses were then re-run from this repository:
 |---|---|
 | `scripts/fetch_data.py` | 1678 / 1678 files verified |
 | `run_part2.py` (stored ICP results) | Every table, prediction file, and the inner selection grid is **byte-identical** to the committed outputs. |
-| `run_part1.py` (stored ICP results) | Table 6 and all 259 prediction sets are identical. The regressor grid differs only in the third decimal of gradient boosting (known run-to-run variation). |
+| `run_part1.py` (stored ICP results) | Table 6 and all 259 prediction sets are identical. The regressor grid differed only in the third decimal of gradient boosting, from multi-threaded fitting; histogram gradient boosting is now fitted with one thread, and the grid is reproduced exactly (2026-10-28). |
 | `run_leakage_test.py` | PASS: 0 mm difference. It compares 412 points here against 424 in the original environment, because it recomputes the ICP geometry (finding 14). |
 | `code/verify_all.py` | 9 / 9 checks passed |
 | `paper/make_paper_numbers.py` | 46 / 46 manuscript values reproduced |

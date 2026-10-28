@@ -26,10 +26,10 @@ Numbering follows the revised journal manuscript. Abbreviations: `P1` =
 | Fig. 6 | Primary evaluation by held-out subject and vertebra | `paper/figures_main.py` `fig5` | `paper/outputs/figures/fig5_patient_level.{pdf,svg,png}` |
 | Fig. 7 | GCZ and GCZ-RL on S03 L4 with magnified close-ups of the applied correction; per-class errors of GCZ, GCZ-RL, SLD | `paper/figures_anatomy.py fig_qualitative_insets` | `paper/outputs/figures/fig_qualitative_insets.{pdf,png}`, checks in `anatomy_checks.json` |
 | Fig. 7 and Fig. S7 captions | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
-| Fig. 8 | Expert annotations, calibrated search regions, GCZ-RL landmarks; ALL and PLL margin close-ups (S03 L4) | `paper/figures_anatomy.py fig_regions_margins` | `paper/outputs/figures/fig_regions_margins.{pdf,png}` (the earlier 3 × 7 grid stays in `paper/outputs/region_verification/`) |
+| Fig. 8 | Expert attachment footprints, expert annotations, GCZ-RL landmarks; ALL and PLL margin close-ups (S03 L4); the calibrated search regions are in Fig. S8 | `paper/figures_anatomy.py fig_regions_margins` | `paper/outputs/figures/fig_regions_margins.{pdf,png}` (the earlier 3 × 7 grid stays in `paper/outputs/region_verification/`) |
 | Fig. 9 | Component analyses (ablation, compactness, importance, atlas) | `paper/figures_main.py` `fig7` | `paper/outputs/figures/fig7_components.{pdf,svg,png}` |
 | Fig. 10 | Ten-seed ICP sensitivity | `paper/figures_main.py` `fig8` | `paper/outputs/figures/fig8_icp_seeds.{pdf,svg,png}` |
-| Fig. 11 | Development analysis chart (original) | values of Table 9 | `figs/fig_literature_comparison_clean2.png` |
+| Fig. 11 | Development analysis chart (design of the original) | `paper/fig11_development.py` (values of Table 9) | `paper/outputs/figures/fig11_development_results.{pdf,png}`; the original image `figs/fig_literature_comparison_clean2.png` is kept |
 | Graphical abstract | — | `paper/graphical_abstract.py` | `paper/outputs/graphical_abstract.{png,pdf}` |
 
 Table rows of Tables 6–8 and S10–S14 are written by `paper/revision_tables.py` into
