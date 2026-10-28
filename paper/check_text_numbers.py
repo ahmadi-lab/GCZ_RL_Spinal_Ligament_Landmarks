@@ -34,6 +34,16 @@ def main():
     rev = json.loads((OUT / "revision" / "revision_numbers.json").read_text())
     seeds = json.loads((OUT / "icp_seed_sensitivity" / "summary.json").read_text())
     trace = json.loads((OUT / "revision" / "itl_trace_S03_L4.json").read_text())
+    dc = json.loads((OUT / "revision" / "itl_double_check.json").read_text())
+    dct = pd.read_csv(OUT / "revision" / "itl_double_check.csv").set_index("case")
+    tip = {(p["method"], p["side_of_point"]): p for p in dc["S03_L4_points"]}
+    words = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+    itl_red = dct["GCZ_mae_recomputed"] - dct["GCZ-RL_mae_recomputed"]
+    bigger = dct[itl_red > itl_red["Verse581_L4"]].sort_values(["subject", "level"])
+    lv = [int(x[1:]) for x in bigger.level]
+    bigger_names = (f"{bigger.subject.iloc[0]} L{lv[0]}--L{lv[-1]}"
+                    if bigger.subject.nunique() == 1 and lv == list(range(lv[0], lv[-1] + 1))
+                    else ", ".join(f"{s} {l}" for s, l in zip(bigger.subject, bigger.level)))
     tr = pd.read_csv(OUT / "revision" / "itl_trace_S03_L4.csv")
     margin = json.loads((OUT / "margin_verification" / "margin_summary.json").read_text())
     zn = pd.read_csv(OUT / "margin_verification" / "margin_zn_by_vertebra.csv")
@@ -129,6 +139,26 @@ def main():
                                            f"correction to {f(stage('6 projected = GCZ-RL'))}~mm"),
         ("S19: residual share", f"the learned residual adds {f(stage('projection only (no residual)') - stage('6 projected = GCZ-RL'))}~mm"),
         ("S19: configuration", f"Extra Trees configuration {trace['regressor']}, $\\alpha_L={trace['alpha']:g}$"),
+        # Supplementary S19, independent checks (paper/itl_double_check.py)
+        ("S19 check: recomputed errors", "equal those of the evaluation (largest difference below $10^{-13}$~mm)"
+         if max((dct[f"{m}_mae_recomputed"] - dct[f"{m}_mae_metrics_file"]).abs().max() for m in (g, rl, "SLD")) < 1e-13 else "(differs)"),
+        ("S19 check: tips", f"the expert ITL points lie {f(tip[(g, 'R')]['reference_to_tip_mm'], 2)} (right) and "
+                            f"{f(tip[(g, 'L')]['reference_to_tip_mm'], 2)}~mm (left) from the most lateral vertex of their transverse "
+                            f"process, and the GCZ-RL landmarks {f(tip[(rl, 'R')]['point_to_tip_mm'], 2)} and {f(tip[(rl, 'L')]['point_to_tip_mm'], 2)}~mm"),
+        ("S19 check: GCZ position", f"the GCZ landmarks lie {f(tip[(g, 'R')]['point_to_tip_mm'], 2)} and {f(tip[(g, 'L')]['point_to_tip_mm'], 2)}~mm "
+                                    "from it, on surface that faces posteriorly, whereas the surface at both GCZ-RL landmarks faces laterally"
+         if all(p["surface_faces"] == ("posterior" if p["method"] == g else "lateral") for p in dc["S03_L4_points"]) else "(differs)"),
+        ("S19 check: leakage", f"the {dc['leakage_test_S03']['points_true_run']} S03 landmarks of GCZ and GCZ-RL were identical in both runs and "
+                               "equal to the saved predictions"
+         if dc["leakage_test_S03"]["max_difference_noisy_vs_true_mm"] == 0 and dc["leakage_test_S03"]["max_difference_recomputed_vs_saved_mm"] < 1e-9
+         else "(differs)"),
+        ("S19 check: side constraint", f"leaves the ITL errors of all {words[len(dc['S03_ITL_without_side_constraint'])]} S03 vertebrae unchanged"
+         if all(v["with_constraint"] == v["without_constraint"] for v in dc["S03_ITL_without_side_constraint"].values()) else "(differs)"),
+        ("S19 check: SLD", f"SLD, which shares no step with GCZ-RL, reaches {f(dc['S03_L4']['SLD'])}~mm on this vertebra"),
+        ("S19 check: rank", f"The reduction on S03 L4 ranks {ords[dc['S03_L4_rank_of_ITL_reduction']]} of the {len(dct)} held-out vertebrae; "
+                            f"the {words[len(bigger)]} larger ones are {bigger_names}, from {f(bigger[g + '_mae_recomputed'].min(), 2)}--"
+                            f"{f(bigger[g + '_mae_recomputed'].max(), 2)}~mm to {f(bigger[rl + '_mae_recomputed'].min(), 2)}--"
+                            f"{f(bigger[rl + '_mae_recomputed'].max(), 2)}~mm"),
     ]
     rows = [{"claim": c, "passage": p, "found": p in TEX} for c, p in claims]
     tab = pd.DataFrame(rows)

@@ -77,6 +77,7 @@ with the regenerated value, and exits with an error if any differs.
 | Section S17, Fig. S7 (previous Fig. 7, unchanged) | `paper/fig6_qualitative_loso.py` | `paper/outputs/fig6_qualitative_loso_S03_L4.png` |
 | Section S18, Fig. S8 (calibrated GCZ search regions) | `paper/figures_anatomy.py` | `paper/outputs/figures/fig_search_regions.{pdf,png}` |
 | Section S19, Table S18 (step-by-step ITL correction on S03 L4) | `paper/itl_trace.py` | `paper/outputs/revision/itl_trace_S03_L4.{csv,json}`, `tab_itl_trace.tex` |
+| Section S19, independent checks of the ITL result (errors from the raw annotation files, position on the mesh, S03 leakage test, S03 fold without the side constraint) | `paper/itl_double_check.py` | `paper/outputs/revision/itl_double_check.{csv,json}` |
 
 Every figure is listed with its input files in `docs/FIGURE_AUDIT.md` and
 `paper/outputs/figures/figure_audit.csv` (written by `paper/figures_main.py`); the candidate

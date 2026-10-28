@@ -74,6 +74,7 @@ if ($Part -eq 'all') {
     Run 'Anatomical figures (Figs. 7 and 8)' @('paper\figures_anatomy.py')
     Run 'Development figure (Fig. 11)' @('paper\fig11_development.py')
     Run 'ITL step-by-step trace (Supplementary Table S18)' @('paper\itl_trace.py')
+    Run 'ITL independent checks and S03 leakage test (Supplementary S19)' @('paper\itl_double_check.py')
     Run 'ICP seed table (from the saved runs)' @('paper\icp_seed_sensitivity.py', 'summary')
     Run 'Revision tables' @('paper\revision_tables.py')
     Run 'Reproducibility check' @('paper\reproducibility_check.py')

@@ -1,0 +1,140 @@
+{
+  "per_vertebra": "itl_double_check.csv",
+  "S03_L4_points": [
+    {
+      "method": "GCZ",
+      "point": 0,
+      "side_of_point": "R",
+      "side_of_matched_reference": "R",
+      "surface_faces": "posterior",
+      "normal_x_left": -0.0018335481304003972,
+      "normal_y_posterior": 0.9990882295027982,
+      "normal_z_superior": -0.042653813079460354,
+      "error_mm": 11.507908809606109,
+      "distance_to_mesh_vertex_mm": 0.0,
+      "point_to_tip_mm": 11.619965373914015,
+      "reference_to_tip_mm": 0.4842888250816241,
+      "point_posterior_of_reference_mm": 0.08291625976565342
+    },
+    {
+      "method": "GCZ",
+      "point": 1,
+      "side_of_point": "L",
+      "side_of_matched_reference": "L",
+      "surface_faces": "posterior",
+      "normal_x_left": -0.27167464460687146,
+      "normal_y_posterior": 0.9033003829321415,
+      "normal_z_superior": -0.33202606173669014,
+      "error_mm": 4.681770549610729,
+      "distance_to_mesh_vertex_mm": 0.0,
+      "point_to_tip_mm": 4.995779701740068,
+      "reference_to_tip_mm": 0.6722170122933474,
+      "point_posterior_of_reference_mm": 1.257171630859375
+    },
+    {
+      "method": "GCZ-RL",
+      "point": 0,
+      "side_of_point": "R",
+      "side_of_matched_reference": "R",
+      "surface_faces": "lateral",
+      "normal_x_left": -0.9926542258675546,
+      "normal_y_posterior": 0.010301434339499684,
+      "normal_z_superior": 0.12054654004920654,
+      "error_mm": 0.5904356021695955,
+      "distance_to_mesh_vertex_mm": 0.0,
+      "point_to_tip_mm": 0.4125070465396649,
+      "reference_to_tip_mm": 0.4842888250816241,
+      "point_posterior_of_reference_mm": -0.20899963378903408
+    },
+    {
+      "method": "GCZ-RL",
+      "point": 1,
+      "side_of_point": "L",
+      "side_of_matched_reference": "L",
+      "surface_faces": "lateral",
+      "normal_x_left": 0.9635340233627903,
+      "normal_y_posterior": 0.24815505176902897,
+      "normal_z_superior": 0.10010622410132505,
+      "error_mm": 0.765387311669429,
+      "distance_to_mesh_vertex_mm": 0.0,
+      "point_to_tip_mm": 1.090104086521721,
+      "reference_to_tip_mm": 0.6722170122933474,
+      "point_posterior_of_reference_mm": 0.2995758056640625
+    }
+  ],
+  "GCZ_ITL_class_mean_recomputed": 6.261924758360655,
+  "GCZ-RL_ITL_class_mean_recomputed": 1.7964157993808911,
+  "SLD_ITL_class_mean_recomputed": 0.8725052319328339,
+  "S03_L4": {
+    "GCZ": 8.09483967960842,
+    "GCZ-RL": 0.6779114569195122,
+    "SLD": 0.844680954138995,
+    "projection_only": 1.1332305680655406
+  },
+  "ITL_reduction_per_vertebra_mm": {
+    "Verse005_L1": 13.418,
+    "Verse005_L2": 7.877,
+    "Verse005_L3": 11.665,
+    "Verse005_L4": 8.428,
+    "Verse005_L5": 5.084,
+    "Verse561_L1": 1.525,
+    "Verse561_L2": 2.887,
+    "Verse561_L3": -0.369,
+    "Verse561_L4": 1.476,
+    "Verse581_L1": -0.208,
+    "Verse581_L2": 1.423,
+    "Verse581_L3": 1.103,
+    "Verse581_L4": 7.417,
+    "Verse581_L5": 0.792
+  },
+  "S03_L4_rank_of_ITL_reduction": 5,
+  "vertebrae_lower_with_GCZRL": 12,
+  "GCZ_ITL_error_range_mm": [
+    0.5271245000610725,
+    14.302998820944445
+  ],
+  "S03_ITL_without_side_constraint": {
+    "Verse581_L1": {
+      "with_constraint": 0.736,
+      "without_constraint": 0.736
+    },
+    "Verse581_L2": {
+      "with_constraint": 1.316,
+      "without_constraint": 1.316
+    },
+    "Verse581_L3": {
+      "with_constraint": 2.116,
+      "without_constraint": 2.116
+    },
+    "Verse581_L4": {
+      "with_constraint": 0.678,
+      "without_constraint": 0.678
+    },
+    "Verse581_L5": {
+      "with_constraint": 1.235,
+      "without_constraint": 1.235
+    }
+  },
+  "leakage_test_S03": {
+    "points_compared_noisy_vs_true": 530,
+    "points_true_run": 530,
+    "points_noisy_run": 530,
+    "max_difference_noisy_vs_true_mm": 0.0,
+    "points_compared_with_saved": 530,
+    "max_difference_recomputed_vs_saved_mm": 5.684341886080802e-14,
+    "max_difference_recomputed_vs_saved_S03_L4_ITL_mm": 0.0
+  },
+  "checks": {
+    "GCZ: recomputed from raw files = metrics file (max diff 1.8e-14 mm)": true,
+    "GCZ-RL: recomputed from raw files = metrics file (max diff 2.2e-14 mm)": true,
+    "SLD: recomputed from raw files = metrics file (max diff 3.8e-14 mm)": true,
+    "class means as reported (6.262 / 1.796 / 0.873 mm)": true,
+    "S03 L4 as reported (8.095 / 0.678 mm)": true,
+    "every S03 L4 point is a mesh vertex": true,
+    "GCZ-RL points matched to the reference of their own side": true,
+    "GCZ points on the posterior surface of the processes, GCZ-RL points at the lateral tips (Fig. 7 caption)": true,
+    "S03 L4 unchanged without the side constraint": true,
+    "S03 predictions identical with noisy S03 annotations": true,
+    "S03 fold recomputed from scratch = saved predictions": true
+  }
+}

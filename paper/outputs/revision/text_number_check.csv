@@ -41,3 +41,10 @@ S19: radius,radius 15.98~mm,True
 S19: projection only and final,"reduces the class error to 1.133~mm, and the complete correction to 0.678~mm",True
 S19: residual share,the learned residual adds 0.455~mm,True
 S19: configuration,"Extra Trees configuration ET-4, $\alpha_L=1.2$",True
+S19 check: recomputed errors,equal those of the evaluation (largest difference below $10^{-13}$~mm),True
+S19 check: tips,"the expert ITL points lie 0.48 (right) and 0.67~mm (left) from the most lateral vertex of their transverse process, and the GCZ-RL landmarks 0.41 and 1.09~mm",True
+S19 check: GCZ position,"the GCZ landmarks lie 11.62 and 5.00~mm from it, on surface that faces posteriorly, whereas the surface at both GCZ-RL landmarks faces laterally",True
+S19 check: leakage,the 530 S03 landmarks of GCZ and GCZ-RL were identical in both runs and equal to the saved predictions,True
+S19 check: side constraint,leaves the ITL errors of all five S03 vertebrae unchanged,True
+S19 check: SLD,"SLD, which shares no step with GCZ-RL, reaches 0.845~mm on this vertebra",True
+S19 check: rank,"The reduction on S03 L4 ranks fifth of the 14 held-out vertebrae; the four larger ones are S01 L1--L4, from 8.52--14.30~mm to 0.61--1.30~mm",True

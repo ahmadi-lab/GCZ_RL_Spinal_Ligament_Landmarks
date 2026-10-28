@@ -35,6 +35,7 @@ fi
 "$PY" paper/figures_anatomy.py
 "$PY" paper/fig11_development.py
 "$PY" paper/itl_trace.py
+"$PY" paper/itl_double_check.py
 "$PY" paper/icp_seed_sensitivity.py summary
 "$PY" paper/revision_tables.py
 "$PY" paper/reproducibility_check.py
