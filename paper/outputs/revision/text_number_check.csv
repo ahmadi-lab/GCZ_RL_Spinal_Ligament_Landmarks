@@ -47,4 +47,10 @@ S19 check: GCZ position,"the GCZ landmarks lie 11.62 and 5.00~mm from it, on sur
 S19 check: leakage,the 530 S03 landmarks of GCZ and GCZ-RL were identical in both runs and equal to the saved predictions,True
 S19 check: side constraint,leaves the ITL errors of all five S03 vertebrae unchanged,True
 S19 check: SLD,"SLD, which shares no step with GCZ-RL, reaches 0.845~mm on this vertebra",True
+S19 origin: atlas,lie 9.60 (right) and 6.41~mm (left) closer to the midline than those of S03 L4,True
+S19 origin: transferred,the transferred points lie 11.65 and 4.33~mm medial of the references,True
+S19 origin: recomputed,reproduces all 28 saved GCZ ITL points,True
+S19 origin: correlation,"Over the 24 ITL points with a wide selection region, the GCZ error correlates with how much farther the target's process reaches than the atlas's ($r=0.86$), but not with the absolute difference ($r=0.38$)",True
+S19 origin: pair,"the GCZ ITL errors of S01 L1 are 12.04 and 16.57~mm; with atlas S01 L1, those of S03 L1 are 0.16 and 0.90~mm",True
+S19 origin: projection region,"has 25 (right) and 27 (left) vertices, all within 1.35 and 1.99~mm of the tip",True
 S19 check: rank,"The reduction on S03 L4 ranks fifth of the 14 held-out vertebrae; the four larger ones are S01 L1--L4, from 8.52--14.30~mm to 0.61--1.30~mm",True

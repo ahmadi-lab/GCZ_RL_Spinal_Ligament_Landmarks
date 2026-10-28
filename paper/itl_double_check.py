@@ -13,9 +13,14 @@ pipeline:
 3. Leakage test on the S03 fold: the fold is recomputed from scratch with the true S03 annotations
    and with every S03 annotation replaced by noise (SD 25 mm); the S03 predictions must be identical,
    and the recomputation with the true annotations is compared with the saved predictions.
+4. Why the GCZ points miss the tips: the GCZ ITL step (rigid ICP of the atlas, transfer of the atlas
+   expert points, snap into the selection region) is recomputed for the 14 vertebrae, and the GCZ error
+   is related to how much farther the target's transverse process reaches than the atlas's.
+5. The S03 fold without the side constraint.
 
 Usage: python paper/itl_double_check.py [--no-leakage]
-Writes paper/outputs/revision/itl_double_check.{json,csv}; exit code 1 if any check fails.
+Writes paper/outputs/revision/itl_double_check.{json,csv} and itl_gcz_origin.csv; exit code 1 if any
+check fails.
 """
 from __future__ import annotations
 
@@ -145,6 +150,58 @@ def leakage_s03():
             "max_difference_recomputed_vs_saved_S03_L4_ITL_mm": float(np.abs(itl[[c + "_c" for c in xyz]].to_numpy() - itl[[c + "_s" for c in xyz]].to_numpy()).max())}
 
 
+def gcz_origin():
+    """Where GCZ puts the ITL points: the atlas expert points are moved by the rigid ICP of the fold onto the
+    target and snapped to the nearest vertex of the ITL selection region on their side. Recomputed for the
+    14 held-out vertebrae and compared with the saved GCZ points; the lateral reach of the transverse process
+    is the distance of the expert ITL point from the vertex centroid in x (LPS)."""
+    import pickle
+    sys.path.insert(0, str(P2))
+    import cases  # noqa: E402
+    import gcz  # noqa: E402
+    import run_part2 as R  # noqa: E402
+    rows = []
+    for subj, pat in PATIENT.items():
+        geo = pickle.loads((P2 / f"checkpoints/fold_held_{subj}_gcz.pkl").read_bytes())
+        train_keys, test_keys = R.keys_of([p for p in PATIENT.values() if p != pat]), R.keys_of([pat])
+        thr = gcz.build_thresholds(cases.train_dict(train_keys, "vtk"))
+        for i, key in enumerate(test_keys):     # same ICP settings and seeds as run_part2.gcz_predict (seed0=1000)
+            v = cases.mesh(*key, "vtk")
+            akey = next(k for k in train_keys if R.case_code(*k) == geo["test_atlas"][key].split(" ")[0])
+            av, agt, tgt = cases.mesh(*akey, "vtk"), cases.landmarks(*akey), cases.landmarks(*key)
+            r, t = gcz.icp(av, v, n_sub=5000, max_iter=150, tol=1e-6, seed=200 + 1000 + i)
+            sel = gcz.candidate_vertices(v, "ITL", thr, third_fallback=True)
+            proj = gcz.candidate_vertices(v, "ITL", thr, third_fallback=False)
+            cx, acx = v[:, 0].mean(), av[:, 0].mean()
+            for side in ("R", "L"):
+                on = lambda p, c: (p[:, 0] >= c) == (side == "L")  # noqa: E731
+                a, ref = agt["ITL"][on(agt["ITL"], acx)][0], tgt["ITL"][on(tgt["ITL"], cx)][0]
+                warped = gcz.apply(r, t, a[None])[0]
+                half = sel[on(sel, cx)]
+                snapped = half[np.linalg.norm(half - warped, axis=1).argmin()]
+                saved = geo["test_gcz"][key]["ITL"]
+                tip = v[v[:, 0].argmax()] if side == "L" else v[v[:, 0].argmin()]
+                ph = proj[on(proj, cx)]
+                rows.append({"case": R.case_code(*key), "atlas": R.case_code(*akey), "side": side,
+                             "atlas_reach_mm": abs(a[0] - acx), "target_reach_mm": abs(ref[0] - cx),
+                             "transferred_point_medial_of_reference_mm": (ref[0] - warped[0]) * (1 if side == "L" else -1),
+                             "gcz_error_mm": float(np.linalg.norm(snapped - ref)),
+                             "resnapped_equals_saved_gcz": bool(np.abs(saved - snapped).sum(axis=1).min() < 1e-6),
+                             "selection_region_vertices": len(sel), "projection_region_vertices_side": len(ph),
+                             "projection_region_max_to_tip_mm": float(np.linalg.norm(ph - tip, axis=1).max()) if len(ph) else np.nan,
+                             "reference_to_tip_mm": float(np.linalg.norm(ref - tip))})
+    d = pd.DataFrame(rows)
+    d["reach_difference_mm"] = d.target_reach_mm - d.atlas_reach_mm      # > 0: the atlas process is shorter
+    d.to_csv(OUT / "itl_gcz_origin.csv", index=False)
+    wide = d[d.selection_region_vertices > 1000]
+    return d, {"points": len(d), "resnapped_equal_saved": int(d.resnapped_equals_saved_gcz.sum()), "wide_region_points": len(wide),
+               "r_error_vs_shortfall_wide": float(np.corrcoef(wide.gcz_error_mm, wide.reach_difference_mm.clip(lower=0))[0, 1]),
+               "r_error_vs_abs_difference_wide": float(np.corrcoef(wide.gcz_error_mm, wide.reach_difference_mm.abs())[0, 1]),
+               "S03_L4": d[d.case == "S03_L4"].set_index("side").round(4).to_dict(orient="index"),
+               "S01_L1": d[d.case == "S01_L1"].set_index("side").round(4).to_dict(orient="index"),
+               "S03_L1": d[d.case == "S03_L1"].set_index("side").round(4).to_dict(orient="index")}
+
+
 def without_side_constraint_s03(rows):
     """The S03 fold re-run with the side constraint switched off (stored geometry, nested selection included)."""
     import tempfile
@@ -197,6 +254,9 @@ def main():
     res["S03_L4_rank_of_ITL_reduction"] = int((red > red[tab.case == "Verse581_L4"].iloc[0]).sum() + 1)
     res["vertebrae_lower_with_GCZRL"] = int((red > 0).sum())
     res["GCZ_ITL_error_range_mm"] = [float(tab["GCZ_mae_recomputed"].min()), float(tab["GCZ_mae_recomputed"].max())]
+    _, origin = gcz_origin()
+    res["gcz_origin"] = origin
+    checks["GCZ ITL step recomputed (ICP, transfer, snap) = saved GCZ points"] = origin["resnapped_equal_saved"] == origin["points"]
     side = without_side_constraint_s03(rows)
     res["S03_ITL_without_side_constraint"] = side
     checks["S03 L4 unchanged without the side constraint"] = side["Verse581_L4"]["without_constraint"] == side["Verse581_L4"]["with_constraint"]

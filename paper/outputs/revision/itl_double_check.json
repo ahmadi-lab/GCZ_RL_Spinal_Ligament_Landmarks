@@ -93,6 +93,103 @@
     0.5271245000610725,
     14.302998820944445
   ],
+  "gcz_origin": {
+    "points": 28,
+    "resnapped_equal_saved": 28,
+    "wide_region_points": 24,
+    "r_error_vs_shortfall_wide": 0.8572205731307051,
+    "r_error_vs_abs_difference_wide": 0.38243985434007743,
+    "S03_L4": {
+      "R": {
+        "case": "S03_L4",
+        "atlas": "S01_L1",
+        "atlas_reach_mm": 38.1506,
+        "target_reach_mm": 47.7489,
+        "transferred_point_medial_of_reference_mm": 11.6476,
+        "gcz_error_mm": 11.5079,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 17416,
+        "projection_region_vertices_side": 25,
+        "projection_region_max_to_tip_mm": 1.3536,
+        "reference_to_tip_mm": 0.4843,
+        "reach_difference_mm": 9.5983
+      },
+      "L": {
+        "case": "S03_L4",
+        "atlas": "S01_L1",
+        "atlas_reach_mm": 40.396,
+        "target_reach_mm": 46.8055,
+        "transferred_point_medial_of_reference_mm": 4.3281,
+        "gcz_error_mm": 4.6818,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 17416,
+        "projection_region_vertices_side": 27,
+        "projection_region_max_to_tip_mm": 1.987,
+        "reference_to_tip_mm": 0.6722,
+        "reach_difference_mm": 6.4094
+      }
+    },
+    "S01_L1": {
+      "R": {
+        "case": "S01_L1",
+        "atlas": "S03_L1",
+        "atlas_reach_mm": 25.1982,
+        "target_reach_mm": 38.1506,
+        "transferred_point_medial_of_reference_mm": 11.8975,
+        "gcz_error_mm": 12.0355,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 7587,
+        "projection_region_vertices_side": 13,
+        "projection_region_max_to_tip_mm": 1.2092,
+        "reference_to_tip_mm": 0.2773,
+        "reach_difference_mm": 12.9524
+      },
+      "L": {
+        "case": "S01_L1",
+        "atlas": "S03_L1",
+        "atlas_reach_mm": 27.9586,
+        "target_reach_mm": 40.396,
+        "transferred_point_medial_of_reference_mm": 13.3012,
+        "gcz_error_mm": 16.5705,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 7587,
+        "projection_region_vertices_side": 13,
+        "projection_region_max_to_tip_mm": 2.1761,
+        "reference_to_tip_mm": 1.4924,
+        "reach_difference_mm": 12.4374
+      }
+    },
+    "S03_L1": {
+      "R": {
+        "case": "S03_L1",
+        "atlas": "S01_L1",
+        "atlas_reach_mm": 38.1506,
+        "target_reach_mm": 25.1982,
+        "transferred_point_medial_of_reference_mm": -11.8878,
+        "gcz_error_mm": 0.1558,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 11921,
+        "projection_region_vertices_side": 12,
+        "projection_region_max_to_tip_mm": 0.9833,
+        "reference_to_tip_mm": 0.4598,
+        "reach_difference_mm": -12.9524
+      },
+      "L": {
+        "case": "S03_L1",
+        "atlas": "S01_L1",
+        "atlas_reach_mm": 40.396,
+        "target_reach_mm": 27.9586,
+        "transferred_point_medial_of_reference_mm": -13.6262,
+        "gcz_error_mm": 0.8985,
+        "resnapped_equals_saved_gcz": true,
+        "selection_region_vertices": 11921,
+        "projection_region_vertices_side": 18,
+        "projection_region_max_to_tip_mm": 2.2085,
+        "reference_to_tip_mm": 0.6664,
+        "reach_difference_mm": -12.4374
+      }
+    }
+  },
   "S03_ITL_without_side_constraint": {
     "Verse581_L1": {
       "with_constraint": 0.736,
@@ -133,6 +230,7 @@
     "every S03 L4 point is a mesh vertex": true,
     "GCZ-RL points matched to the reference of their own side": true,
     "GCZ points on the posterior surface of the processes, GCZ-RL points at the lateral tips (Fig. 7 caption)": true,
+    "GCZ ITL step recomputed (ICP, transfer, snap) = saved GCZ points": true,
     "S03 L4 unchanged without the side constraint": true,
     "S03 predictions identical with noisy S03 annotations": true,
     "S03 fold recomputed from scratch = saved predictions": true

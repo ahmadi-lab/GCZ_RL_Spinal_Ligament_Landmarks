@@ -37,6 +37,7 @@ def main():
     dc = json.loads((OUT / "revision" / "itl_double_check.json").read_text())
     dct = pd.read_csv(OUT / "revision" / "itl_double_check.csv").set_index("case")
     tip = {(p["method"], p["side_of_point"]): p for p in dc["S03_L4_points"]}
+    og = dc["gcz_origin"]
     words = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
     itl_red = dct["GCZ_mae_recomputed"] - dct["GCZ-RL_mae_recomputed"]
     bigger = dct[itl_red > itl_red["Verse581_L4"]].sort_values(["subject", "level"])
@@ -155,6 +156,21 @@ def main():
         ("S19 check: side constraint", f"leaves the ITL errors of all {words[len(dc['S03_ITL_without_side_constraint'])]} S03 vertebrae unchanged"
          if all(v["with_constraint"] == v["without_constraint"] for v in dc["S03_ITL_without_side_constraint"].values()) else "(differs)"),
         ("S19 check: SLD", f"SLD, which shares no step with GCZ-RL, reaches {f(dc['S03_L4']['SLD'])}~mm on this vertebra"),
+        ("S19 origin: atlas", f"lie {f(og['S03_L4']['R']['reach_difference_mm'], 2)} (right) and {f(og['S03_L4']['L']['reach_difference_mm'], 2)}~mm "
+                              f"(left) closer to the midline than those of S03 L4"),
+        ("S19 origin: transferred", f"the transferred points lie {f(og['S03_L4']['R']['transferred_point_medial_of_reference_mm'], 2)} and "
+                                    f"{f(og['S03_L4']['L']['transferred_point_medial_of_reference_mm'], 2)}~mm medial of the references"),
+        ("S19 origin: recomputed", f"reproduces all {og['points']} saved GCZ ITL points" if og["resnapped_equal_saved"] == og["points"] else "(differs)"),
+        ("S19 origin: correlation", f"Over the {og['wide_region_points']} ITL points with a wide selection region, the GCZ error correlates with how much "
+                                    f"farther the target's process reaches than the atlas's ($r={f(og['r_error_vs_shortfall_wide'], 2)}$), but not with "
+                                    f"the absolute difference ($r={f(og['r_error_vs_abs_difference_wide'], 2)}$)"),
+        ("S19 origin: pair", f"the GCZ ITL errors of S01 L1 are {f(og['S01_L1']['R']['gcz_error_mm'], 2)} and {f(og['S01_L1']['L']['gcz_error_mm'], 2)}~mm; "
+                             f"with atlas S01 L1, those of S03 L1 are {f(og['S03_L1']['R']['gcz_error_mm'], 2)} and {f(og['S03_L1']['L']['gcz_error_mm'], 2)}~mm"
+         if og["S01_L1"]["R"]["atlas"] == "S03_L1" and og["S03_L1"]["R"]["atlas"] == "S01_L1" else "(differs)"),
+        ("S19 origin: projection region", f"has {og['S03_L4']['R']['projection_region_vertices_side']} (right) and "
+                                          f"{og['S03_L4']['L']['projection_region_vertices_side']} (left) vertices, all within "
+                                          f"{f(og['S03_L4']['R']['projection_region_max_to_tip_mm'], 2)} and "
+                                          f"{f(og['S03_L4']['L']['projection_region_max_to_tip_mm'], 2)}~mm of the tip"),
         ("S19 check: rank", f"The reduction on S03 L4 ranks {ords[dc['S03_L4_rank_of_ITL_reduction']]} of the {len(dct)} held-out vertebrae; "
                             f"the {words[len(bigger)]} larger ones are {bigger_names}, from {f(bigger[g + '_mae_recomputed'].min(), 2)}--"
                             f"{f(bigger[g + '_mae_recomputed'].max(), 2)}~mm to {f(bigger[rl + '_mae_recomputed'].min(), 2)}--"
