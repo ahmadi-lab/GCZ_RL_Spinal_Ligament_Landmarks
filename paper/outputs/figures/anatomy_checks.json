@@ -20,11 +20,9 @@
   "fig7_class_errors_recomputed_equal_metrics_file": true,
   "fig7_all_predictions_on_mesh_vertices": true,
   "fig7_reference_markers_visible_in_closeups": {
-    "d": "1/1",
-    "e": "1/1",
-    "h": "1/1",
-    "f": "17/21",
-    "g": "14/20"
+    "b (CL_S_R)": "10/10",
+    "c (ISL, SSL)": "15/21",
+    "d, e (ITL)": "2/2"
   },
   "fig7_class_mae_S03_L4": {
     "ALL": {
@@ -65,14 +63,14 @@
   },
   "fig7_itl_points": {
     "right": {
-      "gcz_error_mm": 11.51,
+      "gcz_error_mm": 11.508,
       "gczrl_error_mm": 0.59,
       "gcz_in_projection_region": false,
       "gcz_in_selection_region": true
     },
     "left": {
-      "gcz_error_mm": 4.68,
-      "gczrl_error_mm": 0.77,
+      "gcz_error_mm": 4.682,
+      "gczrl_error_mm": 0.765,
       "gcz_in_projection_region": false,
       "gcz_in_selection_region": true
     }
@@ -87,5 +85,28 @@
     "ITL": 2.212,
     "CL": 0.212
   },
-  "fig8_gray_vertices_equal_masks": true
+  "fig8_gray_vertices_equal_masks": true,
+  "fig7_closeups_are_crops_of_the_overview": true,
+  "fig7_camera": "posterior (+y towards the camera, +z up); the patient's right is on the right",
+  "fig7_cl_closeup_landmarks": [
+    {
+      "point_index": 0,
+      "side": "right",
+      "gcz_error_mm": 1.886,
+      "gczrl_error_mm": 2.311
+    },
+    {
+      "point_index": 7,
+      "side": "right",
+      "gcz_error_mm": 1.73,
+      "gczrl_error_mm": 1.73
+    },
+    {
+      "point_index": 9,
+      "side": "right",
+      "gcz_error_mm": 0.632,
+      "gczrl_error_mm": 0.632
+    }
+  ],
+  "fig8_closeups_are_crops_of_the_whole_view": true
 }
