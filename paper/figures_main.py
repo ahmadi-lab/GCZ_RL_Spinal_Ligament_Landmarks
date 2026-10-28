@@ -260,50 +260,66 @@ def fig4():
 
 # ------------------------------------------------------------------------------ Fig. 5
 def fig5():
+    """(a) Paired GCZ and GCZ-RL error per held-out subject with the relative reduction; (b) GCZ minus
+    GCZ-RL per held-out vertebra, grouped by subject. Exact values are computed from the per-case
+    errors of the primary run as in paper/reproducibility_check.py and must round to Tables 5 and the
+    per-vertebra file."""
     subj = pd.read_csv(P2 / "table_P2_4_per_subject.csv")
     vert = pd.read_csv(REPO / "paper" / "outputs" / "primary_per_vertebra_macro_mae.csv")
-    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 2.7), gridspec_kw={"width_ratios": [1, 3.3], "wspace": 0.2})
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.8, bottom=0.2)
-    dodge = {"GCZ": -0.2, "GCZ-RL": 0.0, "SLD": 0.2}
-    size = {"GCZ": 22, "GCZ-RL": 25, "SLD": 25}
+    cases = pd.read_csv(P2 / "per_vertebra_per_ligament_metrics.csv")
+    cases = cases[~cases.missing_prediction]
+    exact_s = {(m, s): x.groupby("ligament").mae_mm.mean().mean() for (m, s), x in cases.groupby(["method", "subject"])}
+    exact_v = {(m, c): x.mae_mm.mean() for (m, c), x in cases.groupby(["method", "case"])}
+    for r in subj.itertuples():
+        assert round(exact_s[(r.method, r.held_out_subject)], 3) == r.MAE_mm, r
+    for r in vert.itertuples():
+        for m, col in (("GCZ", "GCZ"), ("GCZ-RL", "_3")):
+            assert round(exact_v[(m, r.case)], 3) == getattr(r, col), (r.case, m)
 
-    def pair(ax, x, row):
-        ax.plot([x + dodge["GCZ"], x], [row["GCZ"], row["GCZ-RL"]], color=fs.NEUTRAL, linewidth=0.9, zorder=1)
-        for mth in ("GCZ", "SLD", "GCZ-RL"):
-            ax.scatter(x + dodge[mth], row[mth], marker=fs.MARKER[mth], s=size[mth], color=fs.METHOD[mth],
-                       linewidths=0, zorder=3)
+    fig, (a, b) = plt.subplots(1, 2, figsize=(7.2, 2.55), gridspec_kw={"width_ratios": [1.0, 1.9], "wspace": 0.3})
+    fig.subplots_adjust(left=0.065, right=0.99, top=0.8, bottom=0.2)
+    subjects = ["S01", "S02", "S03"]
+    for i, s in enumerate(subjects):
+        g, r = exact_s[("GCZ", s)], exact_s[("GCZ-RL", s)]
+        a.plot([r, g], [i, i], color=fs.NEUTRAL, lw=1.0, zorder=1)
+        a.plot(g, i, "s", ms=5.0, color=fs.METHOD["GCZ"], zorder=3)
+        a.plot(r, i, "o", ms=5.4, color=fs.METHOD["GCZ-RL"], zorder=3)
+        a.text(g + 0.08, i, f"{100 * (g - r) / g:.1f}% lower", va="center", ha="left", fontsize=6.8)
+    a.set_yticks(range(3), subjects)
+    a.set_ylim(2.6, -0.6)
+    a.set_xlim(1.8, 4.6)
+    a.set_xlabel("Macro-averaged MAE (mm)")
+    a.set_ylabel("Held-out subject")
+    a.tick_params(axis="y", length=0)
+    fs.panel(a, "a", "By held-out subject", x=-0.22)
 
-    for i, s in enumerate(["S01", "S02", "S03"]):
-        pair(a, i, {m: float(subj[(subj.method == m) & (subj.held_out_subject == s)].MAE_mm.iloc[0])
-                    for m in ("GCZ", "GCZ-RL", "SLD")})
-    a.set_xticks(range(3), ["S01", "S02", "S03"])
-    a.set_xlim(-0.5, 2.5)
-    a.set_ylabel("Macro-averaged MAE (mm)")
-    a.set_xlabel("Held-out subject")
-    fs.ygrid(a)
-    fs.panel(a, "a", "By held-out subject")
-
-    subjects = [c.split("_")[0] for c in vert.case]
-    x = np.arange(len(vert))
-    for xi, (_, r) in zip(x, vert.iterrows()):
-        pair(b, xi, r)
+    d = np.array([exact_v[("GCZ", c)] - exact_v[("GCZ-RL", c)] for c in vert.case])
+    subj_of = [c.split("_")[0] for c in vert.case]
+    x = np.arange(len(d))
+    b.axhline(0, color=fs.INK, lw=0.8, zorder=1)
+    for xi, di in zip(x, d):
+        b.plot([xi, xi], [0, di], color=fs.NEUTRAL, lw=1.2, zorder=2)
+        b.plot(xi, di, "o", ms=5.0, zorder=3, mfc=fs.INK if di > 0 else "white", mec=fs.INK, mew=0.9)
+    worse = [i for i in x if d[i] <= 0]
+    for i in worse:
+        b.annotate(f"{SUBJECT_CODE[subj_of[i]]} {vert.case[i].split('_')[1]}: {d[i]:.3f} mm".replace("-", "−"), (i, d[i]),
+                   xytext=(0, -11), textcoords="offset points", ha="center", va="top", fontsize=6.6)
     b.set_xticks(x, [c.split("_")[1] for c in vert.case])
-    starts = [i for i in range(len(x)) if i == 0 or subjects[i] != subjects[i - 1]] + [len(x)]
+    starts = [i for i in range(len(x)) if i == 0 or subj_of[i] != subj_of[i - 1]] + [len(x)]
     for lo, hi in zip(starts[:-1], starts[1:]):
-        b.text(0.5 * (lo + hi - 1), -0.2, SUBJECT_CODE[subjects[lo]], transform=b.get_xaxis_transform(),
+        b.text(0.5 * (lo + hi - 1), -0.2, SUBJECT_CODE[subj_of[lo]], transform=b.get_xaxis_transform(),
                ha="center", va="top", fontsize=7.5)
         if lo:
-            b.axvline(lo - 0.5, color=fs.GRID, linewidth=0.8)
-    b.set_xlim(-0.6, len(vert) - 0.4)
-    fs.ygrid(b)
-    n_better = int((vert["GCZ-RL"] < vert["GCZ"]).sum())
-    fs.panel(b, "b", f"By held-out vertebra (GCZ-RL below GCZ for {n_better} of {len(vert)})")
-    fig.legend(handles=fs.legend_handles([("GCZ", fs.METHOD["GCZ"], "s", 4.6), ("GCZ-RL", fs.METHOD["GCZ-RL"], "o", 5),
-                                          ("SLD", fs.METHOD["SLD"], "^", 5)])
-               + [fs.matplotlib.lines.Line2D([], [], color=fs.NEUTRAL, lw=0.9, label="GCZ to GCZ-RL")],
-               loc="upper center", ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0))
+            b.axvline(lo - 0.5, color=fs.GRID, lw=0.8, zorder=0)
+    b.set_xlim(-0.6, len(d) - 0.4)
+    b.set_ylim(-0.5, 2.1)
+    b.set_ylabel("GCZ minus GCZ-RL (mm)\nabove 0: GCZ-RL lower")
+    fs.panel(b, "b", f"By held-out vertebra: GCZ-RL lower for {int((d > 0).sum())} of {len(d)}", x=-0.1)
+    fig.legend(handles=fs.legend_handles([("GCZ", fs.METHOD["GCZ"], "s", 5.0), ("GCZ-RL", fs.METHOD["GCZ-RL"], "o", 5.4)]),
+               loc="upper left", ncol=2, frameon=False, bbox_to_anchor=(0.06, 1.0))
     files = fs.save(fig, OUT, "fig5_patient_level")
-    audit("Fig. 5", files, [P2 / "table_P2_4_per_subject.csv", REPO / "paper/outputs/primary_per_vertebra_macro_mae.csv"])
+    audit("Fig. 5", files, [P2 / "table_P2_4_per_subject.csv", REPO / "paper/outputs/primary_per_vertebra_macro_mae.csv",
+                            P2 / "per_vertebra_per_ligament_metrics.csv"])
 
 
 # ------------------------------------------------------------------------------ Fig. 6
@@ -334,7 +350,7 @@ ABLATION_LABELS = ["GCZ (geometry only)", "GCZ with projection, no residual", "G
 # Drawing styles of Fig. 7: A, monochrome; B, the method colours of the other figures (used in the paper).
 FIG7_STYLE = {"A": {"GCZ": ("#8a8a8a", "s"), "GCZ-RL": (fs.INK, "o"), "other": ("#4d4d4d", "o")},
               "B": {"GCZ": (fs.METHOD["GCZ"], "s"), "GCZ-RL": (fs.METHOD["GCZ-RL"], "o"), "other": ("#4d4d4d", "o")}}
-CLASS_LABEL_OFFSET = {"CL": (-5, 0, "right")}
+CLASS_LABEL_OFFSET = {}
 
 
 def axis_break(ax, which="y"):
@@ -358,7 +374,7 @@ def fig7(variant="B", stem="fig7_components"):
     atl = pd.read_csv(REV / "table_atlas_icp.csv")
     st = FIG7_STYLE[variant]
     fig = plt.figure(figsize=(7.2, 5.6))
-    gs = fig.add_gridspec(2, 2, hspace=0.62, wspace=0.62)
+    gs = fig.add_gridspec(2, 2, hspace=0.62, wspace=0.55)
     fig.subplots_adjust(left=0.335, right=0.985, top=0.94, bottom=0.08)
 
     # (a) Cleveland dot plot of the ablation, in methodological order
@@ -373,13 +389,13 @@ def fig7(variant="B", stem="fig7_components"):
         ax.plot(v, i, marker=mk, ms=5.4 if k != "other" else 4.6, color=col, ls="", zorder=3)
         ax.text(1.04, i, f"{v:.3f}", transform=ax.get_yaxis_transform(), va="center", ha="left", fontsize=7,
                 color=fs.INK, fontweight="bold" if k != "other" else "normal")
-    ax.text(1.04, -0.95, "MAE (mm)", transform=ax.get_yaxis_transform(), va="bottom", ha="left", fontsize=6.3,
+    ax.text(1.04, -0.75, "MAE (mm)", transform=ax.get_yaxis_transform(), va="center", ha="left", fontsize=6.3,
             color=fs.MUTED)
     ax.set_yticks(range(n), ABLATION_LABELS)
     for t, k in zip(ax.get_yticklabels(), keys):
         if k != "other":
             t.set_fontweight("bold")
-    ax.set_ylim(n - 0.5, -0.6)
+    ax.set_ylim(n - 0.5, -1.05)
     ax.set_xlim(1.9, 3.0)
     ax.set_xticks(np.arange(2.0, 3.01, 0.2))
     ax.set_xlabel("Macro-averaged MAE (mm)")
@@ -401,7 +417,7 @@ def fig7(variant="B", stem="fig7_components"):
     ax.set_ylabel("Reference landmarks inside (%)")
     fs.ygrid(ax)
     axis_break(ax, "y")
-    fs.panel(ax, "b", "Region coverage and compactness", x=-0.2)
+
 
     # (c) grouped permutation importance: the value of each of the three folds, their mean, and their range
     ax = fig.add_subplot(gs[1, 0])
@@ -411,9 +427,9 @@ def fig7(variant="B", stem="fig7_components"):
     ax.set_axisbelow(True)
     for i, grp in enumerate(order):
         vals = perm[perm.group == grp].increase_mm.to_numpy()
-        ax.plot([vals.min(), vals.max()], [i, i], color=fs.NEUTRAL, lw=1.2, solid_capstyle="butt", zorder=1)
-        ax.plot(vals, [i] * len(vals), "o", ms=3.0, mfc="white", mec=fs.MUTED, mew=0.7, ls="", zorder=2)
-        ax.plot(vals.mean(), i, "D", ms=4.4, color=st["other"][0], ls="", zorder=3)
+        ax.plot([vals.min(), vals.max()], [i, i], color="#c9c9c9", lw=1.0, solid_capstyle="butt", zorder=1)
+        ax.plot(vals, [i] * len(vals), "|", ms=6.0, mec=fs.MUTED, mew=1.0, ls="", zorder=2)
+        ax.plot(vals.mean(), i, "D", ms=4.8, color=fs.INK, ls="", zorder=3)
     ax.set_yticks(range(len(order)), [o.replace(" (level, class)", "") for o in order])
     ax.set_ylim(len(order) - 0.5, -0.6)
     ax.set_xlim(0, None)
@@ -421,10 +437,10 @@ def fig7(variant="B", stem="fig7_components"):
     ax.tick_params(axis="y", length=0)
     ax.spines["left"].set_visible(False)
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], ls="", marker="D", color=st["other"][0], ms=4.4, label="Mean of 3 folds"),
-                       Line2D([], [], ls="-", marker="o", color=fs.NEUTRAL, mfc="white", mec=fs.MUTED, ms=3.0,
-                              lw=1.2, label="Each fold; line: range")],
-              loc="lower left", bbox_to_anchor=(-0.02, 1.0), ncol=2, frameon=False, handletextpad=0.3,
+    ax.legend(handles=[Line2D([], [], ls="", marker="D", color=fs.INK, ms=4.8, label="Mean of the 3 folds"),
+                       Line2D([], [], ls="", marker="|", mec=fs.MUTED, mew=1.0, ms=6.0, label="Single fold"),
+                       Line2D([], [], ls="-", color="#c9c9c9", lw=1.0, label="Range over folds")],
+              loc="lower left", bbox_to_anchor=(-0.62, 1.0), ncol=3, frameon=False, handletextpad=0.3,
               columnspacing=1.0, borderaxespad=0.15, fontsize=6.6)
     p = ax.get_position()  # shorter labels than (a): widen the axes to the left
     ax.set_position([0.2, p.y0, p.x1 - 0.2, p.height])
@@ -433,12 +449,13 @@ def fig7(variant="B", stem="fig7_components"):
     ax = fig.add_subplot(gs[1, 1])
     for r in atl.itertuples():
         ax.plot([r.icp_residual_mm] * 2, [r.GCZ_mm, r.GCZRL_mm], color=fs.GRID, linewidth=0.9, zorder=1)
-    for same in (True, False):
-        d = atl[atl.same_level == same]
-        for col, mth in (("GCZ_mm", "GCZ"), ("GCZRL_mm", "GCZ-RL")):
-            c, mk = st[mth]
-            ax.scatter(d.icp_residual_mm, d[col], marker=mk, s=20, facecolors=c if same else "white", edgecolors=c,
-                       linewidths=0.8, zorder=3)
+    # filled: same-level atlas, open: cross-level atlas; thin white edges keep coincident markers apart
+    for col, mth, z in (("GCZ_mm", "GCZ", 3), ("GCZRL_mm", "GCZ-RL", 4)):
+        c, mk = st[mth]
+        for same in (True, False):
+            d = atl[atl.same_level == same]
+            ax.scatter(d.icp_residual_mm, d[col], marker=mk, s=24, facecolors=c if same else "white",
+                       edgecolors="white" if same else c, linewidths=0.6 if same else 0.9, zorder=z)
     ax.set_xlabel("Quick-ICP residual of the selected atlas (mm)")
     ax.set_ylabel("Per-vertebra MAE (mm)")
     fs.ygrid(ax)
@@ -450,13 +467,19 @@ def fig7(variant="B", stem="fig7_components"):
                               label="Cross-level atlas (open markers)", markersize=4.5)],
               loc="lower left", bbox_to_anchor=(-0.02, 1.0), ncol=3, frameon=False, handletextpad=0.15,
               columnspacing=0.9, borderaxespad=0.15, fontsize=6.6)
-    ax.set_title("(d) Atlas residual and landmark error", loc="left", fontsize=8, fontweight="bold", x=-0.2, pad=17)
+
 
     # titles of the left panels start at the figure margin, above their long category labels
     for ax_, title, pad in ((fig.axes[0], "(a) Component ablation", 6),
-                            (fig.axes[2], "(c) Grouped permutation importance", 17)):
+                            (fig.axes[2], "(c) Grouped permutation importance", 19)):
         p = ax_.get_position()
         ax_.set_title(title, loc="left", fontsize=8, fontweight="bold", x=(0.012 - p.x0) / p.width, pad=pad)
+    # titles of the right panels start at one common figure position
+    xr = min(fig.axes[1].get_position().x0, fig.axes[3].get_position().x0) - 0.075
+    for ax_, title, pad in ((fig.axes[1], "(b) Region coverage and compactness", 6),
+                            (fig.axes[3], "(d) Atlas residual and landmark error", 19)):
+        p = ax_.get_position()
+        ax_.set_title(title, loc="left", fontsize=8, fontweight="bold", x=(xr - p.x0) / p.width, pad=pad)
     files = fs.save(fig, OUT, stem)
     audit("Fig. 7" if stem == "fig7_components" else f"Fig. 7 alternative {variant}", files,
           [REV / "table_ablation_components.csv", REV / "table_region_compactness.csv",
@@ -472,35 +495,40 @@ def fig7_alternatives():
 
 # ------------------------------------------------------------------------------ Fig. 8
 def fig8():
+    """Ten-seed ICP sensitivity: GCZ and GCZ-RL per run, the stored run of the reported results set
+    apart, and SLD (no ICP) as a reference line. One y-axis; no annotation inside the axes."""
     s = pd.read_csv(SEEDS / "summary.csv")
-    stats = json.loads((SEEDS / "summary.json").read_text())
     rep = json.loads((REPO / "paper" / "outputs" / "paper_numbers.json").read_text())
-    fig, ax = plt.subplots(figsize=(3.5, 2.6))
-    fig.subplots_adjust(left=0.16, right=0.98, top=0.8, bottom=0.17)
-    xs = [-1.4] + list(s.offset)
+    fig, ax = plt.subplots(figsize=(4.9, 2.55))
+    fig.subplots_adjust(left=0.12, right=0.985, top=0.8, bottom=0.19)
+    xs = [-1.6] + list(s.offset)
     gz = [rep["GCZ"]["macro_mae"]] + list(s.GCZ_mm)
     rl = [rep["GCZ-RL"]["macro_mae"]] + list(s.GCZRL_mm)
     for x, a, b in zip(xs, gz, rl):
-        ax.plot([x, x], [a, b], color=fs.NEUTRAL, linewidth=0.9, zorder=1)
-    ax.scatter(xs[1:], gz[1:], marker="s", s=22, color=fs.METHOD["GCZ"], linewidths=0, zorder=3)
-    ax.scatter(xs[1:], rl[1:], marker="o", s=25, color=fs.METHOD["GCZ-RL"], linewidths=0, zorder=3)
-    ax.scatter(xs[:1], gz[:1], marker="s", s=22, facecolors="white", edgecolors=fs.METHOD["GCZ"], linewidths=0.9, zorder=3)
-    ax.scatter(xs[:1], rl[:1], marker="o", s=25, facecolors="white", edgecolors=fs.METHOD["GCZ-RL"], linewidths=0.9,
+        ax.plot([x, x], [a, b], color="#bdbdbd", linewidth=1.0, zorder=1)
+    ax.scatter(xs[1:], gz[1:], marker="s", s=24, color=fs.METHOD["GCZ"], linewidths=0, zorder=3)
+    ax.scatter(xs[1:], rl[1:], marker="o", s=27, color=fs.METHOD["GCZ-RL"], linewidths=0, zorder=3)
+    ax.scatter(xs[:1], gz[:1], marker="s", s=24, facecolors="white", edgecolors=fs.METHOD["GCZ"], linewidths=1.0, zorder=3)
+    ax.scatter(xs[:1], rl[:1], marker="o", s=27, facecolors="white", edgecolors=fs.METHOD["GCZ-RL"], linewidths=1.0,
                zorder=3)
+    ax.axvline(-0.8, color=fs.GRID, linewidth=0.8, zorder=0)
     sld = rep["SLD"]["macro_mae"]
-    ax.axhline(sld, color=fs.METHOD["SLD"], linewidth=0.8, linestyle=(0, (4, 2)))
-    ax.set_xticks(xs, ["Stored"] + [str(int(k)) for k in s.offset], fontsize=6.8)
-    ax.set_xlabel("ICP seed offset (alignments recomputed)")
+    ax.axhline(sld, color=fs.METHOD["SLD"], linewidth=0.8, linestyle=(0, (4, 2)), zorder=0)
+    ax.set_xticks(xs, ["Stored"] + [str(int(k)) for k in s.offset])
+    ax.set_xlim(-2.3, 9.6)
+    ax.set_xlabel("ICP seed offset (all alignments recomputed)")
     ax.set_ylabel("Macro-averaged MAE (mm)")
     ax.set_ylim(1.9, 4.1)
     fs.ygrid(ax)
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], ls="", marker="s", color=fs.METHOD["GCZ"], ms=4.6, label="GCZ"),
-                       Line2D([], [], ls="", marker="o", color=fs.METHOD["GCZ-RL"], ms=5, label="GCZ-RL"),
-                       Line2D([], [], ls="", marker="o", mfc="white", mec=fs.MUTED, ms=5, label="Stored alignments"),
-                       Line2D([], [], color=fs.METHOD["SLD"], lw=0.8, ls=(0, (4, 2)), label="SLD (no ICP)")],
-              loc="lower left", bbox_to_anchor=(-0.18, 1.0), ncol=2, frameon=False, handletextpad=0.3,
-              columnspacing=1.0, borderaxespad=0.2, fontsize=6.8)
+    ax.legend(handles=[Line2D([], [], ls="", marker="s", color=fs.METHOD["GCZ"], ms=4.8, label="GCZ"),
+                       Line2D([], [], ls="", marker="o", color=fs.METHOD["GCZ-RL"], ms=5.2, label="GCZ-RL"),
+                       Line2D([], [], ls="", marker="o", mfc="white", mec=fs.MUTED, mew=1.0, ms=5.2,
+                              label="Stored alignments (reported run)"),
+                       Line2D([], [], color=fs.METHOD["SLD"], lw=0.8, ls=(0, (4, 2)), label=f"SLD, {sld:.3f} mm (no ICP)")],
+              loc="lower left", bbox_to_anchor=(-0.02, 1.01), ncol=4, frameon=False, handletextpad=0.3,
+              columnspacing=1.0, borderaxespad=0.0, fontsize=6.8)
+    assert len(s) == 10 and (s.GCZRL_mm < s.GCZ_mm).all()
     files = fs.save(fig, OUT, "fig8_icp_seeds")
     audit("Fig. 8", files, [SEEDS / "summary.csv", SEEDS / "summary.json", REPO / "paper/outputs/paper_numbers.json"],
           "Computational sensitivity analysis on the same three subjects; not independent validation")

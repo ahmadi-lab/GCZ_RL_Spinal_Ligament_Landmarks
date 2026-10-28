@@ -16,5 +16,76 @@
     "SSL": true,
     "ITL": true,
     "CL": true
-  }
+  },
+  "fig7_class_errors_recomputed_equal_metrics_file": true,
+  "fig7_all_predictions_on_mesh_vertices": true,
+  "fig7_reference_markers_visible_in_closeups": {
+    "d": "1/1",
+    "e": "1/1",
+    "h": "1/1",
+    "f": "17/21",
+    "g": "14/20"
+  },
+  "fig7_class_mae_S03_L4": {
+    "ALL": {
+      "GCZ": 2.932,
+      "GCZ-RL": 2.932,
+      "SLD": 2.165
+    },
+    "PLL": {
+      "GCZ": 2.031,
+      "GCZ-RL": 2.031,
+      "SLD": 5.222
+    },
+    "LF": {
+      "GCZ": 1.476,
+      "GCZ-RL": 1.476,
+      "SLD": 5.386
+    },
+    "ISL": {
+      "GCZ": 3.318,
+      "GCZ-RL": 3.032,
+      "SLD": 3.793
+    },
+    "SSL": {
+      "GCZ": 1.554,
+      "GCZ-RL": 0.867,
+      "SLD": 0.431
+    },
+    "ITL": {
+      "GCZ": 8.095,
+      "GCZ-RL": 0.678,
+      "SLD": 0.845
+    },
+    "CL": {
+      "GCZ": 3.435,
+      "GCZ-RL": 2.79,
+      "SLD": 1.554
+    }
+  },
+  "fig7_itl_points": {
+    "right": {
+      "gcz_error_mm": 11.51,
+      "gczrl_error_mm": 0.59,
+      "gcz_in_projection_region": false,
+      "gcz_in_selection_region": true
+    },
+    "left": {
+      "gcz_error_mm": 4.68,
+      "gczrl_error_mm": 0.77,
+      "gcz_in_projection_region": false,
+      "gcz_in_selection_region": true
+    }
+  },
+  "fig8_footprint_vertices_within_mm_of_expert": 2.5,
+  "fig8_footprint_share_of_mask_area_check": {
+    "ALL": 0.158,
+    "PLL": 0.18,
+    "LF": 0.181,
+    "ISL": 0.297,
+    "SSL": 0.282,
+    "ITL": 2.212,
+    "CL": 0.212
+  },
+  "fig8_gray_vertices_equal_masks": true
 }

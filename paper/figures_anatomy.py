@@ -178,56 +178,178 @@ def check_saved(name, drawn, ligs):
     assert dev < 1e-9, (name, dev)
 
 
-# ------------------------------------------------------------------------------ Fig. 7
-def fig_qualitative_insets():
+# ------------------------------------------------------------------------------ verification table
+def expert_part_labels(lig, pts):
+    """Annotation sub-group (file suffix, e.g. CL_S_R) of every merged expert point of a class."""
+    import re
+    from scipy.spatial import cKDTree
+    from data_io import LIGAMENT_SUFFIXES, landmark_dir, read_markup
+    tags, coords = [], []
+    for p in sorted(landmark_dir(*KEY).iterdir()):
+        for suf in LIGAMENT_SUFFIXES[lig]:
+            if re.match(rf".*_{re.escape(suf)}(_\d+)?\.mrk\.json$", p.name):
+                q = read_markup(p)
+                if q is not None:
+                    coords.append(np.atleast_2d(q))
+                    tags += [suf] * len(np.atleast_2d(q))
+    d, idx = cKDTree(np.vstack(coords)).query(np.atleast_2d(pts))
+    assert d.max() < 1e-6
+    return [tags[i] for i in idx]
+
+
+def visible(mesh, p, view, offset=0.4):
+    """True if nothing of the mesh lies between the point and a camera of the given view."""
+    vec = np.asarray(fs.VIEWS[view][0], float)
+    start = np.asarray(p, float) + vec * offset
+    hits, _ = mesh.ray_trace(start, start + vec * 400.0)
+    return len(hits) == 0
+
+
+def verify_landmarks():
+    """Every landmark of S03 L4 drawn in Fig. 7: class, side, sub-group of its matched reference,
+    coordinates of GCZ, GCZ-RL, and their Hungarian-matched references, errors, region membership,
+    and visibility in the posterior and left lateral views. Recomputed class errors must equal the
+    metrics file of the primary run."""
+    import pyvista as pv
+    from scipy.optimize import linear_sum_assignment
+    from scipy.spatial import cKDTree
     v, f = fm.mesh(KEY)
+    mesh = pv.PolyData(v, np.hstack([np.full((len(f), 1), 3), f]).ravel())
     gt = fm.cases.landmarks(*KEY)
     g0, rl = fm.preds("gcz")[KEY], fm.preds("gczrl")[KEY]
     check_saved("gcz", g0, fs.LIGAMENTS)
     check_saved("gczrl", rl, fs.LIGAMENTS)
+    _, thr = fm.calibration()
+    sel, proj = fm.region_masks(v, thr, third_fallback=True), fm.region_masks(v, thr, third_fallback=False)
+    kd = cKDTree(v)
+    met = pd.read_csv(fm.P2 / "per_vertebra_per_ligament_metrics.csv")
+    met = met[met.case == f"{KEY[0]}_{KEY[1]}"].set_index(["method", "ligament"]).mae_mm
+    xc = 0.5 * (v[:, 0].min() + v[:, 0].max())
+    rows, vis_ref = [], []
+    for lig in fs.LIGAMENTS:
+        g = np.atleast_2d(gt[lig])
+        part = expert_part_labels(lig, g)
+        for k, p in enumerate(g):
+            vis_ref.append({"ligament": lig, "part": part[k], "x": p[0], "y": p[1], "z": p[2],
+                            "visible_posterior": visible(mesh, p, "posterior"), "visible_left": visible(mesh, p, "left")})
+        match = {}
+        for name, P in (("GCZ", g0), ("GCZ-RL", rl)):
+            P = np.atleast_2d(P[lig])
+            d = np.linalg.norm(P[:, None] - g[None], axis=2)
+            ri, ci = linear_sum_assignment(d)
+            match[name] = dict(zip(ri, ci))
+            err = float(d[ri, ci].mean())
+            assert abs(err - met[(name, lig)]) < 1e-9, (name, lig, err, met[(name, lig)])
+        A, B = np.atleast_2d(g0[lig]), np.atleast_2d(rl[lig])
+        for i in range(len(A)):
+            ra, rb = g[match["GCZ"][i]], g[match["GCZ-RL"][i]]
+            rows.append({
+                "ligament": lig, "point_index": i, "side": "left" if B[i, 0] > xc else "right",
+                **{f"gcz_{c}": A[i, j] for j, c in enumerate("xyz")}, **{f"gczrl_{c}": B[i, j] for j, c in enumerate("xyz")},
+                "correction_mm": float(np.linalg.norm(B[i] - A[i])),
+                "gcz_ref_part": part[match["GCZ"][i]], **{f"gcz_ref_{c}": ra[j] for j, c in enumerate("xyz")},
+                "gcz_error_mm": float(np.linalg.norm(A[i] - ra)),
+                "gczrl_ref_part": part[match["GCZ-RL"][i]], **{f"gczrl_ref_{c}": rb[j] for j, c in enumerate("xyz")},
+                "gczrl_error_mm": float(np.linalg.norm(B[i] - rb)),
+                "gcz_dist_to_mesh_mm": float(kd.query(A[i])[0]), "gczrl_dist_to_mesh_mm": float(kd.query(B[i])[0]),
+                "gcz_in_selection_region": bool(sel[lig][kd.query(A[i])[1]]),
+                "gcz_in_projection_region": bool(proj[lig][kd.query(A[i])[1]]),
+                "gczrl_in_projection_region": bool(proj[lig][kd.query(B[i])[1]]),
+                "gcz_visible_posterior": visible(mesh, A[i], "posterior"), "gczrl_visible_posterior": visible(mesh, B[i], "posterior"),
+                "gcz_visible_left": visible(mesh, A[i], "left"), "gczrl_visible_left": visible(mesh, B[i], "left")})
+    tab = pd.DataFrame(rows)
+    tab.round(3).to_csv(OUT / "fig7_landmark_verification_S03_L4.csv", index=False)
+    pd.DataFrame(vis_ref).round(3).to_csv(OUT / "fig7_reference_visibility_S03_L4.csv", index=False)
+    CHECKS["fig7_class_errors_recomputed_equal_metrics_file"] = True
+    CHECKS["fig7_all_predictions_on_mesh_vertices"] = bool((tab[["gcz_dist_to_mesh_mm", "gczrl_dist_to_mesh_mm"]] < 1e-4).all().all())
+    return tab, pd.DataFrame(vis_ref)
+
+
+# ------------------------------------------------------------------------------ Fig. 7
+fs.VIEWS.setdefault("posteroinferior", ((0.0, np.sqrt(0.5), -np.sqrt(0.5)), (0.0, 0.0, 1.0)))
+VIEW_NAME = {"posterior": "posterior view", "posteroinferior": "posteroinferior oblique view (45° from below)",
+             "left": "left lateral view"}
+
+
+def marker_visible(mesh, p, view, r):
+    """A marker of radius r is visible if the ray towards the camera is free from its centre or from
+    one of four points at 0.7 r around it (perpendicular to the view direction)."""
+    vec = np.asarray(fs.VIEWS[view][0], float)
+    a = np.cross(vec, [0.0, 0.0, 1.0])
+    a = a / np.linalg.norm(a) if np.linalg.norm(a) > 1e-6 else np.array([1.0, 0.0, 0.0])
+    b = np.cross(vec, a)
+    for o in (np.zeros(3), a, -a, b, -b):
+        if visible(mesh, np.asarray(p, float) + 0.7 * r * o, view):
+            return True
+    return False
+
+
+def fig_qualitative_insets():
+    import pyvista as pv
+    v, f = fm.mesh(KEY)
+    mesh = pv.PolyData(v, np.hstack([np.full((len(f), 1), 3), f]).ravel())
+    gt = fm.cases.landmarks(*KEY)
+    g0, rl = fm.preds("gcz")[KEY], fm.preds("gczrl")[KEY]
+    tab, _ = verify_landmarks()
     met = pd.read_csv(fm.P2 / "per_vertebra_per_ligament_metrics.csv")
     met = met[met.case == f"{KEY[0]}_{KEY[1]}"].pivot(index="ligament", columns="method", values="mae_mm")
     xc = 0.5 * (v[:, 0].min() + v[:, 0].max())
-    pairs = [p for p in fm.correction_pairs(g0, rl, fm.CORRECTED) if np.linalg.norm(np.subtract(*p)) > 0.3]
-    lays = [layer("spheres", stack(gt, fs.LIGAMENTS), EXPERT_C, R_EXPERT),
-            layer("cubes", stack(g0, fs.LIGAMENTS), GCZ_C, E_GCZ),
-            {"kind": "lines", "pairs": pairs, "color": SEG_C, "radius": 0.2},
-            layer("spheres", stack(rl, fs.LIGAMENTS), RL_C, R_RL)]
+    def lays(ligs):
+        pairs = [p for p in fm.correction_pairs(g0, rl, ligs) if np.linalg.norm(np.subtract(*p)) > 0.3]
+        return [layer("spheres", stack(gt, ligs), EXPERT_C, R_EXPERT), layer("cubes", stack(g0, ligs), GCZ_C, E_GCZ),
+                {"kind": "lines", "pairs": pairs, "color": SEG_C, "radius": 0.15},
+                layer("spheres", stack(rl, ligs), RL_C, R_RL)]
+    pick = lambda d, lig, side=None: (np.atleast_2d(d[lig]) if side is None else  # noqa: E731
+                                      np.atleast_2d(d[lig])[(np.atleast_2d(d[lig])[:, 0] > xc) == (side == "left")])
+    # close-ups: letter, title, camera, the points that define the frame (reference and both predictions)
+    rois = [("d", "ITL, right tip", "posterior", "ITL", "right", 18),
+            ("e", "ITL, left tip", "posterior", "ITL", "left", 18),
+            ("h", "SSL, spinous process tip", "posterior", "SSL", None, 16),
+            ("f", "CL, right side", "posteroinferior", "CL", "right", None),
+            ("g", "ISL, spinous process", "left", "ISL", None, None)]
+    # one camera per overview (default centre and scale of render(), hence identical projections);
+    # each overview shows the classes of its close-ups, each close-up only its own class
+    renders, boxes, closeups = {}, {}, {}
+    for cam in ("posterior", "posteroinferior", "left"):
+        mine = [r for r in rois if r[2] == cam]
+        sets = [np.vstack([pick(gt, r[3], r[4]), pick(g0, r[3], r[4]), pick(rl, r[3], r[4])]) for r in mine]
+        img, xy, pxmm = render(v, f, cam, lays(sorted({r[3] for r in mine})), project=np.vstack(sets))
+        k = 0
+        for r, s in zip(mine, sets):
+            boxes[r[0]] = box_around(xy[k:k + len(s)], pxmm, 3.0, aspect=1.0, min_mm=r[5])
+            k += len(s)
+            closeups[r[0]] = render(v, f, cam, lays([r[3]]))[0]
+        renders[cam] = img
+    # marker visibility of every reference point inside each close-up (counted, not hidden)
+    vis = {}
+    for letter, _, cam, lig, side, _ in rois:
+        ref = pick(gt, lig, side)
+        vis[letter] = (sum(marker_visible(mesh, p, cam, R_EXPERT) for p in ref), len(ref))
+    CHECKS["fig7_reference_markers_visible_in_closeups"] = {k: f"{a}/{b}" for k, (a, b) in vis.items()}
 
-    # inset centres: the left ITL tip, and the CL landmark with the largest applied correction
-    side = lambda p: np.atleast_2d(p)[np.atleast_2d(p)[:, 0] > xc]  # noqa: E731
-    itl_pts = np.vstack([side(gt["ITL"]), side(g0["ITL"]), side(rl["ITL"])])
-    d_cl = np.linalg.norm(np.atleast_2d(rl["CL"]) - np.atleast_2d(g0["CL"]), axis=1)
-    k = int(np.argmax(d_cl))
-    cl_pts = np.vstack([np.atleast_2d(g0["CL"])[k], np.atleast_2d(rl["CL"])[k]])
-    CHECKS["fig7_cl_inset_correction_mm"] = round(float(d_cl[k]), 2)
-    post, xy, pxmm = render(v, f, "posterior", lays, project=np.vstack([itl_pts, cl_pts]))
-    b_itl = box_around(xy[:len(itl_pts)], pxmm, 4.0, aspect=1.0, min_mm=24)
-    b_cl = box_around(xy[len(itl_pts):], pxmm, 4.0, aspect=1.0, min_mm=24)
-    sp_pts = np.vstack([gt["ISL"], gt["SSL"], g0["ISL"], g0["SSL"], rl["ISL"], rl["SSL"]])
-    lat, xy2, pxmm2 = render(v, f, "left", lays, project=sp_pts)
-    b_sp = box_around(xy2, pxmm2, 3.0, aspect=1.0)
+    fig = plt.figure(figsize=(7.2, 6.3))
+    outer = fig.add_gridspec(3, 1, height_ratios=[1.0, 1.0, 0.85], hspace=0.22)
+    fig.subplots_adjust(left=0.01, right=0.99, top=0.915, bottom=0.065)
+    top = outer[0].subgridspec(1, 3, wspace=0.04)
+    for c, (cam, letter) in enumerate((("posterior", "a"), ("posteroinferior", "b"), ("left", "c"))):
+        img = renders[cam]
+        mine = [r[0] for r in rois if r[2] == cam]
+        pad = [boxes[m] + [-70, -120, 10, 10] for m in mine]
+        cb = union(content_box(img, pad=20), *pad)
+        ax = fig.add_subplot(top[0, c])
+        show(ax, crop(img, cb), f"({letter}) {VIEW_NAME[cam].split(' (')[0].capitalize()}")
+        for m in mine:
+            frame_outside(ax, boxes[m], cb[:2], m)
+    mid = outer[1].subgridspec(1, 5, wspace=0.07)
+    for c, letter in enumerate("defgh"):
+        r = next(x for x in rois if x[0] == letter)
+        ax = fig.add_subplot(mid[0, c])
+        show(ax, crop(closeups[letter], boxes[letter]), f"({letter}) {r[1]}", boxed=True)
 
-    fig = plt.figure(figsize=(7.2, 4.55))
-    gs = fig.add_gridspec(2, 4, width_ratios=[1.6, 1, 1, 1], height_ratios=[1, 0.9], wspace=0.07, hspace=0.3)
-    fig.subplots_adjust(left=0.01, right=0.99, top=0.95, bottom=0.085)
-    cb = union(content_box(post, pad=20), b_itl + [-6, -6, 6, 6], b_cl + [-6, -6, 6, 6])
-    ax = fig.add_subplot(gs[0, 0])
-    show(ax, crop(post, cb), "(a) Posterior view, all classes")
-    frame(ax, b_itl, cb[:2], "b")
-    frame(ax, b_cl, cb[:2], "c")
-
-    def mae(lig):
-        return f"{lig}: GCZ {met.loc[lig, 'GCZ']:.2f} mm, GCZ-RL {met.loc[lig, 'GCZ-RL']:.2f} mm"
-
-    show(fig.add_subplot(gs[0, 1]), crop(post, b_itl), "(b) ITL, left tip", mae("ITL"), boxed=True)
-    cl_side = "left" if np.atleast_2d(rl["CL"])[k, 0] > xc else "right"   # LPS: +x is the patient's left
-    show(fig.add_subplot(gs[0, 2]), crop(post, b_cl), f"(c) CL, {cl_side} side", mae("CL"), boxed=True)
-    show(fig.add_subplot(gs[0, 3]), crop(lat, b_sp), "(d) ISL and SSL, lateral", mae("ISL") + "\n" + mae("SSL"),
-         boxed=True)
-
-    # (e) per-class error of the three methods on this vertebra
-    ax = fig.add_subplot(gs[1, 1:])
+    # (i) per-class error of the three methods on this vertebra
+    ax = fig.add_subplot(outer[2])
+    pos = ax.get_position()
+    ax.set_position([0.08, pos.y0, 0.6, pos.height])
     order = fs.LIGAMENTS[::-1]
     for i, l in enumerate(order):
         a0, a1, s = met.loc[l, "GCZ"], met.loc[l, "GCZ-RL"], met.loc[l, "SLD"]
@@ -236,40 +358,58 @@ def fig_qualitative_insets():
                         arrowprops=dict(arrowstyle="-|>", color=fs.NEUTRAL, lw=0.9, shrinkA=3.5, shrinkB=3.5,
                                         mutation_scale=7))
         ax.plot(a0, i, "s", ms=4.6, color=GCZ_C, zorder=3)
-        ax.plot(s, i, "^", ms=4.8, color=SLD_C, zorder=3)
-        ax.plot(a1, i, "o", ms=4.8, color=RL_C, zorder=4)
+        ax.plot(s, i, "^", ms=4.8, color=SLD_C, zorder=4)
+        ax.plot(a1, i, "o", ms=4.8, color=RL_C, zorder=5)
         if l in ("ALL", "PLL", "LF"):
-            ax.text(9.55, i, r"$\alpha_L=0$", va="center", ha="right", fontsize=6.3, color=fs.MUTED)
+            ax.text(9.55, i, r"$\alpha_L=0$", va="center", ha="right", fontsize=6.5, color=fs.MUTED)
     ax.set_yticks(range(len(order)), order)
     ax.set_ylim(-0.6, len(order) - 0.4)
     ax.set_xlim(0, 9.6)
-    ax.set_xlabel("MAE on S03 L4 (mm)")
+    ax.set_xlabel("Class MAE on S03 L4 (mm; Hungarian-matched pairs)")
     ax.xaxis.grid(True, color=fs.GRID, linewidth=0.5)
     ax.set_axisbelow(True)
     ax.tick_params(axis="y", length=0)
+    ax.set_title("(i) Error by class on this vertebra", loc="left", fontsize=7.5, fontweight="bold", pad=3)
     mean = met.mean()
-    ax.set_title(f"(e) Error by class on this vertebra (macro MAE: GCZ {mean['GCZ']:.3f}, GCZ-RL {mean['GCZ-RL']:.3f}, "
-                 f"SLD {mean['SLD']:.3f} mm)", loc="left", fontsize=7.5, fontweight="bold", pad=3)
     CHECKS["fig7_macro_mae_S03_L4"] = {k: round(float(mean[k]), 3) for k in ("GCZ", "GCZ-RL", "SLD")}
-
-    # bottom-left: what the markers are
-    ax = fig.add_subplot(gs[1, 0])
-    ax.set_axis_off()
+    CHECKS["fig7_class_mae_S03_L4"] = {l: {k: round(float(met.loc[l, k]), 3) for k in ("GCZ", "GCZ-RL", "SLD")}
+                                       for l in fs.LIGAMENTS}
+    CHECKS["fig7_itl_points"] = {r.side: {"gcz_error_mm": round(r.gcz_error_mm, 2), "gczrl_error_mm": round(r.gczrl_error_mm, 2),
+                                          "gcz_in_projection_region": bool(r.gcz_in_projection_region),
+                                          "gcz_in_selection_region": bool(r.gcz_in_selection_region)}
+                                 for r in tab[tab.ligament == "ITL"].itertuples()}
     from matplotlib.lines import Line2D
-    h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.2, label="Expert attachment annotation"),
-         Line2D([], [], ls="", marker="s", color=GCZ_C, ms=4.6, label="GCZ landmark (atlas transfer)"),
-         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL landmark (corrected)"),
-         Line2D([], [], color=SEG_C, lw=1.0, label="Applied correction (GCZ to GCZ-RL)"),
-         Line2D([], [], ls="", marker="^", color=SLD_C, ms=4.8, label="SLD (panel e only)")]
-    ax.legend(handles=h, loc="center left", frameon=False, fontsize=6.8, handletextpad=0.5, labelspacing=0.9)
+    from matplotlib.patches import Rectangle
+    h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.4, label="Expert reference"),
+         Line2D([], [], ls="", marker="s", color=GCZ_C, ms=4.6, label="GCZ (atlas transfer)"),
+         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL (corrected)"),
+         Line2D([], [], color=SEG_C, lw=0.9, label="Applied correction"),
+         Line2D([], [], ls="", marker="^", color=SLD_C, ms=4.8, label="SLD (panel i only)"),
+         Rectangle((0, 0), 1, 1, fill=False, ec=fs.INK, lw=0.8, label="Close-up frame")]
+    fig.legend(handles=h, loc="upper center", ncol=6, frameon=False, bbox_to_anchor=(0.5, 0.998), fontsize=6.7,
+               handletextpad=0.4, columnspacing=1.1)
     files = fs.save(fig, OUT, "fig_qualitative_insets", vector=False)
     fm.audit("Fig. 7 (new)", files, [fm.P2 / "predictions_gcz.csv", fm.P2 / "predictions_gczrl.csv",
-                                     fm.P2 / "per_vertebra_per_ligament_metrics.csv", "raw mesh and annotations of S03 L4"])
+                                     fm.P2 / "per_vertebra_per_ligament_metrics.csv", "raw mesh and annotations of S03 L4",
+                                     "fig7_landmark_verification_S03_L4.csv"])
     return files
 
 
-# ------------------------------------------------------------------------------ Fig. 8
+def frame_outside(ax, b, origin, label, color=fs.INK):
+    """Thin unfilled close-up frame with its letter just above the top-left corner."""
+    from matplotlib.patches import Rectangle
+    x0, y0, x1, y1 = b
+    ox, oy = origin
+    ax.add_patch(Rectangle((x0 - ox, y0 - oy), x1 - x0, y1 - y0, fill=False, ec=color, lw=0.8))
+    ax.text(x0 - ox - 6, y0 - oy - 6, label, ha="right", va="bottom", fontsize=7.2, fontweight="bold", color=color)
+
+
+FOOT_MM = 2.5                                         # footprint: surface within 2.5 mm of an expert point
+FOOT_S, FOOT_I, FOOT = "#86c3e6", "#c3b1e2", "#9ed4c6"  # superior margin, inferior margin, other classes
+
+
 def fig_regions_margins():
+    from scipy.spatial import cKDTree
     v, f = fm.mesh(KEY)
     gt = fm.cases.landmarks(*KEY)
     rl = fm.preds("gczrl")[KEY]
@@ -279,91 +419,146 @@ def fig_regions_margins():
     ref = mv.region_mask(v, "ALL", mv.thresholds("Verse581"))
     CHECKS["fig8_masks_equal_margin_verification"] = bool(np.array_equal(ref, masks["ALL"]))
     walls = mv.body_walls(v)
-    grey = (np.array(fs.matplotlib.colors.to_rgb(REGION_C)) * 255).astype(np.uint8)
-    bone = (np.array(fs.matplotlib.colors.to_rgb(fs.BONE)) * 255).astype(np.uint8)
+    kd = cKDTree(v)
+    rgb_of = lambda c: (np.array(fs.matplotlib.colors.to_rgb(c)) * 255).astype(np.uint8)  # noqa: E731
+    bone = rgb_of(fs.BONE)
 
-    def tint(lig):
+    def footprint(pts):
+        m = np.zeros(len(v), bool)
+        for idx in kd.query_ball_point(np.atleast_2d(pts), FOOT_MM):
+            m[idx] = True
+        return m
+
+    def paint(parts):
         rgb = np.tile(bone, (len(v), 1))
-        rgb[masks[lig]] = grey
+        for m, c in parts:
+            rgb[m] = rgb_of(c)
         return rgb
+
+    foot = {}
+    for lig in ("ALL", "PLL"):
+        pp = mv.parts(*KEY, lig)
+        foot[lig] = {"S": footprint(pp["S"]), "I": footprint(pp["I"])}
+    for lig in ("LF", "ISL", "SSL", "ITL", "CL"):
+        foot[lig] = footprint(gt[lig])
+    # every footprint vertex lies within FOOT_MM of an expert point of its class; footprints are not masks
+    CHECKS["fig8_footprint_vertices_within_mm_of_expert"] = FOOT_MM
+    CHECKS["fig8_footprint_share_of_mask_area_check"] = {
+        l: round(float(((foot[l]["S"] | foot[l]["I"]) if l in ("ALL", "PLL") else foot[l]).sum() / max(masks[l].sum(), 1)), 3)
+        for l in fs.LIGAMENTS}
 
     def letter(ax, s):
         ax.text(0.025, 0.97, s, transform=ax.transAxes, ha="left", va="top", fontsize=7.5, fontweight="bold",
                 bbox=dict(fc="white", ec="none", pad=0.6, alpha=0.85))
 
-    exp_l = lambda l: layer("spheres", gt[l], EXPERT_C, R_EXPERT)  # noqa: E731
-    rl_l = lambda l: layer("spheres", rl[l], RL_C, R_RL)  # noqa: E731
-    letters = iter("abcdefghijklmnop")
+    r_e, r_p = 0.7, 1.0
+    exp_l = lambda l, r=r_e: layer("spheres", gt[l], EXPERT_C, r)  # noqa: E731
+    rl_l = lambda l: layer("spheres", rl[l], RL_C, r_p)  # noqa: E731
 
-    fig = plt.figure(figsize=(7.2, 7.0))
-    outer = fig.add_gridspec(2, 1, height_ratios=[1.0, 1.12], hspace=0.13)
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.925, bottom=0.005)
+    fig = plt.figure(figsize=(7.2, 6.9))
+    outer = fig.add_gridspec(4, 1, height_ratios=[1.2, 1.45, 1.45, 1.1], hspace=0.3)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.89, bottom=0.005)
 
-    # ALL (anterior view) and PLL (posterior view of the body, posterior arch removed for display):
-    # search region with expert points, and close-ups of the superior and inferior margins at one scale
-    top = outer[0].subgridspec(2, 3, width_ratios=[1.0, 1.25, 1.25], wspace=0.05, hspace=0.12)
+    # ---- part A: expert footprints, expert points, GCZ-RL landmarks
     STRIP_W, STRIP_H = 46.0, 21.0                 # close-up size, mm
     fb = mv.body_only(v, f, walls["y_post"] + 0.5)
     for r, (lig, view, faces) in enumerate((("ALL", "anterior", f), ("PLL", "posterior", fb))):
+        row = outer[r].subgridspec(1, 3, width_ratios=[1.0, 1.25, 1.25], wspace=0.05)
         pp = mv.parts(*KEY, lig)
         body = v[np.unique(faces)]
         center = 0.5 * (body.min(0) + body.max(0))
         scale = 0.5 * max(np.ptp(body[:, 0]), np.ptp(body[:, 2])) * 1.1
-        img_r, xy, pxmm = render(v, faces, view, [exp_l(lig)], rgb=tint(lig), center=center, scale=scale,
-                                 project=np.vstack([pp["S"].mean(0), pp["I"].mean(0)]))
-        img_p, _, _ = render(v, faces, view, [exp_l(lig), rl_l(lig)], center=center, scale=scale)
+        rgb = paint([(foot[lig]["S"], FOOT_S), (foot[lig]["I"], FOOT_I)])
+        img, xy, pxmm = render(v, faces, view, [exp_l(lig), rl_l(lig)], rgb=rgb, center=center, scale=scale,
+                               project=np.vstack([pp["S"].mean(0), pp["I"].mean(0)]))
         boxes = [np.r_[c - [STRIP_W / 2 * pxmm, STRIP_H / 2 * pxmm], c + [STRIP_W / 2 * pxmm, STRIP_H / 2 * pxmm]]
                  for c in xy]
-        cbx = union(content_box(img_r, pad=15), *boxes)
-        ax = fig.add_subplot(top[r, 0])
-        show(ax, crop(img_r, cbx))
-        letter(ax, next(letters))
+        cbx = union(content_box(img, pad=15), *[b + [-8, -8, 8, 8] for b in boxes])
+        ax = fig.add_subplot(row[0, 0])
+        show(ax, crop(img, cbx))
+        letter(ax, "ad"[r])
         for b in boxes:
             frame(ax, b, cbx[:2])
         ax.text(-0.04, 0.5, f"{lig}\n({'anterior' if lig == 'ALL' else 'posterior'})", transform=ax.transAxes,
                 rotation=90, ha="right", va="center", fontsize=7.2, fontweight="bold")
         for c, b in enumerate(boxes):
-            a = fig.add_subplot(top[r, c + 1])
-            show(a, crop(img_p, b), boxed=True)
-            letter(a, next(letters))
+            a = fig.add_subplot(row[0, c + 1])
+            show(a, crop(img, b), boxed=True)
+            letter(a, ("bc" if lig == "ALL" else "ef")[c])
         if r == 0:
-            for c, t in enumerate(["Search region and expert points", "Superior margin (close-up)",
-                                   "Inferior margin (close-up)"]):
-                fig.axes[c].set_title(t, loc="left", fontsize=7.3, fontweight="bold", pad=3)
+            for a, t in zip(fig.axes[-3:], ["Whole view with close-up frames", "Superior margin (close-up)",
+                                            "Inferior margin (close-up)"]):
+                a.set_title(t, loc="left", fontsize=7.3, fontweight="bold", pad=3)
 
-    # LF, ISL, SSL, ITL, CL: one camera per class; small regions are seen end-on
-    bot = outer[1].subgridspec(2, 5, wspace=0.05, hspace=0.06)
     xc = 0.5 * (v[:, 0].min() + v[:, 0].max())
     left = lambda p: np.atleast_2d(p)[np.atleast_2d(p)[:, 0] > xc]  # noqa: E731  (LPS: +x is the left)
-    spec = {"LF": ("superior", np.atleast_2d(gt["LF"]), "LF, superior view"),
-            "ISL": ("left", np.vstack([gt["ISL"], gt["SSL"]]), "ISL, left lateral"),
-            "SSL": ("posterior", np.atleast_2d(gt["SSL"]), "SSL, tip (posterior)"),
-            "ITL": ("left", left(gt["ITL"]), "ITL, left tip (lateral)"),
-            "CL": ("posterior", left(gt["CL"]), "CL, left side (posterior)")}
+    spec = {"LF": ("superior", np.atleast_2d(gt["LF"]), "LF, superior view", None),
+            "ISL": ("left", np.vstack([gt["ISL"], gt["SSL"]]), "ISL, left lateral", None),
+            "SSL": ("posterior", np.atleast_2d(gt["SSL"]), "SSL, tip (posterior)", 24),
+            "ITL": ("left", left(gt["ITL"]), "ITL, left tip (lateral)", 24),
+            "CL": ("posterior", left(gt["CL"]), "CL, left side (posterior)", None)}
+    row = outer[2].subgridspec(1, 5, wspace=0.05)
     for c, lig in enumerate(["LF", "ISL", "SSL", "ITL", "CL"]):
-        view, focus, title = spec[lig]
-        img_r, xy, pxmm = render(v, f, view, [exp_l(lig)], rgb=tint(lig), project=focus)
-        img_p, _, _ = render(v, f, view, [exp_l(lig), rl_l(lig)])
-        box = box_around(xy, pxmm, 3.0, aspect=1.0, min_mm=24 if lig in ("SSL", "ITL") else None)
-        for r, img in enumerate((img_r, img_p)):
-            ax = fig.add_subplot(bot[r, c])
-            show(ax, crop(img, box), boxed=True)
-            letter(ax, ("ghijk" if r == 0 else "lmnop")[c])
-            if r == 0:
-                ax.set_title(title, loc="left", fontsize=7.0, fontweight="bold", pad=3)
-            if c == 0:
-                ax.text(-0.04, 0.5, ["Search region and\nexpert points", "GCZ-RL landmarks\nand expert points"][r],
-                        transform=ax.transAxes, rotation=90, ha="right", va="center", fontsize=7.0)
+        view, focus, title, mn = spec[lig]
+        img, xy, pxmm = render(v, f, view, [exp_l(lig, 0.75 if lig in ("SSL", "ITL") else r_e), rl_l(lig)],
+                               rgb=paint([(foot[lig], FOOT)]), project=focus)
+        box = box_around(xy, pxmm, 3.0, aspect=1.0, min_mm=mn)
+        ax = fig.add_subplot(row[0, c])
+        show(ax, crop(img, box), boxed=True)
+        letter(ax, "ghijk"[c])
+        ax.set_title(title, loc="left", fontsize=7.0, fontweight="bold", pad=3)
+        spec[lig] = (view, focus, title, mn, box)
+        if c == 0:
+            ax.text(-0.06, 0.5, "Expert footprint,\nexpert points,\nGCZ-RL", transform=ax.transAxes, rotation=90,
+                    ha="right", va="center", fontsize=6.8)
+
+    # ---- part B: the calibrated GCZ search regions, exactly as computed (with the expert points)
+    row = outer[3].subgridspec(1, 7, wspace=0.05)
+    grey = rgb_of(REGION_C)
+    for c, lig in enumerate(fs.LIGAMENTS):
+        rgb = np.tile(bone, (len(v), 1))
+        rgb[masks[lig]] = grey
+        if lig in ("ALL", "PLL"):
+            faces = f if lig == "ALL" else fb
+            body = v[np.unique(faces)]
+            img, _, _ = render(v, faces, "anterior" if lig == "ALL" else "posterior", [exp_l(lig, 0.6)], rgb=rgb,
+                               center=0.5 * (body.min(0) + body.max(0)),
+                               scale=0.5 * max(np.ptp(body[:, 0]), np.ptp(body[:, 2])) * 1.1)
+            box = content_box(img, pad=10)
+            box = box_around(np.array([[box[0], box[1]], [box[2], box[3]]]), 1.0, 0.0, aspect=1.0)
+        else:
+            view, focus, _, mn, box = spec[lig]
+            img, _, _ = render(v, f, view, [exp_l(lig, 0.75 if lig in ("SSL", "ITL") else 0.6)], rgb=rgb)
+        ax = fig.add_subplot(row[0, c])
+        show(ax, crop(img, box), boxed=True)
+        letter(ax, "lmnopqr"[c])
+        ax.set_title(lig, loc="left", fontsize=7.0, fontweight="bold", pad=3)
+        if c == 0:
+            ax.text(-0.06, 0.5, "Calibrated GCZ\nsearch region\n(actual mask)", transform=ax.transAxes,
+                    rotation=90, ha="right", va="center", fontsize=6.8)
+        # the gray vertices of the render input are exactly the mask vertices
+        assert np.array_equal(np.all(rgb == grey, axis=1), masks[lig])
+    fig.canvas.draw()
+    first_a, first_b = fig.axes[0], fig.axes[-7]
+    for ax_, t in ((first_a, "A. Expert attachment footprints, expert annotations, and GCZ-RL landmarks"),
+                   (first_b, "B. Calibrated GCZ search regions used for projection (actual masks, unchanged)")):
+        top_y = max(a.get_position().y1 for a in fig.axes if abs(a.get_position().y1 - ax_.get_position().y1) < 0.08)
+        fig.text(0.012, top_y + 0.032, t, fontsize=7.6, fontweight="bold", ha="left", va="bottom")
     from matplotlib.lines import Line2D
     from matplotlib.patches import Patch, Rectangle
-    h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.4, label="Expert attachment annotation"),
-         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL landmark (final)"),
-         Patch(fc=REGION_C, ec="none", label="Calibrated search region (GCZ mask)"),
+    h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.4, label="Expert annotation"),
+         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL landmark"),
+         Patch(fc=FOOT_S, ec="none", label="Footprint, superior margin"),
+         Patch(fc=FOOT_I, ec="none", label="Footprint, inferior margin"),
+         Patch(fc=FOOT, ec="none", label="Footprint, other classes"),
+         Patch(fc=REGION_C, ec="none", label="GCZ search region (mask)"),
          Rectangle((0, 0), 1, 1, fill=False, ec=fs.INK, lw=0.8, label="Close-up frame")]
-    fig.legend(handles=h, loc="upper center", ncol=4, frameon=False, bbox_to_anchor=(0.53, 0.999), fontsize=6.9)
+    fig.legend(handles=h, loc="upper center", ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0), fontsize=6.7,
+               handletextpad=0.4, columnspacing=1.0)
     CHECKS["fig8_rl_inside_region"] = {l: bool(np.isin(np.round(np.atleast_2d(rl[l]), 4),
                                                        np.round(v[masks[l]], 4)).all(axis=1).all())
                                        for l in fs.LIGAMENTS}
+    CHECKS["fig8_gray_vertices_equal_masks"] = True
     files = fs.save(fig, OUT, "fig_regions_margins", vector=False)
     fm.audit("Fig. 8 (new)", files, [fm.P2 / "predictions_gczrl.csv", "raw mesh and annotations of S03 L4",
                                      "gcz.build_thresholds / candidate_vertices (fold holding out S03)"])
