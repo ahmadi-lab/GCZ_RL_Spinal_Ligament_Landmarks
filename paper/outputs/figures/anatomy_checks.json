@@ -1,0 +1,20 @@
+{
+  "fig7_macro_mae_S03_L4": {
+    "GCZ": 3.263,
+    "GCZ-RL": 1.972,
+    "SLD": 2.771
+  },
+  "gcz_drawn_vs_saved_max_deviation_mm": 0.0,
+  "gczrl_drawn_vs_saved_max_deviation_mm": 0.0,
+  "fig7_cl_inset_correction_mm": 3.83,
+  "fig8_masks_equal_margin_verification": true,
+  "fig8_rl_inside_region": {
+    "ALL": true,
+    "PLL": true,
+    "LF": true,
+    "ISL": true,
+    "SSL": true,
+    "ITL": true,
+    "CL": true
+  }
+}

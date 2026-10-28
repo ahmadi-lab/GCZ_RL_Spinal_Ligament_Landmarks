@@ -24,9 +24,9 @@ Numbering follows the revised journal manuscript. Abbreviations: `P1` =
 | Fig. 4 | Atlas-to-target prediction workflow (original) | — | `figs/fig_prediction_pipeline.png` |
 | Fig. 5 | Geometry-constrained correction (original drawing) | — (drawn) | `figs/gcz_residual_learning_framework.png` |
 | Fig. 6 | Primary evaluation by held-out subject and vertebra | `paper/figures_main.py` `fig5` | `paper/outputs/figures/fig5_patient_level.{pdf,svg,png}` |
-| Fig. 7 | Qualitative, three orthogonal views | `paper/fig6_qualitative_loso.py` | `paper/outputs/fig6_qualitative_loso_S03_L4.png` |
-| Fig. 7 caption | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
-| Fig. 8 | Expert annotations, candidate regions, GCZ-RL landmarks per class (S03 L4) | `paper/region_verification.py` | `paper/outputs/region_verification/fig_regions_footprints.{pdf,png}` |
+| Fig. 7 | GCZ and GCZ-RL on S03 L4 with magnified close-ups of the applied correction; per-class errors of GCZ, GCZ-RL, SLD | `paper/figures_anatomy.py fig_qualitative_insets` | `paper/outputs/figures/fig_qualitative_insets.{pdf,png}`, checks in `anatomy_checks.json` |
+| Fig. 7 and Fig. S7 captions | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
+| Fig. 8 | Expert annotations, calibrated search regions, GCZ-RL landmarks; ALL and PLL margin close-ups (S03 L4) | `paper/figures_anatomy.py fig_regions_margins` | `paper/outputs/figures/fig_regions_margins.{pdf,png}` (the earlier 3 × 7 grid stays in `paper/outputs/region_verification/`) |
 | Fig. 9 | Component analyses (ablation, compactness, importance, atlas) | `paper/figures_main.py` `fig7` | `paper/outputs/figures/fig7_components.{pdf,svg,png}` |
 | Fig. 10 | Ten-seed ICP sensitivity | `paper/figures_main.py` `fig8` | `paper/outputs/figures/fig8_icp_seeds.{pdf,svg,png}` |
 | Fig. 11 | Development analysis chart (original) | values of Table 9 | `figs/fig_literature_comparison_clean2.png` |
@@ -71,6 +71,7 @@ with the regenerated value, and exits with an error if any differs.
 | Table S17 (region verification) | `paper/region_verification.py` | `paper/outputs/region_verification/{region_verification_by_class,region_verification_per_vertebra,bands_fold_S03}.csv`, `tab_region_verification.tex` |
 | Figs. S4–S5 (method on real data) | `paper/figures_main.py` `fig1`, `fig4` | `paper/outputs/figures/fig1_pipeline.*`, `fig4_residual_correction.*` |
 | Section S16, Fig. S6 (ALL and PLL margins) | `paper/margin_verification.py` | `paper/outputs/margin_verification/{margin_check,margin_zn_by_vertebra}.csv`, `margin_summary.json`, `fig_margins_ALL_PLL.{pdf,png}` |
+| Section S17, Fig. S7 (previous Fig. 7, unchanged) | `paper/fig6_qualitative_loso.py` | `paper/outputs/fig6_qualitative_loso_S03_L4.png` |
 
 Every figure is listed with its input files in `docs/FIGURE_AUDIT.md` and
 `paper/outputs/figures/figure_audit.csv` (written by `paper/figures_main.py`); the candidate

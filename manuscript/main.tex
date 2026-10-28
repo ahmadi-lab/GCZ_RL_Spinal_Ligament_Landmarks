@@ -239,7 +239,7 @@ The calibrated regions define ligament-specific geometric search spaces on the t
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.80\textwidth]{fig_threshold_candidate_combined1.png}
-\caption{Threshold calibration and GCZ candidate regions. The calibration annotations define a mean location and variability for each ligament-specific search quantity. The band $\mu_L \pm k_L\sigma_L$ defines the admissible candidate region. The resulting zones are search regions, not the final landmarks.}
+\caption{Threshold calibration and GCZ candidate regions. The calibration annotations define a mean location and variability for each ligament-specific search quantity. The band $\mu_L \pm k_L\sigma_L$ defines the admissible candidate region. The resulting zones are search regions, not the final landmarks and not attachment footprints\rev{; Fig.~\ref{fig:regions_footprints} shows the real regions of a held-out vertebra next to its expert annotations}.}
 \label{fig:threshold_candidate}
 \end{figure*}
 
@@ -465,8 +465,8 @@ S03 & 9  & 5 & 2.512 & 2.652 & \textbf{2.117} \\
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.82\textwidth]{fig_qualitative_loso_S03_L4.png}
-\caption{Predictions of GCZ, GCZ-RL, and SLD on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03), shown in three orthogonal views. Small dark points are the expert reference landmarks; colored spheres are the predicted landmarks of each class. The vertebra was chosen because it shows the residual correction clearly: ITL improves from 8.10 to 0.68~mm, and CL, ISL, and SSL also change, whereas for ALL, PLL, and LF the inner validation of this fold selected $\alpha=0$, so GCZ and GCZ-RL coincide. It is not a typical case. Its improvement from GCZ to GCZ-RL ranks fifth of the 14 held-out vertebrae, and SLD performs worse on it than on average. Macro-averaged errors on this vertebra are 3.263~mm for GCZ, 1.972~mm for GCZ-RL, and 2.771~mm for SLD, against cohort means of 2.879, 2.150, and 2.224~mm (Table~\ref{tab:loso_ligament}). All points are read from the saved predictions of the code release.}
+\includegraphics[width=\textwidth]{fig_qualitative_insets.pdf}
+\caption{\rev{GCZ and GCZ-RL on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03; atlas S01 L1). Black spheres: expert attachment annotations; blue cubes: GCZ landmarks after atlas transfer; red spheres: GCZ-RL landmarks; dark segments: the applied correction from each GCZ landmark to its GCZ-RL landmark. (a) Posterior view of all classes, with the frames of the close-ups (b, c). (b) Left transverse process tip (ITL): the GCZ landmark lies on the posterior surface of the process and the corrected landmark at the tip. (c) The CL landmark with the largest applied correction on this vertebra (3.83~mm). (d) Spinous process in the left lateral view (ISL and SSL). Each close-up is a magnified crop of a render of the real mesh; markers are glyphs of fixed size in millimeters. (e) Error of GCZ, GCZ-RL, and SLD for each class on this vertebra; arrows run from GCZ to GCZ-RL. For ALL, PLL, and LF the inner validation of this fold selected $\alpha_L=0$, so GCZ and GCZ-RL coincide; their superior and inferior margins are shown in Fig.~\ref{fig:regions_footprints}. The vertebra shows the correction clearly but is not a typical case: its improvement from GCZ to GCZ-RL ranks fifth of the 14 held-out vertebrae, and SLD performs worse on it than on average (cohort means 2.879, 2.150, and 2.224~mm; Table~\ref{tab:loso_ligament}). All points are read from the saved predictions of the code release; the complete seven-class comparison of the three methods in three views is Supplementary Fig.~S7.}}
 \label{fig:qualitative_loso}
 \end{figure*}
 
@@ -544,15 +544,15 @@ The learned corrections were directionally consistent with the true residuals an
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=\textwidth]{fig_regions_footprints.pdf}
-\caption{\rev{Expert attachment annotations (top), GCZ candidate regions used for projection with the expert points as small dark dots (middle), and GCZ-RL landmarks (bottom; small gray points: expert annotations) for each ligament class on held-out vertebra S03 L4, with the regions calibrated on the training subjects S01 and S02. Each column uses one camera for its three rows. Every colored vertex of the middle row belongs to the region mask of the method; nothing is redrawn. The very small SSL and ITL regions are also marked with dots on their vertices. The regions are search regions that contain the attachment footprints rather than footprint segmentations: for ALL, PLL, and CL they extend over the full superior--inferior height, while the landmarks lie at the superior and inferior margins (close-ups in Supplementary Fig.~S6; Supplementary Sections~S14 and S16).}}
+\includegraphics[width=\textwidth]{fig_regions_margins.pdf}
+\caption{\rev{Expert attachment annotations (black spheres), calibrated search regions (gray; the GCZ masks used for projection, unchanged), and GCZ-RL landmarks (red spheres) on held-out vertebra S03 L4, with the regions calibrated on the training subjects S01 and S02. (a--f) ALL in the anterior view and PLL in the posterior view of the vertebral body (posterior arch removed for display). The search regions (a, d) cover the anterior and posterior body walls over their full height, because one band must contain the superior and inferior margins of all training vertebrae (Supplementary Section~S16); the expert annotations and the GCZ-RL landmarks lie on the superior (b, e) and inferior (c, f) margins, shown at one common scale in the framed close-ups. (g--k) Search region and expert points and (l--p) GCZ-RL landmarks and expert points for LF, ISL, SSL, ITL, and CL, with one camera per class; the small SSL and ITL regions are viewed end-on at the spinous and left transverse process tips. Every gray vertex belongs to the region mask of the method. The regions are search regions that contain the attachment footprints, not footprint segmentations (Supplementary Sections~S14 and S16, Fig.~S6).}}
 \label{fig:regions_footprints}
 \end{figure*}
 
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.95\textwidth]{fig7_components.pdf}
-\caption{\rev{Component analyses of the primary evaluation. (a) Macro-averaged MAE of the six configurations of Table~\ref{tab:ablation} in methodological order, from GCZ to the complete GCZ-RL; values to three decimals at the right; the horizontal axis starts at 1.9~mm. (b) Containment of the reference landmarks against the share of the vertebral surface covered by the projection region, one point per class (Table~\ref{tab:compactness}); the vertical axis starts at 80\%. (c) Grouped permutation importance of the residual regressors: increase in the held-out residual-prediction error when one feature group is permuted (mean and range over the three folds). (d) Quick-ICP residual of the selected atlas against the per-vertebra macro MAE of GCZ (squares) and GCZ-RL (circles); filled markers, same-level atlas; open markers, cross-level atlas; gray segments connect the two methods on each vertebra.}}
+\caption{\rev{Component analyses of the primary evaluation. (a) Macro-averaged MAE of the six configurations of Table~\ref{tab:ablation} in methodological order, from GCZ to the complete GCZ-RL; values to three decimals at the right; the horizontal axis starts at 1.9~mm. (b) Containment of the reference landmarks against the share of the vertebral surface covered by the projection region, one point per class (Table~\ref{tab:compactness}); the vertical axis starts at 80\%. (c) Grouped permutation importance of the residual regressors: increase in the held-out residual-prediction error when one feature group is permuted; open circles, the three folds; diamond, their mean; line, their range. (d) Quick-ICP residual of the selected atlas against the per-vertebra macro MAE of GCZ (squares) and GCZ-RL (circles); filled markers, same-level atlas; open markers, cross-level atlas; gray segments connect the two methods on each vertebra.}}
 \label{fig:components}
 \end{figure*}
 
@@ -597,12 +597,12 @@ CL  & 5.437 & 63.7\% & 3.426 & 80.7\% & \textbf{1.630} & \textbf{99.0\%} \\
 \end{tabular}}
 \end{table*}
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\includegraphics[width=0.99\columnwidth]{fig_literature_comparison_clean2.png}
+\includegraphics[width=0.8\textwidth]{fig_literature_comparison_clean2.png}
 \caption{Supplementary development analysis (values of Table~\ref{tab:literature}): per-ligament mean Euclidean error (top) and Pass@5 (bottom) for the original GCZ configuration and GCZ-RL, with SLD values shown for descriptive context only. The GCZ-RL configuration was partly chosen after held-out outputs had been inspected, and this SLD run used different preprocessing and a mismatched coordinate frame; the SLD values are not used for comparative ranking.}
 \label{fig:literature_chart}
-\end{figure}
+\end{figure*}
 
 \subsection{Effect of the correspondence rule}
 

@@ -522,6 +522,18 @@ The ALL and PLL annotations are stored as superior and inferior parts along the 
 \caption{Superior and inferior margins of ALL and PLL. (a) Mid-sagittal section of held-out vertebra S03 L4 in millimeters (anterior to the left, superior up): mesh vertices within 1.5~mm of the mid-sagittal plane (light), vertices of the ALL and PLL candidate regions (gray), body margins measured on the mesh (dashed), and the expert points and GCZ-RL landmarks within 6~mm of the plane. (b) ALL region, anterior view. (c) PLL region, posterior view of the vertebral body with the posterior arch removed for display. Solid lines in (b, c): body margins measured on the mesh. Regions calibrated on S01 and S02, as in the method. (d, e) Normalized height $z_n$ of the superior and inferior expert parts in each of the 14 vertebrae (dot: mean; bar: range; held-out subject S03 in bold) and the pooled band of the fold holding out S03 (shaded).}
 \label{fig:margins}
 \end{figure}
+
+\FloatBarrier
+\section*{S17. Complete qualitative comparison of the three methods}
+
+Figure~\ref{fig:qualitative_complete} is the qualitative figure of the previous version of the manuscript, unchanged. It shows the predictions of GCZ, GCZ-RL, and SLD for all seven classes on held-out vertebra S03 L4 in three orthogonal views (\texttt{paper/fig6\_qualitative\_loso.py}). The main text shows the same vertebra with magnified close-ups of the classes whose correction is active in this fold (Fig.~7) and the expert annotations, search regions, and GCZ-RL landmarks class by class (Fig.~8).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_qualitative_loso_S03_L4.png}
+\caption{Predictions of GCZ, GCZ-RL, and SLD on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03), shown in three orthogonal views. Small dark points are the expert reference landmarks; colored spheres are the predicted landmarks of each class. ITL improves from 8.09 to 0.68~mm, and CL, ISL, and SSL also change, whereas for ALL, PLL, and LF the inner validation of this fold selected $\alpha=0$, so GCZ and GCZ-RL coincide. Macro-averaged errors on this vertebra are 3.263~mm for GCZ, 1.972~mm for GCZ-RL, and 2.771~mm for SLD. All points are read from the saved predictions of the code release.}
+\label{fig:qualitative_complete}
+\end{figure}
 \revend
 
 \FloatBarrier
