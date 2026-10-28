@@ -101,6 +101,13 @@ def main():
              ("Second environment: GCZ-RL macro MAE (mm)", 2.418, fresh.loc[rl, "MAE_mm"], "C (archived)",
               "sensitivity_fresh_icp/table_P2_2_overall.csv")]
 
+    seed0 = PAPER / "icp_seed_sensitivity" / "offset_0.json"
+    if seed0.exists():  # ICP recomputed here with the method's seeds (executed, not archived)
+        s0 = json.loads(seed0.read_text())
+        rows += [("Recomputed ICP, seed offset 0: GCZ macro MAE (mm)", 3.208, s0["GCZ"]["macro_mae_mm"], "C",
+                  "icp_seed_sensitivity/offset_0.json"),
+                 ("Recomputed ICP, seed offset 0: GCZ-RL macro MAE (mm)", 2.418, s0["GCZ-RL"]["macro_mae_mm"], "C",
+                  "icp_seed_sensitivity/offset_0.json")]
     df = pd.DataFrame(rows, columns=["claim", "reported", "reproduced", "level", "artifact"])
     df["reproduced"] = df.reproduced.astype(float)
     df["abs_difference"] = (df.reported - df.reproduced).abs().round(4)

@@ -2,7 +2,7 @@
 # GCZ-RL - reproduce the paper with one command (Linux/macOS).
 #   bash run_all.sh            Part 1 + Part 2 + checks + paper numbers
 #   FRESH=1 bash run_all.sh    also recompute ICP geometry and SLD
-#   SLOW=1  bash run_all.sh    also Table 3 (about 25 min) and the original notebook
+#   SLOW=1  bash run_all.sh    also Table 3 (about 25 min), the original notebook, and the ICP seed analysis (about 100 min)
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=${PY:-.venv/bin/python}
@@ -17,6 +17,8 @@ if [ "${SLOW:-0}" = 1 ]; then
   "$PY" part1_dissertation_57/original_notebook/run_original_notebook.py
   "$PY" part1_dissertation_57/original_notebook/extract_tables.py
   "$PY" paper/table3_regressor_comparison.py
+  "$PY" paper/icp_seed_sensitivity.py run 0 1 2 3 4 5 6 7 8 9
+  "$PY" paper/icp_seed_sensitivity.py summary
 fi
 "$PY" part2_patient_loso_14/run_part2.py $F
 "$PY" part2_patient_loso_14/run_leakage_test.py

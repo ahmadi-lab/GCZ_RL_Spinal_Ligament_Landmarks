@@ -35,15 +35,17 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 6. **Code access during review.** Decide whether reviewers get access to the GitHub repository
    (it is private until publication). The revision is on the branch `revision-lin-tang`; merging it
    into `main` awaits approval.
-7. **ICP atlas selection.** The stored alignments reproduce every number exactly. Recomputing them
-   in another environment changed the atlas of 2 of 14 vertebrae (GCZ-RL 2.418 mm instead of
-   2.150 mm). This is disclosed in Supplementary S5 and explained by the atlas analysis of
-   Supplementary S11 (the ICP residual is not associated with landmark error).
+7. **ICP atlas selection.** The stored alignments reproduce every number exactly. Recomputing all
+   alignments with ten different ICP seeds (Supplementary S13) changed 2–4 of the 14 atlases per
+   run: GCZ-RL improved on GCZ in every run and for every subject (22.8–33.4 %), while its absolute
+   error ranged from 2.10 to 2.92 mm (mean 2.36 mm; reported 2.150 mm). This is stated in Results
+   4.4, the Discussion, and the Limitations. A more robust atlas initialization (pre-alignment,
+   multi-start ICP) is named as future work.
 
 ## Changes in this revision (responses to Dr. Lin and Dr. Tang)
 
 Every result was first reproduced from the public data with the released code
-(Supplementary S12, Table S15: 66 claims verified; the S02 reduction is now 10.0 %, previously
+(Supplementary S12, Table S15: 68 claims verified; the S02 reduction is now 10.0 %, previously
 computed from rounded means). The method and the reported primary results are unchanged.
 
 - **Annotation provenance** from the source publications (Section 3.1, Limitations).

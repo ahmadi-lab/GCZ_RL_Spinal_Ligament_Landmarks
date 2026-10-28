@@ -65,3 +65,5 @@ Calibration comparison: Random forest mean MAE (mm),2.307,2.307,B,table3_rows_fi
 Calibration comparison: Gradient boosting mean MAE (mm),2.337,2.337,B,table3_rows_fixed_ctx.csv,0.0,verified
 Second environment: GCZ macro MAE (mm),3.208,3.208,C (archived),sensitivity_fresh_icp/table_P2_2_overall.csv,0.0,verified
 Second environment: GCZ-RL macro MAE (mm),2.418,2.418,C (archived),sensitivity_fresh_icp/table_P2_2_overall.csv,0.0,verified
+"Recomputed ICP, seed offset 0: GCZ macro MAE (mm)",3.208,3.2080384443844925,C,icp_seed_sensitivity/offset_0.json,0.0,verified
+"Recomputed ICP, seed offset 0: GCZ-RL macro MAE (mm)",2.418,2.4177688865913347,C,icp_seed_sensitivity/offset_0.json,0.0002,verified

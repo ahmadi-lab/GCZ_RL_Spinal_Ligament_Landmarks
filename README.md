@@ -101,7 +101,7 @@ python paper/graphical_abstract.py                 # graphical abstract
 python paper/revision_analyses.py                  # component analyses (Section 4.4, Supplementary S8-S11)
 python paper/revision_figures.py                   # Fig. 7, Fig. S3
 python paper/revision_tables.py                    # table rows of Tables 6-8 and S10-S14 -> manuscript/tables
-python paper/reproducibility_check.py              # 66 reported claims vs regenerated values (Table S15)
+python paper/reproducibility_check.py              # 68 reported claims vs regenerated values (Table S15)
 python -m unittest discover -s tests               # geometric constraints and metrics
 ```
 
@@ -119,6 +119,12 @@ SpineLib files, which you fetch with `python scripts/fetch_spinelib.py`.
 > In a second environment, 2 of the 14 held-out vertebrae changed atlas. The result was
 > GCZ 3.208 mm and GCZ-RL 2.418 mm, against 2.879 and 2.150 mm in the paper; SLD was
 > unchanged. See Supplementary Section S5 and [docs/CODE_PAPER_AUDIT.md](docs/CODE_PAPER_AUDIT.md).
+>
+> `paper/icp_seed_sensitivity.py` quantifies this: it re-runs the complete nested evaluation with
+> all ICP alignments recomputed for ten seed offsets, with nothing else changed. GCZ-RL improved on
+> GCZ in every run (22.8–33.4 %, mean 26.9 %) and for every held-out subject in every run; its
+> absolute error ranged from 2.10 to 2.92 mm (mean 2.36 mm). Offset 0 reproduces the
+> second-environment result exactly (Supplementary Section S13).
 
 [docs/PAPER_MAP.md](docs/PAPER_MAP.md) lists, for every table and figure of the paper, the
 script that produces it and its output file.
@@ -147,7 +153,7 @@ its complete configuration reproduces the saved GCZ-RL predictions exactly.
 - **Atlas choice.** The ICP residual of the selected atlas is not associated with landmark
   error (Spearman ρ = 0.24).
 
-Outputs are in `paper/outputs/revision/`. `paper/reproducibility_check.py` verifies 66 main
+Outputs are in `paper/outputs/revision/`. `paper/reproducibility_check.py` verifies 68 main
 claims of the paper against the regenerated outputs.
 
 ## Notes on the evaluation

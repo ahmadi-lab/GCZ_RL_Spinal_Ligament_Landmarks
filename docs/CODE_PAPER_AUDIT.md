@@ -90,9 +90,21 @@ every analysis was re-run from commit `17d5661` with the pinned environment.
 | `paper/table3_regressor_comparison.py` | All values identical |
 | `code/verify_all.py` | 9 / 9 checks passed |
 | `run_leakage_test.py` | PASS (412 points, as in finding 14) |
-| `paper/reproducibility_check.py` | 66 / 66 claims verified; the S02 reduction is 10.0 %, not 10.1 % (it had been computed from rounded means) |
+| `paper/reproducibility_check.py` | 68 / 68 claims verified; the S02 reduction is 10.0 %, not 10.1 % (it had been computed from rounded means) |
 
 The component analyses of the revision (`paper/revision_analyses.py`) reproduce the saved
 GCZ-RL predictions from the stored geometry and fold models with a maximum coordinate difference
 of 6e-14 mm. Files that differ between runs only in provenance (time stamps, `"gcz_geometry":
 "checkpoint"`) were kept at their committed versions.
+
+### ICP seed sensitivity (2026-10-27)
+
+`paper/icp_seed_sensitivity.py` re-ran the complete nested evaluation ten times with every ICP
+alignment recomputed and the ICP sampling seeds of `run_part2.gcz_predict` shifted by
+10000 × offset. Folds, calibration, fallback and farthest-point-sampling seeds, Extra Trees
+seeds, selection grids, and evaluation were unchanged; the stored checkpoints were not touched.
+Offset 0 reproduced the second-environment result of finding 14 exactly (3.208 / 2.418 mm).
+Over the ten offsets, 2–4 of 14 atlases differed from the stored alignments; GCZ-RL improved on
+GCZ in every run (22.8–33.4 %) and for every held-out subject in every run; GCZ-RL ranged from
+2.103 to 2.918 mm (mean 2.357, SD 0.239) and GCZ from 2.844 to 3.888 mm. GCZ-RL was below SLD
+(2.224 mm) in 3 of 10 runs.

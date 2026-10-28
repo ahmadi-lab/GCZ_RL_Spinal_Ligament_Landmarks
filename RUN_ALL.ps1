@@ -4,7 +4,7 @@
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1                 # Part 1 + Part 2 + checks + paper numbers
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Part 2         # primary LOSO only
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Fresh          # also recompute ICP geometry and SLD
-  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 25 min) and the original notebook
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 25 min), the original notebook, and the ICP seed analysis (about 100 min)
 
   Raw data: fetched automatically into dataset\raw unless GCZRL_RAW_ROOT points to an existing copy.
 #>
@@ -53,6 +53,8 @@ if ($Part -in @('1', 'all')) {
         Run 'Original notebook (matching diagnostic, alignment)' @('part1_dissertation_57\original_notebook\run_original_notebook.py')
         Run 'Original notebook tables' @('part1_dissertation_57\original_notebook\extract_tables.py')
         Run 'Table 3 regressor comparison' @('paper\table3_regressor_comparison.py')
+        Run 'ICP seed sensitivity (10 runs, about 100 min)' @('paper\icp_seed_sensitivity.py', 'run', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+        Run 'ICP seed sensitivity summary' @('paper\icp_seed_sensitivity.py', 'summary')
     }
 }
 if ($Part -in @('2', 'all')) {

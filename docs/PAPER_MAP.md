@@ -41,7 +41,7 @@ Table rows of Tables 6–8 and S10–S15 are written by `paper/revision_tables.p
 
 `paper/make_paper_numbers.py` compares every value listed in `paper/expected_values.json`
 with the regenerated value, and exits with an error if any differs.
-`paper/reproducibility_check.py` compares 66 main claims with the regenerated outputs
+`paper/reproducibility_check.py` compares 68 main claims with the regenerated outputs
 (Supplementary Table S15).
 
 ## Supplementary material
@@ -60,3 +60,4 @@ with the regenerated value, and exits with an error if any differs.
 | Tables S12–S13, Fig. S3 (residual interpretability) | `paper/revision_analyses.py interpretability`, `paper/revision_figures.py` | `REV/table_residual_agreement.csv`, `REV/feature_importance_*.csv`, `REV/residual_vectors_heldout.csv`, `REV/fig_residual_vectors_S03_L4.png` |
 | Table S14 (atlas and ICP) | `paper/revision_analyses.py atlas` | `REV/table_atlas_icp.csv` |
 | Table S15 (reproducibility) | `paper/reproducibility_check.py` | `REV/reproducibility_table.{csv,tex}` |
+| Table S16, Fig. S4 (ICP seed sensitivity; Sec. 4.4, Limitations) | `paper/icp_seed_sensitivity.py run 0 … 9`, then `summary` | `paper/outputs/icp_seed_sensitivity/{offset_*.json,summary.csv,summary.json,tab_icp_seeds.tex,fig_icp_seeds.*}` |
