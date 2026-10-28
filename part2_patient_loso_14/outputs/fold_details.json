@@ -80,7 +80,7 @@
       "ITL": 25.67019465359745,
       "CL": 14.561928103489764
     },
-    "gcz_geometry": "computed",
+    "gcz_geometry": "checkpoint",
     "test_atlas_choice": {
       "S01_L1": "S03_L1 (residual 1.38 mm)",
       "S01_L2": "S03_L2 (residual 1.56 mm)",
@@ -171,7 +171,7 @@
       "ITL": 33.91962116609723,
       "CL": 8.291880377506594
     },
-    "gcz_geometry": "computed",
+    "gcz_geometry": "checkpoint",
     "test_atlas_choice": {
       "S02_L1": "S03_L2 (residual 1.28 mm)",
       "S02_L2": "S03_L2 (residual 1.14 mm)",
@@ -261,7 +261,7 @@
       "ITL": 15.980294924315427,
       "CL": 5.4447288462753285
     },
-    "gcz_geometry": "computed",
+    "gcz_geometry": "checkpoint",
     "test_atlas_choice": {
       "S03_L1": "S01_L1 (residual 2.16 mm)",
       "S03_L2": "S01_L1 (residual 1.61 mm)",

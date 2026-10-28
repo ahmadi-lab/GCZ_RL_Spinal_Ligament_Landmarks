@@ -1,5 +1,5 @@
 {
-  "sld_state": "computed",
+  "sld_state": "checkpoint",
   "sld_diagnostics": {
     "S01": {
       "errors": [],
@@ -35,5 +35,5 @@
     }
   },
   "folds_completed": 3,
-  "seconds": 369
+  "seconds": 181
 }

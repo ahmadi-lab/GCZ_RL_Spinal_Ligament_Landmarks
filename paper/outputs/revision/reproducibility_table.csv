@@ -54,8 +54,8 @@ ITL: GCZ-RL MAE (mm),1.796,1.796,B,table_P2_3_per_ligament.csv,0.0,verified
 CL: GCZ MAE (mm),2.302,2.302,B,table_P2_3_per_ligament.csv,0.0,verified
 CL: SLD MAE (mm),1.591,1.591,B,table_P2_3_per_ligament.csv,0.0,verified
 CL: GCZ-RL MAE (mm),2.18,2.18,B,table_P2_3_per_ligament.csv,0.0,verified
-Leakage test: max coordinate difference (mm),0.0,0.0,C,table_P2_5_leakage_test.json,0.0,verified
-Leakage test: points compared,424.0,424.0,C,table_P2_5_leakage_test.json,0.0,verified
+"Leakage test, recomputed here: max coordinate difference (mm)",0.0,0.0,C,table_P2_5_leakage_test_recomputed.json,0.0,verified
+"Leakage test, original run: points compared",424.0,424.0,C (archived),table_P2_5_leakage_test.json,0.0,verified
 Development: GCZ macro MAE (mm),3.708,3.708,B,table_4_4_heldout_results.csv,0.0,verified
 Development: GCZ Pass@5 (%),79.8,79.8,B,table_4_4_heldout_results.csv,0.0,verified
 Development: GCZ-RL macro MAE (mm),2.946,2.946,B,table_4_4_heldout_results.csv,0.0,verified

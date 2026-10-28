@@ -33,7 +33,8 @@ def main():
     overall = pd.read_csv(P2 / "table_P2_2_overall.csv").set_index("method")
     lig = pd.read_csv(P2 / "table_P2_3_per_ligament.csv").set_index(["method", "ligament"]).MAE_mm
     subj = pd.read_csv(P2 / "table_P2_4_per_subject.csv").set_index(["method", "held_out_subject"]).MAE_mm
-    leak = json.loads((P2 / "table_P2_5_leakage_test.json").read_text())
+    leak = json.loads((P2 / "table_P2_5_leakage_test.json").read_text())                 # archived original run
+    leak_here = json.loads((P2 / "table_P2_5_leakage_test_recomputed.json").read_text())  # run_leakage_test.py here
     folds = json.loads((P2 / "fold_details.json").read_text())
     dev = pd.read_csv(P1 / "table_4_4_heldout_results.csv")
     t3 = pd.read_csv(PAPER / "table3_rows_fixed_ctx.csv")
@@ -83,9 +84,10 @@ def main():
     for c, vals in table4.items():
         for m, v in zip((g, sld, rl), vals):
             rows.append((f"{c}: {m} MAE (mm)", v, lig[(m, c)], "B", "table_P2_3_per_ligament.csv"))
-    rows += [("Leakage test: max coordinate difference (mm)", 0.0, leak["max_abs_coordinate_difference_mm"], "C",
-              "table_P2_5_leakage_test.json"),
-             ("Leakage test: points compared", 424, leak["points_compared"], "C", "table_P2_5_leakage_test.json")]
+    rows += [("Leakage test, recomputed here: max coordinate difference (mm)", 0.0,
+              leak_here["max_abs_coordinate_difference_mm"], "C", "table_P2_5_leakage_test_recomputed.json"),
+             ("Leakage test, original run: points compared", 424, leak["points_compared"], "C (archived)",
+              "table_P2_5_leakage_test.json")]
     dev = dev.set_index(["method", "ligament"])
     for name, mae, p5 in (("GCZ", 3.708, 79.8), ("GCZ-RL", 2.946, 88.1)):
         rows += [(f"Development: {name} macro MAE (mm)", mae, dev.loc[(name, "Mean"), "MAE_mm"], "B",

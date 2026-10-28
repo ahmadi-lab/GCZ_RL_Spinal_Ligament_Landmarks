@@ -1,14 +1,14 @@
-[18:48:26] 57 vertebrae: 20 calibration, 37 held-out; 27 held-out vertebrae have expert annotations
-[18:48:26] GCZ geometry read from checkpoint gcz_heldout_table44.pkl (use --fresh to recompute)
-[18:48:26] GCZ geometry read from checkpoint gcz_input_for_gczrl.pkl (use --fresh to recompute)
-[18:48:34] training samples: 1683 x 36 from 20 calibration vertebrae
-[18:48:35] Table 4.3: Ridge evaluated (leave-one-vertebra-out, 20 folds)
-[18:48:39] Table 4.3: KNN evaluated (leave-one-vertebra-out, 20 folds)
-[18:49:01] Table 4.3: RandomForest evaluated (leave-one-vertebra-out, 20 folds)
-[18:49:49] Table 4.3: GradientBoosting evaluated (leave-one-vertebra-out, 20 folds)
-[18:50:13] Table 4.3: HistGradientBoosting evaluated (leave-one-vertebra-out, 20 folds)
-[18:50:22] Table 4.3: ET-1 evaluated (leave-one-vertebra-out, 20 folds)
-[18:50:40] Table 4.3: ET-2 evaluated (leave-one-vertebra-out, 20 folds)
-[18:50:54] Table 4.3: ET-3 evaluated (leave-one-vertebra-out, 20 folds)
-[18:51:12] Table 4.3: ET-4 evaluated (leave-one-vertebra-out, 20 folds)
-[18:51:50] final GCZ-RL (Extra Trees) trained on 20 calibration vertebrae and applied to 37 held-out vertebrae
+[09:49:08] 57 vertebrae: 20 calibration, 37 held-out; 27 held-out vertebrae have expert annotations
+[09:49:08] GCZ geometry read from checkpoint gcz_heldout_table44.pkl (use --fresh to recompute)
+[09:49:08] GCZ geometry read from checkpoint gcz_input_for_gczrl.pkl (use --fresh to recompute)
+[09:49:21] training samples: 1683 x 36 from 20 calibration vertebrae
+[09:49:24] Table 4.3: Ridge evaluated (leave-one-vertebra-out, 20 folds)
+[09:49:29] Table 4.3: KNN evaluated (leave-one-vertebra-out, 20 folds)
+[09:50:44] Table 4.3: RandomForest evaluated (leave-one-vertebra-out, 20 folds)
+[09:52:02] Table 4.3: GradientBoosting evaluated (leave-one-vertebra-out, 20 folds)
+[09:52:56] Table 4.3: HistGradientBoosting evaluated (leave-one-vertebra-out, 20 folds)
+[09:53:19] Table 4.3: ET-1 evaluated (leave-one-vertebra-out, 20 folds)
+[09:54:20] Table 4.3: ET-2 evaluated (leave-one-vertebra-out, 20 folds)
+[09:54:55] Table 4.3: ET-3 evaluated (leave-one-vertebra-out, 20 folds)
+[09:55:36] Table 4.3: ET-4 evaluated (leave-one-vertebra-out, 20 folds)
+[09:56:24] final GCZ-RL (Extra Trees) trained on 20 calibration vertebrae and applied to 37 held-out vertebrae

@@ -72,9 +72,11 @@ def make_regressor(name):
             n_estimators=260, learning_rate=0.035, max_depth=3, subsample=0.85, min_samples_leaf=2,
             random_state=95), n_jobs=N_JOBS)
     if name == "HistGradientBoosting":
+        # one output at a time and one OpenMP thread (see fit): the multithreaded histogram sums of
+        # HistGradientBoosting change in the last digits from run to run
         return make_pipeline(StandardScaler(), MultiOutputRegressor(HistGradientBoostingRegressor(
             max_iter=260, learning_rate=0.035, max_leaf_nodes=31, l2_regularization=0.05, min_samples_leaf=8,
-            random_state=96), n_jobs=N_JOBS))
+            random_state=96), n_jobs=1))
     raise ValueError(name)
 
 
@@ -83,6 +85,10 @@ def fit(name, X, Y):
     if model == "knn":
         k = min(31, max(5, int(np.sqrt(len(X)))))
         model = make_pipeline(StandardScaler(), KNeighborsRegressor(n_neighbors=k, weights="distance"))
+    if name == "HistGradientBoosting":
+        from threadpoolctl import threadpool_limits
+        with threadpool_limits(limits=1, user_api="openmp"):
+            return model.fit(X, Y)
     return model.fit(X, Y)
 
 

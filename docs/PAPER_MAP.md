@@ -40,7 +40,7 @@ Table rows of Tables 6–8 and S10–S15 are written by `paper/revision_tables.p
 | Section | Numbers | Source |
 |---|---|---|
 | Sec. 4.3 | statistics (Wilcoxon, cluster bootstrap), 13/14 vertebrae, ITL errors | `paper/outputs/paper_numbers.json` |
-| Sec. 4.3 | leakage test (424 points; 412 with recomputed ICP) | `P2/outputs/table_P2_5_leakage_test.json`, `REV/leakage_test_recomputed_icp_this_environment.json` |
+| Sec. 4.3 | leakage test (424 points; 412 with recomputed ICP) | `P2/outputs/table_P2_5_leakage_test.json` (archived original run, 424), `P2/outputs/table_P2_5_leakage_test_recomputed.json` (written by `run_leakage_test.py` in the current environment; 412 here) |
 | Sec. 4.3 | selected α and models | `P2/outputs/table_P2_6_selected_models.csv` |
 | Sec. 4.4 | ablation, GCZ-RL vs GCZ with projection, side-constraint re-run, compactness, interpretability, atlas | `REV/revision_numbers.json` |
 | Sec. 4.5 | GCZ input of GCZ-RL (3.704 mm, 80.8 %) | `paper_numbers.json` → `dev_GCZ_input_to_GCZRL` |

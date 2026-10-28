@@ -6,7 +6,8 @@ coordinate).  If no annotation of the held-out subject reaches training, model s
 prediction, the GCZ and GCZ-RL predictions for S02 of the two runs must be identical.
 Exit code 1 if they are not.
 
-Run after run_part2.py.   Output: outputs/table_P2_5_leakage_test.json
+Run after run_part2.py.   Output: outputs/table_P2_5_leakage_test_recomputed.json (the archived
+result of the original computing environment, outputs/table_P2_5_leakage_test.json, is kept)
 """
 import json
 import shutil
@@ -61,8 +62,10 @@ def main():
            "points_compared": int(len(m)), "points_clean_run": int(len(clean)), "points_corrupted_run": int(len(new)),
            "max_abs_coordinate_difference_mm": dev, "tolerance_mm": 1e-9,
            "predictions_unchanged": bool(dev <= 1e-9 and len(m) == len(clean) == len(new))}
+    # table_P2_5_leakage_test.json is the archived result of the original computing environment (424
+    # points); this run, with the ICP recomputed here, is written beside it and never overwrites it.
     out = HERE / "outputs"
-    (out / "table_P2_5_leakage_test.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
+    (out / "table_P2_5_leakage_test_recomputed.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
     shutil.rmtree(tmp, ignore_errors=True)
     print(json.dumps(res, indent=2))
     if not res["predictions_unchanged"]:
