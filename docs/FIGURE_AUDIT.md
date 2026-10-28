@@ -27,9 +27,11 @@ number.
 | Fig. 8 | `figs/fig_regions_margins.pdf` | `paper/figures_anatomy.py fig_regions_margins` | new (2026-10-28) |
 | Fig. 9 | `figs/fig7_components.pdf` | `paper/figures_main.py fig7` (alternatives: `fig7_alternatives`) | new |
 | Fig. 10 | `figs/fig8_icp_seeds.pdf` | `paper/figures_main.py fig8` | new |
-| Fig. 11 | `figs/fig_literature_comparison_clean2.png` | — | original |
-| Fig. S1, S2 | `fig_matching_versions_clean.png`, `figure4_cropped_labeled1.png` | analysis notebook | original |
+| Fig. 11 | `figs/fig11_development_results.pdf` | `paper/fig11_development.py` (Table 9 values) | redrawn from code in the design of the original; the original image `fig_literature_comparison_clean2.png` is kept in `figs/` |
+| Fig. S1, S2 | `fig_matching_versions_clean.png` (output of the original notebook, `run_original_notebook.py`), `figure4_cropped_labeled1.png` (drawn) | analysis notebook / drawn | original |
 | Fig. S3 | `figS3_residual_vectors.png` | `paper/figures_main.py figS3` | new |
+
+Every generated file is copied into `manuscript/` by `paper/build_manuscript_assets.py`, which fails if a figure or table of `main.tex` or `supplementary.tex` has no source; only the drawn schematics of Figs. 1–5 and S2 are kept as files. `run_all.sh` runs every step; `PDF=1` also compiles the clean and highlighted manuscript and the supplement.
 | Fig. S4 | `fig1_pipeline.pdf` | `paper/figures_main.py fig1` | new |
 | Fig. S5 | `fig4_residual_correction.pdf` | `paper/figures_main.py fig4` | new |
 | Fig. S6 | `fig_margins_ALL_PLL.pdf` | `paper/margin_verification.py` | new |
@@ -66,7 +68,7 @@ package is one of these and is **not** the compiled Fig. 7.
 | Fig. 8 | `predictions_gczrl.csv`, annotation files, masks from `gcz.build_thresholds` and `candidate_vertices` (fold holding out S03) | ALL anterior, PLL posterior view of the body; small regions end-on | the dark-gray bands were the actual masks: they appear only in Part B, unchanged (gray vertices = mask vertices, asserted); Part A footprints = surface within 2.5 mm of the expert points | close-ups at one scale (46 × 21 mm), two frames per vertebra | Part A: expert footprints (superior, inferior, other), expert points, GCZ-RL; Part B: actual masks |
 | Fig. 9 | `paper/outputs/revision/*.csv` | — | values plotted from the tables | legends outside the data; axis breaks marked; headings aligned | (a) header and spacing, caption on α_L = 1; (b) labels right of points; (c) fold ticks, mean, range; (d) white edges for coincident markers |
 | Fig. 10 | `icp_seed_sensitivity/summary.{csv,json}`, `paper_numbers.json` | — | paired values per run unchanged; GCZ-RL < GCZ asserted for all ten runs | full text width (the numbers beside the old column figure were the line numbers of the other column) | stored run apart (gap and divider), filled markers for the ten runs, SLD value in the legend |
-| Fig. 11 | values of Table 9 | — | — | labels illegible at column width | image unchanged; placed at 0.8 of the text width |
+| Fig. 11 | `part1_dissertation_57/outputs/table_4_4_heldout_results.csv` | — | values plotted from the table | vector, readable at 0.85 of the text width | drawn from code; the bar heights of the original image did not match its printed values exactly (e.g. GCZ Pass@5 for ALL: bar about 89 %, label 86.7 %) |
 | Fig. S3–S5 | see above | as in the main figures | S4: ICP transfer reproduces the saved GCZ landmarks (6e-14 mm) | checked | S5: wider gap before panel (c) |
 | Fig. S6 | `_S`/`_I` annotation files, masks, saved predictions | superior above inferior in 28/28 cases | — | checked | none |
 | Fig. S7 | saved predictions | — | `paper/check_fig6.py` | readable | moved from the main text unchanged; caption value 8.09 mm (the previous 8.10 came from rounding 8.095) |
