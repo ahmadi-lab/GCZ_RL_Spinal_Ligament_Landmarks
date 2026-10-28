@@ -14,7 +14,7 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 | File | Purpose | MedIA requirement |
 |---|---|---|
 | `main.tex`, `references.bib`, `figs/`, `tables/` | Manuscript (19 pp., abstract 249 words, 7 keywords). `tables/` holds the rows of the generated tables (Tables 6–8), written by `paper/revision_tables.py` of the code release | Editable source; abstract ≤ 250 words; 1–7 keywords |
-| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S12 (Tables S1–S15, Figs. S1–S3), in the separate supplementary source package | — |
+| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S13 (Tables S1–S16, Figs. S1–S3), in the separate supplementary source package | — |
 | `highlights.txt` | 5 bullets, each ≤ 85 characters | Required, separate file with "highlights" in its name |
 | `graphical_abstract.pdf` / `.png` | Graphical abstract, 2600 px wide | Required, ≥ 1328 px wide, readable at 13 cm |
 | `submission/Statement_of_Significance.md` / `.docx` | Draft answers to all 18 questions; the Word file is generated from the Markdown with pandoc, so edit the Markdown and regenerate | **Required. A missing or incomplete statement means desk rejection.** |
@@ -61,7 +61,11 @@ computed from rounded means). The method and the reported primary results are un
 - **Matching-independent metrics** in the main text (Table 6), with what each metric measures
   (Section 3.8).
 - **Finite element modeling and external validation** in the Discussion and Conclusion.
-- **One highlight** reworded to describe the constrained refinement.
+- **Figures** redrawn from the saved data in one journal style (Arial, Okabe-Ito classes, method
+  markers): Figs. 1, 3, 4 on the real held-out vertebra S03 L4; new Fig. 5 (by subject and
+  vertebra) and Fig. 8 (ten ICP seeds); Figs. 6, 7, 9 restyled. The previous Fig. 4 (prediction
+  pipeline) is replaced by panels (c)–(d) of Fig. 1. Audit: `docs/FIGURE_AUDIT.md` of the code release.
+- **Highlights**: two reworded (constrained refinement; predictions on the bone surface).
 
 ## Changes made earlier, relative to the dissertation draft
 

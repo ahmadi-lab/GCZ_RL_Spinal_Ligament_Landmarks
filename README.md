@@ -99,7 +99,7 @@ python paper/fig6_qualitative_loso.py              # Fig. 6
 python paper/check_fig6.py                         # Fig. 6 points = saved predictions; caption numbers
 python paper/graphical_abstract.py                 # graphical abstract
 python paper/revision_analyses.py                  # component analyses (Section 4.4, Supplementary S8-S11)
-python paper/revision_figures.py                   # Fig. 7, Fig. S3
+python paper/figures_main.py                      # all figures of the paper -> paper/outputs/figures (audit CSV)
 python paper/revision_tables.py                    # table rows of Tables 6-8 and S10-S14 -> manuscript/tables
 python paper/reproducibility_check.py              # 68 reported claims vs regenerated values (Table S15)
 python -m unittest discover -s tests               # geometric constraints and metrics

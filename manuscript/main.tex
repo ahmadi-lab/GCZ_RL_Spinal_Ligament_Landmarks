@@ -187,8 +187,8 @@ The three stages have complementary roles, and each is evaluated separately in S
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=1.0\textwidth]{fig_gcz_pipeline_benchmark_style4.png}
-\caption{GCZ-RL landmark reconstruction workflow. The calibration branch uses annotated calibration vertebrae to define normalized anatomical coordinates, calibrate ligament-specific threshold bands, construct candidate regions, and assemble the annotated atlas. The prediction branch applies the learned thresholds to each target vertebra, aligns the atlas by ICP, and selects initial GCZ landmarks inside the candidate regions. The residual-learning branch computes GCZ-to-expert correction vectors on training data only, trains the Extra Trees regressor, adds the bounded predicted correction to each GCZ point, and projects the corrected point back onto the candidate region before evaluation.}
+\includegraphics[width=\textwidth]{fig1_pipeline.pdf}
+\caption{\rev{GCZ-RL on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03), superior view; all panels show the real meshes and the saved landmarks. (a) Expert annotations of a training vertebra (S01 L1, the atlas selected for this target). (b) Candidate regions of the target, calibrated on the training subjects S01 and S02 (Section~\ref{ssec:thresholds}). (c) The atlas aligned to the target by rigid ICP and its transferred landmarks (Section~\ref{ssec:atlas}). (d) GCZ landmarks: transferred landmarks snapped to target vertices inside the regions (Section~\ref{ssec:prediction}). (e) GCZ-RL landmarks after the bounded residual correction and projection (Section~\ref{ssec:gcz_rl}), with the expert reference; dark segments connect each GCZ landmark to its corrected position. The residual regressor is trained beforehand on the training subjects only, from the displacements between their GCZ landmarks and expert annotations. The ICP transfer shown reproduces the saved GCZ landmarks of this vertebra.}}
 \label{fig:gcz_landmark_pipeline}
 \end{figure*}
 
@@ -238,8 +238,8 @@ The calibrated regions define ligament-specific geometric search spaces on the t
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.80\textwidth]{fig_threshold_candidate_combined1.png}
-\caption{Threshold calibration and GCZ candidate regions. The calibration annotations define a mean location and variability for each ligament-specific search quantity. The band $\mu_L \pm k_L\sigma_L$ defines the admissible candidate region. The resulting zones are search regions, not the final landmarks.}
+\includegraphics[width=\textwidth]{fig3_calibration.pdf}
+\caption{\rev{Threshold calibration and candidate regions in the fold holding out S03. (a) Normalized antero-posterior coordinate $y_n$ of the expert PLL points of the nine training vertebrae (S01 L1--L5, S02 L1--L4), each normalized within its own vertebra; the shaded band is $\mu_L \pm k_L\sigma_L$ with $k_L=2$. (b) The $y_n$ bands of all classes (vertical tick: $\mu_L$); the $|x_n-0.5|$ and $z_n$ bands are calibrated in the same way (Eq.~\eqref{eq:threshold_rule}). (c--e) The resulting candidate regions used for projection on held-out vertebra S03 L4. The regions are search regions, not the final landmarks.}}
 \label{fig:threshold_candidate}
 \end{figure*}
 
@@ -265,13 +265,6 @@ For each target vertebra, the learned thresholds are applied to obtain the candi
   \label{eq:gcz_select}
 \end{equation}
 Transferred landmarks farther than 15~mm from the region are discarded when enough nearer ones remain. For LF and ITL the snapping is performed separately for the left and right halves of the vertebra (split at the $x$-centroid of the mesh), and for CL separately for its four superior/inferior and left/right quadrants. Duplicate vertices are merged, and if more than ten distinct vertices remain, ten are retained by farthest-point sampling. The result is a set of at most ten surface vertices per class (one for SSL and two for ITL, the number of atlas annotations of these classes), each inside the admissible region of its class. This geometry-only prediction is referred to as the original GCZ configuration.
-
-\begin{figure*}[!t]
-\centering
-\includegraphics[width=0.98\textwidth]{fig_prediction_pipeline.png}
-\caption{Representative atlas-to-target prediction workflow. An annotated atlas vertebra is aligned to a held-out vertebra. After ICP alignment, ligament-specific regions constrain where GCZ landmarks can be selected. Errors are computed separately from paired landmark distances.}
-\label{fig:prediction_pipeline}
-\end{figure*}
 
 \subsection{Bounded residual-learning correction}
 \label{ssec:gcz_rl}
@@ -306,8 +299,8 @@ The elements of the correction have distinct roles. The residual prediction supp
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.99\textwidth,keepaspectratio]{gcz_residual_learning_framework.png}
-\caption{Geometry-constrained GCZ-RL correction. Residuals between GCZ and expert landmarks on training data are used to compare residual regressors and to train the Extra Trees regressor. At inference, the bounded predicted correction is added to the GCZ point, which is then projected to the nearest admissible vertex of its ligament-specific region.}
+\includegraphics[width=\textwidth]{fig4_residual_correction.pdf}
+\caption{\rev{Geometry-constrained correction on held-out vertebra S03 L4 (fold holding out S03), for the classes whose blend weight was above zero in this fold (ISL, SSL, ITL, CL). (a, b) Translucent squares: GCZ landmarks; spheres: GCZ-RL landmarks after the bounded correction and projection onto the tinted candidate region of the class; dark segments: the applied correction; small dark points: expert reference. (c) MAE of each class on this vertebra before (GCZ) and after (GCZ-RL) the correction; for ALL, PLL, and LF the inner validation selected $\alpha_L=0$, so the two coincide. All points are the saved predictions of the primary evaluation.}}
 \label{fig:gcz_residual_learning_framework}
 \end{figure*}
 
@@ -407,7 +400,7 @@ Mean & 3.055 & 2.715 & 2.307 & 2.337 & \textbf{2.037} \\
 
 \subsection{Primary evaluation}
 
-Table~\ref{tab:loso_ligament} and Table~\ref{tab:loso_subject} report the primary evaluation\rev{, and Table~\ref{tab:overall} summarizes it with matched-pair and matching-independent metrics}. \rev{The GCZ-RL refinement, residual correction followed by projection onto the calibrated regions,} reduced the macro-averaged mean Euclidean error from 2.879~mm for GCZ to 2.150~mm for GCZ-RL, a 25.3\% reduction (difference $-0.729$~mm, 95\% cluster-bootstrap interval $-1.078$ to $-0.381$~mm), and raised Pass@5 from 86.0\% to 92.7\%. Over the 98 vertebra--class cases, GCZ-RL had the lower error in 45, GCZ in 15, and 38 were unchanged (Wilcoxon $p<0.001$). The reduction held for every held-out subject: from 3.784 to 2.315~mm for S01 (38.8\%), from 2.208 to 1.986~mm for S02 (\rev{10.0\%}), and from 2.512 to 2.117~mm for S03 (15.7\%). It also held for 13 of the 14 vertebrae and for six of the seven classes, with no change for PLL. The particularly large ITL improvement (6.262 to 1.796~mm) \rev{combines projection onto the small calibrated ITL region with the learned correction (Section~\ref{ssec:component_results}) and relies on} the side constraint introduced after an earlier evaluation had been inspected (Section~\ref{ssec:loso}); with it, the two vertebrae whose ITL zone has no vertex on one side retain the GCZ point there (errors of 4.96 and 5.53~mm), and the other twelve lie between 0.6 and 2.3~mm. In 7 of the 21 class--fold choices the inner validation selected $\alpha=0$, so the correction was applied only where the training subjects supported it. Figure~\ref{fig:qualitative_loso} shows the predictions of the three methods on one held-out vertebra in three orthogonal views.
+Table~\ref{tab:loso_ligament} and Table~\ref{tab:loso_subject} report the primary evaluation\rev{, Fig.~\ref{fig:patient_level} shows it by held-out subject and vertebra, and Table~\ref{tab:overall} summarizes it with matched-pair and matching-independent metrics}. \rev{The GCZ-RL refinement, residual correction followed by projection onto the calibrated regions,} reduced the macro-averaged mean Euclidean error from 2.879~mm for GCZ to 2.150~mm for GCZ-RL, a 25.3\% reduction (difference $-0.729$~mm, 95\% cluster-bootstrap interval $-1.078$ to $-0.381$~mm), and raised Pass@5 from 86.0\% to 92.7\%. Over the 98 vertebra--class cases, GCZ-RL had the lower error in 45, GCZ in 15, and 38 were unchanged (Wilcoxon $p<0.001$). The reduction held for every held-out subject: from 3.784 to 2.315~mm for S01 (38.8\%), from 2.208 to 1.986~mm for S02 (\rev{10.0\%}), and from 2.512 to 2.117~mm for S03 (15.7\%). It also held for 13 of the 14 vertebrae and for six of the seven classes, with no change for PLL. The particularly large ITL improvement (6.262 to 1.796~mm) \rev{combines projection onto the small calibrated ITL region with the learned correction (Section~\ref{ssec:component_results}) and relies on} the side constraint introduced after an earlier evaluation had been inspected (Section~\ref{ssec:loso}); with it, the two vertebrae whose ITL zone has no vertex on one side retain the GCZ point there (errors of 4.96 and 5.53~mm), and the other twelve lie between 0.6 and 2.3~mm. In 7 of the 21 class--fold choices the inner validation selected $\alpha=0$, so the correction was applied only where the training subjects supported it. Figure~\ref{fig:qualitative_loso} shows the predictions of the three methods on one held-out vertebra in three orthogonal views.
 
 The evaluated SLD implementation produced predictions for all 98 vertebra--class combinations and achieved a macro-averaged error of 2.224~mm and Pass@5 of 90.4\%, compared with 2.150~mm and 92.7\% for GCZ-RL (Table~\ref{tab:loso_ligament}). The difference in macro-averaged error was not significant (difference $-0.074$~mm, 95\% interval $-0.386$ to $0.228$~mm; Wilcoxon $p=0.35$), and SLD had the lower error in 59 of the 98 cases. Performance varied by ligament: SLD yielded lower errors in five classes, while GCZ-RL yielded lower errors for PLL and LF. These class-wise differences indicate complementary strengths rather than a uniform advantage for either approach. The matching-independent metrics depend on their direction (\rev{Table~\ref{tab:overall}; per class in} Supplementary Table~S3). Measured from each prediction to the closest reference point, the protocol of \citet{blomenkamp2026sld}, SLD had the lowest error (1.787~mm, against 2.140~mm for GCZ-RL and 2.873~mm for GCZ); measured from each reference point to the closest prediction, which penalizes uncovered footprint, GCZ-RL had the lowest (3.297, 4.024, and 4.089~mm for GCZ-RL, GCZ, and SLD). The symmetric mean was 3.448, 2.719, and 2.938~mm for GCZ, GCZ-RL, and SLD, and 72.1\%, 78.4\%, and 77.6\% of reference points lay within 5~mm of a predicted point. SLD predicted more landmarks per class than GCZ-RL for ALL, PLL, ISL, and CL and therefore paired a larger share of the reference points (43.3\% against 34.3\%; Supplementary Table~S2).
 
@@ -458,7 +451,14 @@ S03 & 9  & 5 & 2.512 & 2.652 & \textbf{2.117} \\
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.82\textwidth]{fig_qualitative_loso_S03_L4.png}
+\includegraphics[width=\textwidth]{fig5_patient_level.pdf}
+\caption{\rev{Primary evaluation by held-out subject and by held-out vertebra (macro-averaged MAE over classes). Squares: GCZ; circles: GCZ-RL; triangles: SLD; gray segments connect GCZ and GCZ-RL. (a) Values of Table~\ref{tab:loso_subject}. (b) The 14 held-out lumbar vertebrae, grouped by subject; GCZ-RL has a lower error than GCZ for 13 of them.}}
+\label{fig:patient_level}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.86\textwidth]{fig6_qualitative.pdf}
 \caption{Predictions of GCZ, GCZ-RL, and SLD on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03), shown in three orthogonal views. Small dark points are the expert reference landmarks; colored spheres are the predicted landmarks of each class. The vertebra was chosen because it shows the residual correction clearly: ITL improves from 8.10 to 0.68~mm, and CL, ISL, and SSL also change, whereas for ALL, PLL, and LF the inner validation of this fold selected $\alpha=0$, so GCZ and GCZ-RL coincide. It is not a typical case. Its improvement from GCZ to GCZ-RL ranks fifth of the 14 held-out vertebrae, and SLD performs worse on it than on average. Macro-averaged errors on this vertebra are 3.263~mm for GCZ, 1.972~mm for GCZ-RL, and 2.771~mm for SLD, against cohort means of 2.879, 2.150, and 2.224~mm (Table~\ref{tab:loso_ligament}). All points are read from the saved predictions of the code release.}
 \label{fig:qualitative_loso}
 \end{figure*}
@@ -492,7 +492,7 @@ The three functions of the framework were examined separately on the primary eva
 
 \emph{Atlas-based geometric initialization.} The selected atlas was of the same level as the target for 7 of the 14 held-out vertebrae (Supplementary Table~S14). Same-level atlases did not give lower GCZ errors (mean per-vertebra macro MAE 3.073~mm against 2.686~mm for cross-level atlases, a comparison confounded by subject because most same-level choices concern S01), and the quick-ICP residual was not associated with the GCZ error (Spearman $\rho=0.24$, $p=0.40$; Fig.~\ref{fig:components}d). Within this residual range, a lower surface distance therefore did not indicate a better landmark transfer, which is consistent with the sensitivity of the atlas choice described in Section~\ref{ssec:implementation}: in the second computing environment, S02 L3 received an atlas with a lower residual (1.33 against 1.51~mm) but a GCZ error of 6.28 instead of 2.29~mm. GCZ-RL improved on GCZ for 13 of the 14 vertebrae, whether the atlas was of the same or a different level.
 
-\emph{Sensitivity to the ICP seeds.} To quantify how much the results depend on the atlas selection, the complete nested procedure was re-run ten times with the ICP alignments recomputed from scratch and the random seeds of the ICP point sampling shifted; the subjects and folds, calibration, regressors, hyperparameters, model-selection grid, and evaluation were unchanged (Supplementary Section~S13). These runs are a computational sensitivity analysis on the same three subjects, not additional subjects or an external validation. Between 2 and 4 of the 14 held-out vertebrae changed atlas in each run. GCZ-RL improved on GCZ in all ten runs, by 22.8--33.4\% (mean 26.9\%), and for every held-out subject in every run (30 of 30 subject--run comparisons). The absolute error depended on the atlas selection: GCZ-RL reached 2.10--2.92~mm (mean $2.36\pm0.24$~mm) and GCZ 2.84--3.89~mm (mean $3.23\pm0.31$~mm). The reported values, 2.150 and 2.879~mm, are those of the stored alignments and lie in the lower part of these ranges.
+\emph{Sensitivity to the ICP seeds.} To quantify how much the results depend on the atlas selection, the complete nested procedure was re-run ten times with the ICP alignments recomputed from scratch and the random seeds of the ICP point sampling shifted; the subjects and folds, calibration, regressors, hyperparameters, model-selection grid, and evaluation were unchanged (Supplementary Section~S13). These runs are a computational sensitivity analysis on the same three subjects, not additional subjects or an external validation. Between 2 and 4 of the 14 held-out vertebrae changed atlas in each run. GCZ-RL improved on GCZ in all ten runs, by 22.8--33.4\% (mean 26.9\%), and for every held-out subject in every run (30 of 30 subject--run comparisons; Fig.~\ref{fig:icp_seeds}). The absolute error depended on the atlas selection: GCZ-RL reached 2.10--2.92~mm (mean $2.36\pm0.24$~mm) and GCZ 2.84--3.89~mm (mean $3.23\pm0.31$~mm). The reported values, 2.150 and 2.879~mm, are those of the stored alignments and lie in the lower part of these ranges.
 
 \emph{Constrained residual refinement.} Table~\ref{tab:ablation} adds the elements of the refinement one at a time; the complete configuration reproduces the reported GCZ-RL predictions exactly. The two elements of the refinement, the learned correction and the projection onto the calibrated regions (Eqs.~\eqref{eq:corrected_point} and~\eqref{eq:projection}), act together. The predicted residual without projection lowered the macro-averaged MAE from 2.879 to 2.698~mm but left every corrected point off the surface (mean distance 0.57~mm), which is why the method projects it back. The correction bound was not reached by any held-out point (none of the 742 predicted corrections exceeded $\tau_L$); it acts as a safeguard against extrapolation and did not alter any prediction in this cohort. Projection of the corrected points gave 2.132~mm and placed every output on the vertebral surface and 740 of the 742 outputs on a vertex of the projection region; the other two are the ITL points of S01 L5 and S02 L4, which keep their GCZ position because the region has no vertex on their side (Section~\ref{ssec:loso}).
 
@@ -537,10 +537,17 @@ The learned corrections were directionally consistent with the true residuals an
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.92\textwidth]{fig_component_analysis.pdf}
-\caption{\rev{Component analyses of the primary evaluation. (a) Macro-averaged MAE as the refinement elements are added (Table~\ref{tab:ablation}); the percentage in parentheses is the share of outputs that are vertices of the projection region of their class. (b) Containment of the reference landmarks against the share of the vertebral surface covered by the projection region, per class (Table~\ref{tab:compactness}). (c) Grouped permutation importance of the residual regressors: increase in the held-out residual-prediction error when one feature group is permuted (mean and range over the three folds). (d) Quick-ICP residual of the selected atlas against the per-vertebra macro MAE of GCZ (blue) and GCZ-RL (orange); circles, same-level atlas; squares, cross-level atlas; labeled vertebrae changed atlas in the second computing environment.}}
+\includegraphics[width=0.95\textwidth]{fig7_components.pdf}
+\caption{\rev{Component analyses of the primary evaluation. (a) Macro-averaged MAE as the refinement elements are added (Table~\ref{tab:ablation}). (b) Containment of the reference landmarks against the share of the vertebral surface covered by the projection region, per class (Table~\ref{tab:compactness}). (c) Grouped permutation importance of the residual regressors: increase in the held-out residual-prediction error when one feature group is permuted (mean and range over the three folds). (d) Quick-ICP residual of the selected atlas against the per-vertebra macro MAE of GCZ (squares) and GCZ-RL (circles); filled markers, same-level atlas; open markers, cross-level atlas; gray segments connect the two methods on each vertebra.}}
 \label{fig:components}
 \end{figure*}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig8_icp_seeds.pdf}
+\caption{\rev{Sensitivity of the primary evaluation to the ICP atlas selection. Macro-averaged MAE of GCZ (squares) and GCZ-RL (circles) with the stored alignments of the reported results (open markers) and for ten runs in which all ICP alignments were recomputed with shifted sampling seeds and everything else was unchanged (filled markers). GCZ-RL improved on GCZ in every run, by 22.8--33.4\% (mean 26.9\%), and for every held-out subject in every run. Dashed line: SLD, which does not use ICP. This is a computational sensitivity analysis on the same three subjects, not a validation on independent patients (Supplementary Section~S13).}}
+\label{fig:icp_seeds}
+\end{figure}
 
 \subsection{Supplementary development analysis: vertebra-wise split}
 
@@ -578,8 +585,8 @@ CL  & 5.437 & 63.7\% & 3.426 & 80.7\% & \textbf{1.630} & \textbf{99.0\%} \\
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=0.99\columnwidth]{fig_literature_comparison_clean2.png}
-\caption{Supplementary development analysis (values of Table~\ref{tab:literature}): per-ligament mean Euclidean error (top) and Pass@5 (bottom) for the original GCZ configuration and GCZ-RL, with SLD values shown for descriptive context only. The GCZ-RL configuration was partly chosen after held-out outputs had been inspected, and this SLD run used different preprocessing and a mismatched coordinate frame; the SLD values are not used for comparative ranking.}
+\includegraphics[width=\columnwidth]{fig9_development.pdf}
+\caption{Supplementary development analysis (values of Table~\ref{tab:literature}): per-ligament mean Euclidean error (top) and Pass@5 (bottom) for the original GCZ configuration \rev{(squares)} and GCZ-RL \rev{(circles)}, with SLD values \rev{(triangles)} shown for descriptive context only. The GCZ-RL configuration was partly chosen after held-out outputs had been inspected, and this SLD run used different preprocessing and a mismatched coordinate frame; the SLD values are not used for comparative ranking.}
 \label{fig:literature_chart}
 \end{figure}
 

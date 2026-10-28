@@ -9,7 +9,8 @@ written (a temporary checkpoint folder is used). SLD does not use ICP and is not
 
 Usage:  python paper/icp_seed_sensitivity.py run 0 1 2 ...   (one JSON per offset)
         python paper/icp_seed_sensitivity.py summary
-Outputs: paper/outputs/icp_seed_sensitivity/offset_<k>.json, summary.csv, summary.json
+Outputs: paper/outputs/icp_seed_sensitivity/offset_<k>.json, summary.csv, summary.json, tab_icp_seeds.tex
+(the figure, Fig. 8, is drawn by paper/figures_main.py)
 """
 from __future__ import annotations
 
@@ -113,40 +114,8 @@ def summary():
               f"{df.GCZRL_S03.mean():.3f} & {int((df.subjects_improved == 3).sum())}/{len(df)} runs & "
               f"{df.atlas_changed.mean():.1f} \\\\"]
     (OUT / "tab_icp_seeds.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
-    figure(df)
     print(df.round(3).to_string(index=False))
     print(json.dumps(stats, indent=1))
-
-
-def figure(df):
-    """GCZ and GCZ-RL per ICP seed run, with the reported (stored-alignment) run and SLD."""
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    ink, muted, grid = "#262624", "#6b6a66", "#e4e3df"
-    fig, ax = plt.subplots(figsize=(6.4, 2.9))
-    x = df.offset.to_numpy()
-    for xi, a, b in zip(x, df.GCZ_mm, df.GCZRL_mm):
-        ax.plot([xi, xi], [a, b], color=grid, linewidth=1.6, zorder=1)
-    ax.scatter(x, df.GCZ_mm, s=34, color="#2a78d6", edgecolor="white", linewidth=1, zorder=3, label="GCZ")
-    ax.scatter(x, df.GCZRL_mm, s=34, color="#eb6834", edgecolor="white", linewidth=1, zorder=3, label="GCZ-RL")
-    ax.scatter([-1.3], [2.879], s=34, marker="D", color="#2a78d6", edgecolor="white", zorder=3)
-    ax.scatter([-1.3], [2.150], s=34, marker="D", color="#eb6834", edgecolor="white", zorder=3)
-    ax.plot([-1.3, -1.3], [2.150, 2.879], color=grid, linewidth=1.6, zorder=1)
-    ax.axhline(SLD_MACRO_MAE, color="#1baf7a", linestyle=(0, (4, 3)), linewidth=1.0, label="SLD (no ICP)")
-    ax.set_xticks([-1.3] + list(x), ["Reported\n(stored)"] + [str(int(k)) for k in x], fontsize=7)
-    ax.set_xlabel("ICP seed offset (alignments recomputed)", fontsize=8, color=ink)
-    ax.set_ylabel("Macro-averaged MAE (mm)", fontsize=8, color=ink)
-    ax.tick_params(colors=muted, labelsize=7)
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.yaxis.grid(True, color=grid, linewidth=0.6)
-    ax.set_axisbelow(True)
-    ax.legend(frameon=False, fontsize=7, ncol=3, loc="upper left")
-    ax.set_ylim(1.8, 4.2)
-    fig.tight_layout()
-    for ext in ("png", "pdf"):
-        fig.savefig(OUT / f"fig_icp_seeds.{ext}", dpi=300)
-    plt.close(fig)
 
 
 if __name__ == "__main__":

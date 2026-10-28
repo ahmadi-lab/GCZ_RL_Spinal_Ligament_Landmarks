@@ -395,8 +395,8 @@ By impurity, the ten most used single features were the position of the point in
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{fig_residual_vectors_S03_L4.png}
-\caption{True (dark) and predicted (colored) residual vectors of the GCZ points on held-out vertebra S03 L4 (lumbar level L4; fold holding out S03), for the classes whose correction was applied in this fold (blend weight above zero): ISL, SSL, ITL, and CL. Small dark points are the expert reference landmarks of these classes. Vectors are drawn at true length, before the correction bound and projection.}
+\includegraphics[width=\textwidth]{figS3_residual_vectors.png}
+\caption{True (dark) and predicted (colored) residual vectors of the GCZ points (colored squares) on held-out vertebra S03 L4 (lumbar level L4; fold holding out S03), for the classes whose correction was applied in this fold (blend weight above zero): ISL, SSL, ITL, and CL. Small dark points are the expert reference landmarks of these classes. Vectors are drawn at true length, before the correction bound and projection. The applied corrections are shown in Fig.~4 of the main text.}
 \label{fig:residual_vectors}
 \end{figure}
 
@@ -462,12 +462,7 @@ Offset & GCZ & GCZ-RL & Reduction (\%) & Pass@5 & S01 & S02 & S03 & Subjects imp
 \end{tabular}}
 \end{table}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\textwidth]{fig_icp_seeds.pdf}
-\caption{Macro-averaged MAE of GCZ (blue) and GCZ-RL (orange) for the reported run with the stored alignments (diamonds) and for ten runs with the ICP alignments recomputed with shifted seeds (circles); each gray segment connects the two methods of one run. Dashed line: SLD, which does not use ICP.}
-\label{fig:icp_seeds}
-\end{figure}
+Figure~8 of the main text plots these runs together with the reported run.
 \revend
 
 \FloatBarrier
