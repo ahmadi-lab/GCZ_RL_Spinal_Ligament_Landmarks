@@ -73,6 +73,7 @@ if ($Part -eq 'all') {
     Run 'Margin verification (Supplementary S16, Fig. S6)' @('paper\margin_verification.py')
     Run 'Anatomical figures (Figs. 7 and 8)' @('paper\figures_anatomy.py')
     Run 'Development figure (Fig. 11)' @('paper\fig11_development.py')
+    Run 'ITL step-by-step trace (Supplementary Table S18)' @('paper\itl_trace.py')
     Run 'ICP seed table (from the saved runs)' @('paper\icp_seed_sensitivity.py', 'summary')
     Run 'Revision tables' @('paper\revision_tables.py')
     Run 'Reproducibility check' @('paper\reproducibility_check.py')

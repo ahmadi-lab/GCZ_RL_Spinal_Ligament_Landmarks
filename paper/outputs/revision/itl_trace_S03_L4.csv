@@ -1,0 +1,15 @@
+side,stage,x,y,z,error_mm,step_mm,same_side_as_gcz,vertex_of_projection_region
+right,1 GCZ landmark,-15.803,187.303,-684.0,11.508,0.0,True,False
+right,2 GCZ + raw residual,-22.7,191.851,-682.086,6.713,8.48,True,False
+right,3 GCZ + clipped residual,-22.7,191.851,-682.086,6.713,0.0,True,False
+right,4 projected (corrected point),-26.973,187.286,-682.792,0.912,6.292,True,True
+right,5 blended (alpha = 1.2),-29.206,187.283,-682.551,2.191,2.247,True,False
+right,6 projected = GCZ-RL,-27.254,187.012,-683.089,0.59,2.043,True,True
+right,projection only (no residual),-26.995,186.814,-684.693,1.172,11.224,True,True
+left,1 GCZ landmark,62.914,186.578,-682.777,4.682,0.0,True,False
+left,2 GCZ + raw residual,67.366,190.035,-681.955,4.735,5.696,True,False
+left,3 GCZ + clipped residual,67.366,190.035,-681.955,4.735,0.0,True,False
+left,4 projected (corrected point),66.855,186.194,-681.044,1.076,3.981,True,True
+left,5 blended (alpha = 1.2),67.644,186.117,-680.697,1.221,0.865,True,False
+left,6 projected = GCZ-RL,67.133,185.62,-680.84,0.765,0.727,True,True
+left,projection only (no residual),66.958,185.849,-682.447,1.095,4.122,True,True

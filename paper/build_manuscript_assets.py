@@ -44,6 +44,7 @@ GENERATED = {  # manuscript file -> produced by
                                            "paper/region_verification.py"),
     "tables/tab_icp_seeds.tex": ("paper/outputs/icp_seed_sensitivity/tab_icp_seeds.tex",
                                  "paper/icp_seed_sensitivity.py summary"),
+    "tables/tab_itl_trace.tex": ("paper/outputs/revision/tab_itl_trace.tex", "paper/itl_trace.py"),
     "tables/reproducibility_table.tex": ("paper/outputs/revision/reproducibility_table.tex",
                                          "paper/reproducibility_check.py"),
     "graphical_abstract.png": ("paper/outputs/graphical_abstract.png", "paper/graphical_abstract.py"),

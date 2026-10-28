@@ -546,6 +546,27 @@ Figure~\ref{fig:search_regions} shows the calibrated GCZ search regions of held-
 \caption{Calibrated GCZ search regions (gray; the actual masks used for projection, unchanged) and expert annotations (black) on held-out vertebra S03 L4 for (a) ALL, anterior view; (b) PLL, posterior view of the vertebral body with the posterior arch removed for display; (c) LF, superior view; (d) ISL, left lateral view; (e) SSL, posterior view of the spinous process tip; (f) ITL, lateral view of the left transverse process tip; (g) CL, posterior view of the left side. Every gray vertex belongs to the region mask of the method. The cameras and crops are those of Fig.~8(g--k).}
 \label{fig:search_regions}
 \end{figure}
+
+\FloatBarrier
+\section*{S19. Step-by-step correction of the ITL landmarks of S03 L4}
+
+The ITL error of held-out vertebra S03 L4 falls from 8.095~mm (GCZ) to 0.678~mm (GCZ-RL), the largest change in Fig.~7 of the main text. Table~\ref{tab:itl_trace} follows both ITL landmarks through every operation of the correction (\texttt{paper/itl\_trace.py}): the saved Extra Trees model of the fold holding out S03 predicts a residual, which is clipped to the correction radius, added to the GCZ landmark, and projected onto the calibrated ITL region; the result is blended with the GCZ landmark by the weight $\alpha_L$ selected in the inner validation and projected again, with each landmark kept on its side. The computation uses only the target mesh, the saved GCZ landmarks, and the saved fold model with its thresholds, class priors, correction radius, and $\alpha_L$, all derived from S01 and S02; the expert annotations of S03 are read only afterwards, to score each step. It reproduces the saved GCZ-RL landmarks exactly (maximum deviation 0~mm), and the scored class errors equal those of the evaluation. Each landmark is scored against the reference of its own side (Hungarian matching pairs the right landmark with the right tip and the left with the left).
+
+The two GCZ landmarks lie on the transverse processes, inside the wide GCZ selection region and outside the small projection region at the tips. Without projection, the learned residual moved the right landmark 8.48~mm towards the tip (error 11.51 to 6.71~mm) and left the left landmark at its error (4.68 to 4.73~mm); clipping was not active (radius 15.98~mm). Projecting the GCZ landmarks onto the ITL region without any residual already reduces the class error to 1.133~mm, and the complete correction to 0.678~mm. Most of the ITL improvement on this vertebra therefore comes from the projection onto the calibrated region, which is part of the GCZ-RL framework, and the learned residual adds 0.455~mm; it is not an improvement of the Extra Trees regressor alone. This agrees with the component analysis of the main text, in which projection alone accounts for most of the ITL change over the cohort.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Step-by-step GCZ-RL correction of the two ITL landmarks of held-out vertebra S03 L4 (fold holding out S03; Extra Trees configuration ET-4, $\alpha_L=1.2$). Step: length of the displacement from the previous step (for the last row, from the GCZ landmark). Error: distance to the expert reference of the same side. Region: whether the point is a vertex of the calibrated ITL projection region. The last row of each side is the counterfactual projection of the GCZ landmark without residual.}
+\label{tab:itl_trace}
+\begin{tabular}{@{}llrrl@{}}
+\toprule
+Side & Operation & Step (mm) & Error (mm) & Region \\
+\midrule
+\inputrows{tables/tab_itl_trace.tex}
+\bottomrule
+\end{tabular}
+\end{table}
 \revend
 
 \FloatBarrier

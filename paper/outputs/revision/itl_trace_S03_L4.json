@@ -1,0 +1,23 @@
+{
+  "vertebra": "S03 L4 (Verse581 L4), fold holding out S03",
+  "class": "ITL",
+  "regressor": "ET-4",
+  "alpha": 1.2,
+  "correction_radius_mm": 15.98,
+  "final_equals_saved_gczrl_max_deviation_mm": 0.0,
+  "class_mae_mm": {
+    "1 GCZ landmark": 8.095,
+    "2 GCZ + raw residual": 5.724,
+    "3 GCZ + clipped residual": 5.724,
+    "4 projected (corrected point)": 0.994,
+    "5 blended (alpha = 1.2)": 1.706,
+    "6 projected = GCZ-RL": 0.678,
+    "projection only (no residual)": 1.133
+  },
+  "class_mae_matches_metrics_file": true,
+  "raw_residual_length_mm": {
+    "right": 8.48,
+    "left": 5.696
+  },
+  "inputs_without_S03_annotations": "mesh, saved GCZ landmarks, saved fold model (S01, S02)"
+}
