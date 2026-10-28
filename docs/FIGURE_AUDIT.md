@@ -34,6 +34,7 @@ Quantitative figures are vector PDF and SVG; figures with 3D anatomy are 600 dpi
 | Fig. S3 | Predicted and true residual vectors on S03 L4 | new, `figures_main.py figS3` | `paper/outputs/revision/residual_vectors_heldout.csv` |
 | Fig. S4 | Workflow of Fig. 1 on real data (S03 L4) | new, `figures_main.py fig1` | saved GCZ and GCZ-RL predictions; raw meshes; the ICP transfer reproduces the saved GCZ landmarks (6e-14 mm) |
 | Fig. S5 | Correction of Fig. 5 on real data (S03 L4) | new, `figures_main.py fig4` | saved predictions; `per_vertebra_per_ligament_metrics.csv` |
+| Fig. S6 | ALL and PLL regions against the superior and inferior body margins | new, `margin_verification.py` | raw meshes and the `_S`/`_I` annotation files; `gcz.build_thresholds`, `candidate_vertices`; `P2/outputs/predictions_gczrl.csv` |
 
 ## Candidate-region figure (Fig. 8)
 
@@ -44,7 +45,10 @@ The region figure was checked before it was added (`docs/REGION_VERIFICATION.md`
 - each class column uses one camera for the three rows.
 
 The broad regions of ALL, PLL, and CL are a property of the calibration, which pools the superior
-and inferior annotation parts into one band, and are stated as such in the caption.
+and inferior annotation parts into one band, and are stated as such in the caption. For ALL and
+PLL, Supplementary Fig. S6 shows the regions, the expert parts, the GCZ-RL landmarks, and the body
+margins in one coordinate system (mid-sagittal section in mm), and the per-vertebra heights that
+widen the band; the middle row of Fig. 8 overlays the expert points on the regions.
 
 `figures_main.py` also draws restyled alternatives of Figs. 3, 7, and 11 (`fig3_calibration`,
 `fig6_qualitative`, `fig9_development`) that are not used in the manuscript.

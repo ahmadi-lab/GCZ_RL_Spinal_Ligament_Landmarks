@@ -13,9 +13,11 @@ Values are medians over the 14 vertebrae (containment: pooled over all reference
 2. **The masks themselves.** The regions are the vertices inside three calibrated bands
    (μ ± 2σ of `y_n`, `|x_n − 0.5|`, and `z_n`, Eq. 4). For a class whose annotations have two
    separate parts, such as superior and inferior rims (`ALL_S`/`ALL_I`, `PLL_S`/`PLL_I`, the four
-   CL quadrants), the pooled band covers both parts and the surface between them. In the fold
-   holding out S03, the `z_n` band of ALL is 0.00–1.00, of PLL 0.04–1.00, and of CL 0.00–1.00, so
-   these regions extend over the whole height of the vertebra.
+   CL quadrants), the pooled band covers both parts and the surface between them. Because `z_n` is
+   measured over the whole vertebra, the parts also sit at different normalized heights in
+   different vertebrae (the inferior ALL margin lies between `z_n` 0.05 and 0.50), which widens the
+   band further. In the fold holding out S03, the `z_n` band of ALL is 0.00–1.00, of PLL 0.04–1.00,
+   and of CL 0.00–1.00, so these regions extend over the whole height of the vertebra.
 3. **This is the calibration as designed and as described in the paper.** The regions are search
    regions that contain the footprints, not footprint segmentations (Sections 3.4 and 4.4).
 
@@ -51,6 +53,44 @@ GCZ-RL landmarks: 100 % are vertices of the projection region for every class ex
 - **Across all classes.** About 67–85 % of each region's area (ITL excepted) lies more than
   2.5 mm from any expert point. This is the price of 86–97 % footprint coverage with axis-aligned
   bands in normalized coordinates.
+
+## ALL and PLL: superior and inferior body margins
+
+Script: `paper/margin_verification.py`; outputs in `paper/outputs/margin_verification/`
+(`margin_check.csv` per vertebra, `margin_zn_by_vertebra.csv`, `margin_summary.json`, and the
+figure `fig_margins_ALL_PLL`, Supplementary Fig. S6). The question was whether the ALL and PLL
+regions mark the middle of the vertebral body because of the camera, the normalization, the mask
+computation, or the drawing code.
+
+| Possible cause | Check | Result |
+|---|---|---|
+| Camera or axis direction | Superior (`_S`) expert files above inferior (`_I`) files along +z (LPS) in all 14 vertebrae; on S03 L4, the body margins measured on the mesh alone agree with the expert parts | Correct: superior above inferior in 28/28 vertebra–class cases (median 27.5 mm ALL, 27.4 mm PLL); mesh margins within 1.6 mm of the expert parts |
+| Normalization | `gcz.aabb_norm` against (z − z_min)/(z_max − z_min) over the whole vertebra | Identical for every expert point |
+| Drawing code | Rendered colours against the mask vertices (`region_verification.py`) | Identical vertex sets |
+| Mask computation | Share of the region area in the middle half between the two margins of the same wall | **The masks do cover the middle of the body wall**: median 28 % (ALL) and 35 % (PLL) of the region area |
+
+**Cause.** The method calibrates one `z_n` band per class from all its training points
+(μ ± 2σ, Eq. 4), and `z_n` is measured over the whole vertebra, including the posterior
+elements. The body margins therefore sit at different normalized heights in different vertebrae:
+inferior ALL margin 0.05–0.50, superior 0.50–0.97. A band that contains the margins of all
+training vertebrae spans 0.00–1.00 (ALL) and 0.04–1.00 (PLL). This is the method as designed and
+as described in the paper, not an implementation error, and the figures draw it correctly.
+
+**Effect on the existing results.** None of the reported numbers change; they were computed with
+these masks. The superior–inferior position of each landmark comes from the atlas transfer, and
+the region constrains only its antero-posterior and lateral position: none of the 140 ALL and 140
+PLL landmarks of GCZ, and none of GCZ-RL, lies in the middle half between the margins (expert
+points: none either). For these two classes the region is a weaker constraint than its appearance
+suggests, but it does not move landmarks off the margins.
+
+**Separate superior and inferior bands (counterfactual, not applied).** In the same normalized
+coordinates, separate bands would leave the ALL region unchanged in the folds holding out S02 and
+S03 (the two bands together span 0.00–1.00) and would remove about 45 % of the PLL region, but 8
+ALL and 18 PLL landmarks of GCZ-RL, all at the margins of their vertebrae, would fall outside the
+separate bands, because some held-out margins lie beyond the range of the training vertebrae.
+Regions that follow the margins would need a body-relative height coordinate, for example `z`
+normalized between the endplates of the vertebral body. That is a change of the method that
+would require a full re-run of the nested evaluation; it has not been made.
 
 ## Consequences for the manuscript
 

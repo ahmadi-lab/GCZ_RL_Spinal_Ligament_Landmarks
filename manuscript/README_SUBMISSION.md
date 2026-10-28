@@ -14,7 +14,7 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 | File | Purpose | MedIA requirement |
 |---|---|---|
 | `main.tex`, `references.bib`, `figs/`, `tables/` | Manuscript (20 pp., abstract 249 words, 7 keywords). `tables/` holds the rows of the generated tables (Tables 6–8), written by `paper/revision_tables.py` of the code release | Editable source; abstract ≤ 250 words; 1–7 keywords |
-| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S15 (Tables S1–S17, Figs. S1–S5), in the separate supplementary source package | — |
+| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S16 (Tables S1–S17, Figs. S1–S6), in the separate supplementary source package | — |
 | `highlights.txt` | 5 bullets, each ≤ 85 characters | Required, separate file with "highlights" in its name |
 | `graphical_abstract.pdf` / `.png` | Graphical abstract, 2600 px wide | Required, ≥ 1328 px wide, readable at 13 cm |
 | `submission/Statement_of_Significance.md` / `.docx` | Draft answers to all 18 questions; the Word file is generated from the Markdown with pandoc, so edit the Markdown and regenerate | **Required. A missing or incomplete statement means desk rejection.** |
@@ -56,15 +56,16 @@ computed from rounded means). The method and the reported primary results are un
   evaluated set, with the per-subject consistency reported alongside (Sections 3.8, 4.4).
 - **Roles of the components** (Sections 3.2–3.7) and the side-constraint exception, in which 2 of
   742 points keep their GCZ position (Sections 3.7, 3.10).
-- **Component analyses** (Section 4.4, Tables 7–8, Fig. 7; Supplementary S8–S11): ablation,
+- **Component analyses** (Section 4.4, Tables 7–8, Fig. 9; Supplementary S8–S11): ablation,
   region coverage and compactness, residual interpretability, and atlas and ICP sensitivity.
 - **Matching-independent metrics** in the main text (Table 6), with what each metric measures
   (Section 3.8).
 - **Finite element modeling and external validation** in the Discussion and Conclusion.
 - **Figures.** All original figures are kept. New: Fig. 6 (by subject and vertebra), Fig. 8
   (expert annotations, candidate regions, GCZ-RL landmarks per class), Fig. 9 (component analyses),
-  Fig. 10 (ten ICP seeds); Supplementary Figs. S4–S5 (method on real data) and Section S14 (region
-  verification). Audit: `docs/FIGURE_AUDIT.md` and `docs/REGION_VERIFICATION.md` of the code release.
+  Fig. 10 (ten ICP seeds); Supplementary Figs. S4–S5 (method on real data), Section S14 (region
+  verification), and Section S16 with Fig. S6 (ALL and PLL against the superior and inferior body
+  margins). Audit: `docs/FIGURE_AUDIT.md` and `docs/REGION_VERIFICATION.md` of the code release.
 - **Highlights**: two reworded (constrained refinement; predictions on the bone surface).
 
 ## Changes made earlier, relative to the dissertation draft

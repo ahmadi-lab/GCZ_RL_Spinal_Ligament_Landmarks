@@ -228,7 +228,7 @@ def fig4():
     m = pd.read_csv(P2 / "per_vertebra_per_ligament_metrics.csv")
     m = m[m.case == f"{TARGET[0]}_{TARGET[1]}"].pivot_table(index="ligament", columns="method", values="mae_mm")
     fig = plt.figure(figsize=(7.2, 2.75))
-    gs = fig.add_gridspec(1, 3, width_ratios=[1, 1, 0.82], wspace=0.08)
+    gs = fig.add_gridspec(1, 3, width_ratios=[1, 1, 0.82], wspace=0.24)
     for j, view in enumerate(("posterior", "left")):
         a = fig.add_subplot(gs[0, j])
         fs.show(a, fs.render(v, f, view, layers, zoom=1.9, focal=focal, vertex_rgb=rgb))
@@ -316,39 +316,83 @@ def fig6():
 
 
 # ------------------------------------------------------------------------------ Fig. 7
-def fig7():
+ABLATION_LABELS = ["GCZ (geometry only)", "GCZ with projection, no residual", "GCZ with raw residual",
+                   "GCZ with bounded residual", r"GCZ with bounded residual and projection ($\alpha_L=1$)",
+                   r"Complete GCZ-RL (nested $\alpha_L$)"]
+# Drawing styles of Fig. 7: A, monochrome; B, the method colours of the other figures (used in the paper).
+FIG7_STYLE = {"A": {"GCZ": ("#8a8a8a", "s"), "GCZ-RL": (fs.INK, "o"), "other": ("#4d4d4d", "o")},
+              "B": {"GCZ": (fs.METHOD["GCZ"], "s"), "GCZ-RL": (fs.METHOD["GCZ-RL"], "o"), "other": ("#4d4d4d", "o")}}
+CLASS_LABEL_OFFSET = {"CL": (-5, 0, "right")}
+
+
+def axis_break(ax, which="y"):
+    """Mark an axis that does not start at zero with two short slanted strokes near its origin."""
+    kw = dict(transform=ax.transAxes, color=fs.INK, lw=0.7, clip_on=False, zorder=5)
+    gap = dict(transform=ax.transAxes, color="white", lw=1.6, clip_on=False, zorder=4)
+    if which == "y":
+        ax.plot([0, 0], [0.023, 0.047], **gap)
+        for d in (-0.012, 0.012):
+            ax.plot([-0.022, 0.022], [0.035 + d - 0.012, 0.035 + d + 0.012], **kw)
+    else:
+        ax.plot([0.023, 0.047], [0, 0], **gap)
+        for d in (-0.012, 0.012):
+            ax.plot([0.035 + d - 0.012, 0.035 + d + 0.012], [-0.03, 0.03], **kw)
+
+
+def fig7(variant="B", stem="fig7_components"):
     abl = pd.read_csv(REV / "table_ablation_components.csv")
     comp = pd.read_csv(REV / "table_region_compactness.csv")
     perm = pd.read_csv(REV / "feature_importance_permutation.csv")
     atl = pd.read_csv(REV / "table_atlas_icp.csv")
-    fig, axes = plt.subplots(2, 2, figsize=(7.2, 5.2), gridspec_kw={"hspace": 0.55, "wspace": 0.55})
-    ax = axes[0, 0]
-    labels = ["GCZ", "+ projection only", "+ raw residual", "+ bounded residual", "+ bounded + projection",
-              "GCZ-RL (complete)"]
-    y = np.arange(len(abl))[::-1]
-    colors = [fs.METHOD["GCZ"]] + [fs.NEUTRAL] * 4 + [fs.METHOD["GCZ-RL"]]
-    ax.barh(y, abl.macro_mae_mm, height=0.55, color=colors)
-    for yi, r in zip(y, abl.itertuples()):
-        ax.text(r.macro_mae_mm + 0.05, yi, f"{r.macro_mae_mm:.3f}", va="center", fontsize=6.5)
-    ax.set_yticks(y, labels)
-    ax.set_xlim(0, 3.4)
-    ax.set_xlabel("Macro-averaged MAE (mm)")
-    ax.xaxis.grid(True, color=fs.GRID, linewidth=0.5)
+    st = FIG7_STYLE[variant]
+    fig = plt.figure(figsize=(7.2, 5.3))
+    gs = fig.add_gridspec(2, 2, hspace=0.66, wspace=0.62)
+    fig.subplots_adjust(left=0.335, right=0.985, top=0.93, bottom=0.085)
+
+    # (a) Cleveland dot plot of the ablation, in methodological order
+    ax = fig.add_subplot(gs[0, 0])
+    vals = abl.macro_mae_mm.to_numpy()
+    n = len(vals)
+    keys = ["GCZ"] + ["other"] * (n - 2) + ["GCZ-RL"]
+    ax.yaxis.grid(True, color=fs.GRID, linewidth=0.6, linestyle=(0, (1, 1.5)))
     ax.set_axisbelow(True)
-    fs.panel(ax, "a", "Component ablation", x=-0.75)
-    ax = axes[0, 1]
+    for i, (v, k) in enumerate(zip(vals, keys)):
+        col, mk = st[k]
+        ax.plot(v, i, marker=mk, ms=5.4 if k != "other" else 4.6, color=col, ls="", zorder=3)
+        ax.text(1.04, i, f"{v:.3f}", transform=ax.get_yaxis_transform(), va="center", ha="left", fontsize=7,
+                color=fs.INK, fontweight="bold" if k != "other" else "normal")
+    ax.text(1.04, -0.95, "MAE (mm)", transform=ax.get_yaxis_transform(), va="bottom", ha="left", fontsize=6.3,
+            color=fs.MUTED)
+    ax.set_yticks(range(n), ABLATION_LABELS)
+    for t, k in zip(ax.get_yticklabels(), keys):
+        if k != "other":
+            t.set_fontweight("bold")
+    ax.set_ylim(n - 0.5, -0.6)
+    ax.set_xlim(1.9, 3.0)
+    ax.set_xticks(np.arange(2.0, 3.01, 0.2))
+    ax.set_xlabel("Macro-averaged MAE (mm)")
+    ax.tick_params(axis="y", length=0)
+    ax.spines["left"].set_visible(False)
+    axis_break(ax, "x")
+
+    # (b) containment against compactness, one uniform marker per class with direct labels
+    ax = fig.add_subplot(gs[0, 1])
     for r in comp.itertuples():
-        ax.scatter(r.projection_area_fraction_median, r.inside_selection_pct, s=22, color=fs.CLASS[r.ligament], zorder=3,
-                   linewidths=0)
-        ax.annotate(r.ligament, (r.projection_area_fraction_median, r.inside_selection_pct), xytext=(4, 2),
-                    textcoords="offset points", fontsize=6.5)
-    ax.set_xlim(-1, 32)
+        x, y = r.projection_area_fraction_median, r.inside_selection_pct
+        ax.plot(x, y, "o", ms=4.4, color=st["other"][0], ls="", zorder=3)
+        dx, dy, ha = CLASS_LABEL_OFFSET.get(r.ligament, (5, 0, "left"))
+        ax.annotate(r.ligament, (x, y), xytext=(dx, dy), textcoords="offset points", ha=ha, va="center", fontsize=7)
+    ax.set_xlim(-1, 30)
     ax.set_ylim(80, 100)
-    ax.set_xlabel("Share of vertebral surface area (%)")
+    ax.set_yticks(range(80, 101, 5))
+    ax.set_xlabel("Share of the vertebral surface in the region (%)")
     ax.set_ylabel("Reference landmarks inside (%)")
     fs.ygrid(ax)
-    fs.panel(ax, "b", "Region coverage and compactness")
-    ax = axes[1, 0]
+    axis_break(ax, "y")
+    fs.panel(ax, "b", "Region coverage and compactness", x=-0.2)
+
+    # (c) grouped permutation importance (unchanged content)
+    ax = fig.add_subplot(gs[1, 0])
     g = perm.groupby("group").increase_mm
     order = g.mean().sort_values().index
     yy = np.arange(len(order))
@@ -359,30 +403,47 @@ def fig7():
     ax.set_xlabel("Increase in held-out residual error (mm)")
     ax.xaxis.grid(True, color=fs.GRID, linewidth=0.5)
     ax.set_axisbelow(True)
-    fs.panel(ax, "c", "Grouped permutation importance", x=-0.75)
-    ax = axes[1, 1]
-    for same, mk_g, mk_r in ((True, "s", "o"), (False, "s", "o")):
-        d = atl[atl.same_level == same]
-        face = "full" if same else "none"
-        for col, mth, mk in (("GCZ_mm", "GCZ", mk_g), ("GCZRL_mm", "GCZ-RL", mk_r)):
-            ax.scatter(d.icp_residual_mm, d[col], marker=mk, s=20,
-                       facecolors=fs.METHOD[mth] if same else "white", edgecolors=fs.METHOD[mth], linewidths=0.8,
-                       zorder=3)
+    p = ax.get_position()  # shorter labels than (a): widen the axes to the left
+    ax.set_position([0.2, p.y0, p.x1 - 0.2, p.height])
+
+    # (d) atlas residual against per-vertebra error; legend above the axes, outside the data
+    ax = fig.add_subplot(gs[1, 1])
     for r in atl.itertuples():
         ax.plot([r.icp_residual_mm] * 2, [r.GCZ_mm, r.GCZRL_mm], color=fs.GRID, linewidth=0.9, zorder=1)
+    for same in (True, False):
+        d = atl[atl.same_level == same]
+        for col, mth in (("GCZ_mm", "GCZ"), ("GCZRL_mm", "GCZ-RL")):
+            c, mk = st[mth]
+            ax.scatter(d.icp_residual_mm, d[col], marker=mk, s=20, facecolors=c if same else "white", edgecolors=c,
+                       linewidths=0.8, zorder=3)
     ax.set_xlabel("Quick-ICP residual of the selected atlas (mm)")
     ax.set_ylabel("Per-vertebra MAE (mm)")
     fs.ygrid(ax)
-    fs.panel(ax, "d", "Atlas residual and landmark error")
     from matplotlib.lines import Line2D
-    ax.legend(handles=[Line2D([], [], ls="", marker="s", color=fs.METHOD["GCZ"], label="GCZ", markersize=4),
-                       Line2D([], [], ls="", marker="o", color=fs.METHOD["GCZ-RL"], label="GCZ-RL", markersize=4),
+    ax.legend(handles=[Line2D([], [], ls="", marker=st["GCZ"][1], color=st["GCZ"][0], label="GCZ", markersize=4.5),
+                       Line2D([], [], ls="", marker=st["GCZ-RL"][1], color=st["GCZ-RL"][0], label="GCZ-RL",
+                              markersize=4.5),
                        Line2D([], [], ls="", marker="o", markerfacecolor="white", markeredgecolor=fs.MUTED,
-                              label="Cross-level atlas (open)", markersize=4)],
-              loc="upper right", bbox_to_anchor=(1.02, 0.66), handletextpad=0.2)
-    files = fs.save(fig, OUT, "fig7_components")
-    audit("Fig. 7", files, [REV / "table_ablation_components.csv", REV / "table_region_compactness.csv",
-                            REV / "feature_importance_permutation.csv", REV / "table_atlas_icp.csv"])
+                              label="Cross-level atlas (open markers)", markersize=4.5)],
+              loc="lower left", bbox_to_anchor=(-0.02, 1.0), ncol=3, frameon=False, handletextpad=0.15,
+              columnspacing=0.9, borderaxespad=0.15, fontsize=6.6)
+    ax.set_title("(d) Atlas residual and landmark error", loc="left", fontsize=8, fontweight="bold", x=-0.2, pad=17)
+
+    # titles of the left panels start at the figure margin, above their long category labels
+    for ax_, title in ((fig.axes[0], "(a) Component ablation"), (fig.axes[2], "(c) Grouped permutation importance")):
+        p = ax_.get_position()
+        ax_.set_title(title, loc="left", fontsize=8, fontweight="bold", x=(0.012 - p.x0) / p.width, pad=6)
+    files = fs.save(fig, OUT, stem)
+    audit("Fig. 7" if stem == "fig7_components" else f"Fig. 7 alternative {variant}", files,
+          [REV / "table_ablation_components.csv", REV / "table_region_compactness.csv",
+           REV / "feature_importance_permutation.csv", REV / "table_atlas_icp.csv"],
+          "" if stem == "fig7_components" else "Design alternative for comparison; not used in the manuscript")
+
+
+def fig7_alternatives():
+    """Alternative A (monochrome) and B (two method colours) for comparison; B is used as Fig. 7."""
+    for v in ("A", "B"):
+        fig7(v, f"fig7_components_alt{v}")
 
 
 # ------------------------------------------------------------------------------ Fig. 8
@@ -475,7 +536,8 @@ def figS3():
 
 def main():
     fs.setup()
-    names = sys.argv[1:] or ["fig1", "fig3", "fig4", "fig5", "fig6", "fig7", "fig8", "fig9", "figS3"]
+    names = sys.argv[1:] or ["fig1", "fig3", "fig4", "fig5", "fig6", "fig7", "fig7_alternatives", "fig8", "fig9",
+                             "figS3"]
     for n in names:
         res = globals()[n]()
         print(n, "done" if res is None else f"done ({res})", flush=True)

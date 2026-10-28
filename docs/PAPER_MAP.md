@@ -70,6 +70,7 @@ with the regenerated value, and exits with an error if any differs.
 
 | Table S17 (region verification) | `paper/region_verification.py` | `paper/outputs/region_verification/{region_verification_by_class,region_verification_per_vertebra,bands_fold_S03}.csv`, `tab_region_verification.tex` |
 | Figs. S4–S5 (method on real data) | `paper/figures_main.py` `fig1`, `fig4` | `paper/outputs/figures/fig1_pipeline.*`, `fig4_residual_correction.*` |
+| Section S16, Fig. S6 (ALL and PLL margins) | `paper/margin_verification.py` | `paper/outputs/margin_verification/{margin_check,margin_zn_by_vertebra}.csv`, `margin_summary.json`, `fig_margins_ALL_PLL.{pdf,png}` |
 
 Every figure is listed with its input files in `docs/FIGURE_AUDIT.md` and
 `paper/outputs/figures/figure_audit.csv` (written by `paper/figures_main.py`); the candidate

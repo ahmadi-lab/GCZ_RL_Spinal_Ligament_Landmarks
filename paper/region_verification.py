@@ -165,17 +165,18 @@ def figure(masks):
     gt = cases.landmarks(*key)
     rl = table_from_csv(P2 / "predictions_gczrl.csv")[key]
     _, proj = masks
-    rows = ["Expert attachment\nannotations", "GCZ candidate\nregion", "GCZ-RL\nlandmarks"]
+    rows = ["Expert attachment\nannotations", "GCZ candidate region\nwith expert points", "GCZ-RL\nlandmarks"]
     fig, axes = plt.subplots(3, len(LIGS), figsize=(7.2, 3.6))
     for c, l in enumerate(LIGS):
         view = VIEW_OF[l]
         g = np.atleast_2d(gt[l])
         # very small regions (SSL, ITL: tens of vertices) are also drawn as markers on the same vertices
         small = [{"kind": "spheres", "points": v[proj[l]], "color": fs.CLASS[l], "size": 12}] if proj[l].sum() < 300 else []
-        imgs = [fs.render(v, f, view, [{"kind": "spheres", "points": g, "color": fs.CLASS[l], "size": 20}], zoom=1.25),
-                fs.render(v, f, view, small, zoom=1.25, vertex_rgb=fs.region_colors(v, {l: proj[l]}, order=(l,), mix=0.6)),
-                fs.render(v, f, view, [{"kind": "spheres", "points": g, "color": "#9a9a9a", "size": 9},
-                                       {"kind": "spheres", "points": rl[l], "color": fs.CLASS[l], "size": 30}],
+        imgs = [fs.render(v, f, view, [{"kind": "spheres", "points": g, "color": fs.CLASS[l], "size": 26}], zoom=1.25),
+                fs.render(v, f, view, small + [{"kind": "spheres", "points": g, "color": fs.EXPERT, "size": 14}],
+                          zoom=1.25, vertex_rgb=fs.region_colors(v, {l: proj[l]}, order=(l,), mix=0.6)),
+                fs.render(v, f, view, [{"kind": "spheres", "points": g, "color": "#9a9a9a", "size": 11},
+                                       {"kind": "spheres", "points": rl[l], "color": fs.CLASS[l], "size": 34}],
                           zoom=1.25)]
         for r_, img in enumerate(imgs):
             ax = axes[r_, c]

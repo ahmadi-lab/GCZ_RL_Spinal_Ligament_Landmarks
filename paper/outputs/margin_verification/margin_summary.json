@@ -1,0 +1,43 @@
+{
+  "normalization_matches_direct_computation": true,
+  "ALL": {
+    "vertebrae": 14,
+    "superior_above_inferior_all": true,
+    "sup_minus_inf_mm_median": 27.5,
+    "sup_minus_inf_mm_min": 24.4,
+    "region_area_middle_half_pct_median": 27.9,
+    "region_area_kept_by_split_bands_pct_median": 100.0,
+    "expert_middle_half_pct_mean": 0.0,
+    "gcz_middle_half": "0/140",
+    "gcz_outside_split_bands": "8/140",
+    "gczrl_middle_half": "0/140",
+    "gczrl_outside_split_bands": "8/140"
+  },
+  "PLL": {
+    "vertebrae": 14,
+    "superior_above_inferior_all": true,
+    "sup_minus_inf_mm_median": 27.4,
+    "sup_minus_inf_mm_min": 24.5,
+    "region_area_middle_half_pct_median": 35.3,
+    "region_area_kept_by_split_bands_pct_median": 55.1,
+    "expert_middle_half_pct_mean": 0.0,
+    "gcz_middle_half": "0/140",
+    "gcz_outside_split_bands": "18/140",
+    "gczrl_middle_half": "0/140",
+    "gczrl_outside_split_bands": "18/140"
+  },
+  "figure_case_mesh_margin_minus_expert_mm": {
+    "ALL": {
+      "superior": 1.1,
+      "inferior": -1.6
+    },
+    "PLL": {
+      "superior": 1.2,
+      "inferior": 0.8
+    }
+  },
+  "figure": [
+    "fig_margins_ALL_PLL.pdf",
+    "fig_margins_ALL_PLL.png"
+  ]
+}
