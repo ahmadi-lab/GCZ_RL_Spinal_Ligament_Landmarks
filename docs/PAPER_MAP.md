@@ -18,16 +18,18 @@ Numbering follows the revised journal manuscript. Abbreviations: `P1` =
 | Table 7 | Component ablation | `paper/revision_analyses.py ablation` | `REV/table_ablation_components.csv`, `REV/ablation_per_case.csv` |
 | Table 8 | Candidate-region coverage and compactness | `paper/revision_analyses.py compactness` | `REV/table_region_compactness.csv`, `REV/region_compactness_per_vertebra.csv` |
 | Table 9 | Development analysis | `P1/run_part1.py` | `P1/outputs/table_4_4_heldout_results.csv` |
-| Fig. 1 | Pipeline on held-out S03 L4 (calibration, regions, ICP transfer, GCZ, GCZ-RL) | `paper/figures_main.py` `fig1` | `paper/outputs/figures/fig1_pipeline.{pdf,png}` |
+| Fig. 1 | GCZ-RL workflow (original drawing) | — (drawn) | manuscript source `figs/fig_gcz_pipeline_benchmark_style4.png` |
 | Fig. 2 | Preprocessing; panel D midplane positions | `NB` cells 21–24 | figure only |
-| Fig. 3 | Calibration bands and candidate regions (fold holding out S03) | `paper/figures_main.py` `fig3` | `paper/outputs/figures/fig3_calibration.{pdf,png}` |
-| Fig. 4 | GCZ initialization, GCZ-RL correction, expert reference on S03 L4 | `paper/figures_main.py` `fig4` | `paper/outputs/figures/fig4_residual_correction.{pdf,png}` |
-| Fig. 5 | Primary evaluation by held-out subject and vertebra | `paper/figures_main.py` `fig5` | `paper/outputs/figures/fig5_patient_level.{pdf,svg,png}` |
-| Fig. 6 | Qualitative, three orthogonal views | `paper/figures_main.py` `fig6` | `paper/outputs/figures/fig6_qualitative.{pdf,png}` |
-| Fig. 6 caption | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
-| Fig. 7 | Component analyses (ablation, compactness, importance, atlas) | `paper/figures_main.py` `fig7` | `paper/outputs/figures/fig7_components.{pdf,svg,png}` |
-| Fig. 8 | Ten-seed ICP sensitivity | `paper/figures_main.py` `fig8` | `paper/outputs/figures/fig8_icp_seeds.{pdf,svg,png}` |
-| Fig. 9 | Development analysis chart (values of Table 9) | `paper/figures_main.py` `fig9` | `paper/outputs/figures/fig9_development.{pdf,svg,png}` |
+| Fig. 3 | Threshold calibration and candidate regions (original drawing) | — (drawn) | `figs/fig_threshold_candidate_combined1.png` |
+| Fig. 4 | Atlas-to-target prediction workflow (original) | — | `figs/fig_prediction_pipeline.png` |
+| Fig. 5 | Geometry-constrained correction (original drawing) | — (drawn) | `figs/gcz_residual_learning_framework.png` |
+| Fig. 6 | Primary evaluation by held-out subject and vertebra | `paper/figures_main.py` `fig5` | `paper/outputs/figures/fig5_patient_level.{pdf,svg,png}` |
+| Fig. 7 | Qualitative, three orthogonal views | `paper/fig6_qualitative_loso.py` | `paper/outputs/fig6_qualitative_loso_S03_L4.png` |
+| Fig. 7 caption | Errors on S03 L4 (3.263 / 1.972 / 2.771 mm), rank 5 of 14; check that the drawn points are the saved predictions | `paper/check_fig6.py` | `paper/outputs/fig6_check_S03_L4.csv`, `fig6_vertebra_ranking.csv` |
+| Fig. 8 | Expert annotations, candidate regions, GCZ-RL landmarks per class (S03 L4) | `paper/region_verification.py` | `paper/outputs/region_verification/fig_regions_footprints.{pdf,png}` |
+| Fig. 9 | Component analyses (ablation, compactness, importance, atlas) | `paper/figures_main.py` `fig7` | `paper/outputs/figures/fig7_components.{pdf,svg,png}` |
+| Fig. 10 | Ten-seed ICP sensitivity | `paper/figures_main.py` `fig8` | `paper/outputs/figures/fig8_icp_seeds.{pdf,svg,png}` |
+| Fig. 11 | Development analysis chart (original) | values of Table 9 | `figs/fig_literature_comparison_clean2.png` |
 | Graphical abstract | — | `paper/graphical_abstract.py` | `paper/outputs/graphical_abstract.{png,pdf}` |
 
 Table rows of Tables 6–8 and S10–S15 are written by `paper/revision_tables.py` into
@@ -64,7 +66,11 @@ with the regenerated value, and exits with an error if any differs.
 | Tables S12–S13, Fig. S3 (residual interpretability) | `paper/revision_analyses.py interpretability`, `paper/figures_main.py` `figS3` | `REV/table_residual_agreement.csv`, `REV/feature_importance_*.csv`, `REV/residual_vectors_heldout.csv`, `paper/outputs/figures/figS3_residual_vectors.{pdf,png}` |
 | Table S14 (atlas and ICP) | `paper/revision_analyses.py atlas` | `REV/table_atlas_icp.csv` |
 | Table S15 (reproducibility) | `paper/reproducibility_check.py` | `REV/reproducibility_table.{csv,tex}` |
-| Table S16 (ICP seed sensitivity; Sec. 4.4, Fig. 8, Limitations) | `paper/icp_seed_sensitivity.py run 0 … 9`, then `summary` | `paper/outputs/icp_seed_sensitivity/{offset_*.json,summary.csv,summary.json,tab_icp_seeds.tex}` |
+| Table S16 (ICP seed sensitivity; Sec. 4.4, Fig. 10, Limitations) | `paper/icp_seed_sensitivity.py run 0 … 9`, then `summary` | `paper/outputs/icp_seed_sensitivity/{offset_*.json,summary.csv,summary.json,tab_icp_seeds.tex}` |
+
+| Table S17 (region verification) | `paper/region_verification.py` | `paper/outputs/region_verification/{region_verification_by_class,region_verification_per_vertebra,bands_fold_S03}.csv`, `tab_region_verification.tex` |
+| Figs. S4–S5 (method on real data) | `paper/figures_main.py` `fig1`, `fig4` | `paper/outputs/figures/fig1_pipeline.*`, `fig4_residual_correction.*` |
 
 Every figure is listed with its input files in `docs/FIGURE_AUDIT.md` and
-`paper/outputs/figures/figure_audit.csv` (written by `paper/figures_main.py`).
+`paper/outputs/figures/figure_audit.csv` (written by `paper/figures_main.py`); the candidate
+regions are checked against the expert annotations in `docs/REGION_VERIFICATION.md`.

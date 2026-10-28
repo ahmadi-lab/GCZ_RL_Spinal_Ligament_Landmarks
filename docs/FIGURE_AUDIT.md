@@ -1,33 +1,50 @@
 # Figure audit
 
-Every figure of the revised manuscript is drawn by `paper/figures_main.py` from saved outputs of
-the code release and from the public meshes and annotations (`scripts/fetch_data.py`); no value
-is typed in by hand and no anatomy is synthetic. The script also writes
-`paper/outputs/figures/figure_audit.csv`, one row per figure with its input files.
+The original figures of the manuscript are kept unchanged. New figures were added for the
+revision; every new figure is drawn from saved outputs of the code release and from the public
+meshes and annotations (`scripts/fetch_data.py`). No value is typed in by hand and no anatomy is
+synthetic. `paper/figures_main.py` and `paper/region_verification.py` draw them;
+`paper/outputs/figures/figure_audit.csv` lists the input files per figure.
 
-Style: white background, Arial, thin axes, light grid; ligament classes in the Okabe-Ito palette;
-methods by colour and marker shape (GCZ square, GCZ-RL circle, SLD triangle), validated for colour
-vision deficiency with marker shape as the second cue. Quantitative figures are vector PDF and SVG
-(text kept as text); figures with 3D anatomy are 600 dpi renders placed in a PDF. All renders use
-the same camera conventions (LPS frame; superior, left lateral, and posterior views).
+Style of the new figures: white background, Arial, thin axes, light grid; ligament classes in the
+Okabe-Ito palette; methods by colour and marker shape (GCZ square, GCZ-RL circle, SLD triangle).
+Quantitative figures are vector PDF and SVG; figures with 3D anatomy are 600 dpi renders in a PDF.
 
-| Figure | Content | Inputs | Decision |
+## Main text
+
+| Figure | Content | Origin | Inputs |
 |---|---|---|---|
-| Fig. 1 | Pipeline on held-out S03 L4: calibration annotations (S01 L1), calibrated regions, ICP transfer of the atlas, GCZ landmarks, GCZ-RL with expert reference | `P2/outputs/predictions_gcz.csv`, `predictions_gczrl.csv`; raw meshes and annotations of S01, S02, S03 L4 | Replaces the drawn workflow diagram. The ICP transfer is recomputed with the seed of the primary run and reproduces the saved GCZ landmarks of S03 L4 (maximum deviation 6e-14 mm). |
-| Fig. 2 | Preprocessing montage | original analysis notebook | Kept unchanged. |
-| Fig. 3 | PLL calibration histogram, y_n bands of all classes, candidate regions in three views | raw annotations of S01 L1–L5 and S02 L1–L4; S03 L4 mesh; `gcz.build_thresholds`, `candidate_vertices` | Replaces the drawn calibration figure (which had a smoothed density and a garbled label). |
-| Fig. 4 | GCZ landmarks, GCZ-RL landmarks, applied corrections, expert reference on S03 L4; per-class error | `predictions_gcz.csv`, `predictions_gczrl.csv`, `per_vertebra_per_ligament_metrics.csv`; S03 L4 mesh | Replaces the drawn residual-learning diagram. |
-| Fig. 5 | Macro MAE by held-out subject and by held-out vertebra | `P2/outputs/table_P2_4_per_subject.csv`, `paper/outputs/primary_per_vertebra_macro_mae.csv` | New. |
-| Fig. 6 | GCZ, GCZ-RL, SLD on S03 L4 in three views | `predictions_{gcz,gczrl,sld}.csv`; S03 L4 mesh | Restyled; same points as before (`paper/check_fig6.py`). |
-| Fig. 7 | Ablation, coverage and compactness, permutation importance, atlas residual vs error | `paper/outputs/revision/{table_ablation_components,table_region_compactness,feature_importance_permutation,table_atlas_icp}.csv` | Restyled. |
-| Fig. 8 | Ten-seed ICP sensitivity (paired GCZ and GCZ-RL per run, stored run, SLD reference) | `paper/outputs/icp_seed_sensitivity/summary.{csv,json}`, `paper/outputs/paper_numbers.json` | Moved from the supplement. Labelled as a computational sensitivity analysis on the same three subjects, not independent validation. |
-| Fig. 9 | Development analysis by class (values of Table 9) | `part1_dissertation_57/outputs/table_4_4_heldout_results.csv` | Redrawn as a dot plot without per-bar labels. |
-| Fig. S3 | Predicted and true residual vectors on S03 L4 | `paper/outputs/revision/residual_vectors_heldout.csv`; S03 L4 mesh | Restyled. |
+| Fig. 1 | GCZ-RL workflow | original (drawn) | — |
+| Fig. 2 | Preprocessing montage | original (analysis notebook) | — |
+| Fig. 3 | Threshold calibration and candidate regions | original (drawn) | — |
+| Fig. 4 | Atlas-to-target prediction workflow | original | — |
+| Fig. 5 | Geometry-constrained GCZ-RL correction | original (drawn) | — |
+| Fig. 6 | Macro MAE by held-out subject and vertebra | new, `figures_main.py fig5` | `P2/outputs/table_P2_4_per_subject.csv`, `paper/outputs/primary_per_vertebra_macro_mae.csv` |
+| Fig. 7 | GCZ, GCZ-RL, SLD on S03 L4 in three views | original (`paper/fig6_qualitative_loso.py`) | saved predictions |
+| Fig. 8 | Expert annotations, candidate regions, GCZ-RL landmarks per class on S03 L4 | new, `region_verification.py` | raw meshes and annotations; `gcz.build_thresholds`, `candidate_vertices`; `P2/outputs/predictions_gczrl.csv` |
+| Fig. 9 | Component analyses (ablation, compactness, importance, atlas) | new, `figures_main.py fig7` | `paper/outputs/revision/*.csv` |
+| Fig. 10 | Ten-seed ICP sensitivity | new, `figures_main.py fig8` | `paper/outputs/icp_seed_sensitivity/summary.{csv,json}`, `paper_numbers.json` |
+| Fig. 11 | Development analysis chart | original | values of Table 9 |
 
-The previous Fig. 4 (atlas-to-target prediction workflow) is replaced by panels (c)–(d) of Fig. 1,
-and the previous Supplementary Fig. S4 by Fig. 8. The replaced figure files are kept in
-`manuscript/figs_previous/`.
+## Supplementary material
 
-Reproduce: run `part2_patient_loso_14/run_part2.py`, `paper/make_paper_numbers.py`,
-`paper/revision_analyses.py`, and `paper/icp_seed_sensitivity.py run 0 … 9` + `summary`, then
-`python paper/figures_main.py`.
+| Figure | Content | Origin | Inputs |
+|---|---|---|---|
+| Fig. S1, S2 | Matching diagnostic | original (analysis notebook) | — |
+| Fig. S3 | Predicted and true residual vectors on S03 L4 | new, `figures_main.py figS3` | `paper/outputs/revision/residual_vectors_heldout.csv` |
+| Fig. S4 | Workflow of Fig. 1 on real data (S03 L4) | new, `figures_main.py fig1` | saved GCZ and GCZ-RL predictions; raw meshes; the ICP transfer reproduces the saved GCZ landmarks (6e-14 mm) |
+| Fig. S5 | Correction of Fig. 5 on real data (S03 L4) | new, `figures_main.py fig4` | saved predictions; `per_vertebra_per_ligament_metrics.csv` |
+
+## Candidate-region figure (Fig. 8)
+
+The region figure was checked before it was added (`docs/REGION_VERIFICATION.md`):
+
+- the rendering colours exactly the vertices of each region mask;
+- the regions are the masks of the method, unchanged;
+- each class column uses one camera for the three rows.
+
+The broad regions of ALL, PLL, and CL are a property of the calibration, which pools the superior
+and inferior annotation parts into one band, and are stated as such in the caption.
+
+`figures_main.py` also draws restyled alternatives of Figs. 3, 7, and 11 (`fig3_calibration`,
+`fig6_qualitative`, `fig9_development`) that are not used in the manuscript.

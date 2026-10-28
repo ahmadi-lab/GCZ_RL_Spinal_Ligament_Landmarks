@@ -396,7 +396,7 @@ By impurity, the ten most used single features were the position of the point in
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{figS3_residual_vectors.png}
-\caption{True (dark) and predicted (colored) residual vectors of the GCZ points (colored squares) on held-out vertebra S03 L4 (lumbar level L4; fold holding out S03), for the classes whose correction was applied in this fold (blend weight above zero): ISL, SSL, ITL, and CL. Small dark points are the expert reference landmarks of these classes. Vectors are drawn at true length, before the correction bound and projection. The applied corrections are shown in Fig.~4 of the main text.}
+\caption{True (dark) and predicted (colored) residual vectors of the GCZ points (colored squares) on held-out vertebra S03 L4 (lumbar level L4; fold holding out S03), for the classes whose correction was applied in this fold (blend weight above zero): ISL, SSL, ITL, and CL. Small dark points are the expert reference landmarks of these classes. Vectors are drawn at true length, before the correction bound and projection. The applied corrections are shown in Fig.~\ref{fig:correction_real}.}
 \label{fig:residual_vectors}
 \end{figure}
 
@@ -462,7 +462,46 @@ Offset & GCZ & GCZ-RL & Reduction (\%) & Pass@5 & S01 & S02 & S03 & Subjects imp
 \end{tabular}}
 \end{table}
 
-Figure~8 of the main text plots these runs together with the reported run.
+The ten-seed figure of Section~4.4 of the main text plots these runs together with the reported run.
+
+\section*{S14. Anatomical verification of the candidate regions}
+
+The candidate regions of the primary evaluation were compared with the expert annotations of the same class on all 14 held-out vertebrae (\texttt{paper/region\_verification.py}). The regions were rebuilt exactly as in the method from the training subjects of each fold; nothing was shrunk, moved, or redrawn, and the rendering in the main text colours exactly the vertices of each region mask. The footprint of a class is taken as the mesh surface within 2.5~mm of its expert points. Table~\ref{tab:region_verification} gives, per class, the calibrated bands of the fold holding out S03 and the medians over the 14 vertebrae.
+
+The broad regions of ALL, PLL, and CL follow from the calibration: the superior and inferior parts of these classes (and, for CL, the left and right parts) are pooled into one band per quantity, so the $z_n$ band covers both parts and the surface between them, for example the anterior body surface and the anterior parts of both endplates for ALL. The LF region overlaps the CL and PLL regions by most of its area, so the class of a landmark is determined by the transferred atlas landmark rather than by the region. The ITL band of $|x_n-0.5|$ collapses to the most lateral vertices, so the ITL region is narrower than the annotated tip footprint and contains 30\% of its area, although 92.9\% of the ITL points have their nearest vertex inside it. All GCZ-RL landmarks are vertices of the projection region of their class except the two ITL points that keep their GCZ position under the side-preserving fallback (Section~3.10). Separate bands for the parts of a class would give tighter regions; this would be a change of the method and is left for future work.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Candidate regions against expert footprints on the 14 held-out vertebrae (medians; Inside pooled over reference points). Bands: calibrated $\mu_L\pm2\sigma_L$ bands in the fold holding out S03. Area: share of the vertebral surface. Footprint: surface within 2.5~mm of an expert point of the class. Ratio: region area over footprint area. Foot.\ in reg.: share of the footprint area inside the region. Reg.\ on foot.: share of the region area within the footprint. Overlap: share of the region area that also belongs to another class region.}
+\label{tab:region_verification}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llllrrrrrrr@{}}
+\toprule
+Class & $y_n$ band & $|x_n-0.5|$ band & $z_n$ band & Inside (\%) & Region area (\%) & Footprint area (\%) & Ratio & Foot.\ in reg.\ (\%) & Reg.\ on foot.\ (\%) & Overlap (\%) \\
+\midrule
+\inputrows{tables/tab_region_verification.tex}
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\section*{S15. Method illustrations on real data}
+
+Figures~\ref{fig:pipeline_real} and~\ref{fig:correction_real} show the steps of Fig.~1 and the correction of Fig.~5 of the main text on held-out vertebra S03 L4 of the primary evaluation, using the real meshes and the saved landmarks (\texttt{paper/figures\_main.py}). The ICP transfer in Fig.~\ref{fig:pipeline_real}(c) is recomputed with the seed of the primary run and reproduces the saved GCZ landmarks of this vertebra (maximum deviation $6\times10^{-14}$~mm).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig1_pipeline.pdf}
+\caption{GCZ-RL on held-out vertebra S03 L4 (fold holding out S03), superior view. (a) Expert annotations of a training vertebra (S01 L1, the atlas selected for this target). (b) Candidate regions of the target, calibrated on S01 and S02. (c) The atlas aligned to the target by rigid ICP and its transferred landmarks. (d) GCZ landmarks snapped to target vertices inside the regions. (e) GCZ-RL landmarks after the bounded residual correction and projection, with the expert reference; dark segments connect each GCZ landmark to its corrected position.}
+\label{fig:pipeline_real}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig4_residual_correction.pdf}
+\caption{Applied correction on held-out vertebra S03 L4 for the classes whose blend weight was above zero in this fold (ISL, SSL, ITL, CL). (a, b) Translucent squares: GCZ landmarks; spheres: GCZ-RL landmarks after the bounded correction and projection onto the tinted candidate region; dark segments: the applied correction; small dark points: expert reference. (c) MAE of each class on this vertebra before (GCZ) and after (GCZ-RL); for ALL, PLL, and LF the inner validation selected $\alpha_L=0$, so the two coincide.}
+\label{fig:correction_real}
+\end{figure}
 \revend
 
 \FloatBarrier

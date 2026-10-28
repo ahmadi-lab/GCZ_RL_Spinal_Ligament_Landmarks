@@ -1,0 +1,8 @@
+{
+  "render_colours_equal_masks": true,
+  "footprint_buffer_mm": 2.5,
+  "figure": [
+    "fig_regions_footprints.pdf",
+    "fig_regions_footprints.png"
+  ]
+}
