@@ -14,7 +14,7 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 | File | Purpose | MedIA requirement |
 |---|---|---|
 | `main.tex`, `references.bib`, `figs/`, `tables/` | Manuscript (20 pp., abstract 249 words, 7 keywords). `tables/` holds the rows of the generated tables (Tables 6–8), written by `paper/revision_tables.py` of the code release | Editable source; abstract ≤ 250 words; 1–7 keywords |
-| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S17 (Tables S1–S17, Figs. S1–S7), in the separate supplementary source package | — |
+| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S18 (Tables S1–S17, Figs. S1–S8), in the separate supplementary source package | — |
 | `highlights.txt` | 5 bullets, each ≤ 85 characters | Required, separate file with "highlights" in its name |
 | `graphical_abstract.pdf` / `.png` | Graphical abstract, 2600 px wide | Required, ≥ 1328 px wide, readable at 13 cm |
 | `submission/Statement_of_Significance.md` / `.docx` | Draft answers to all 18 questions; the Word file is generated from the Markdown with pandoc, so edit the Markdown and regenerate | **Required. A missing or incomplete statement means desk rejection.** |
@@ -62,12 +62,12 @@ computed from rounded means). The method and the reported primary results are un
   (Section 3.8).
 - **Finite element modeling and external validation** in the Discussion and Conclusion.
 - **Figures.** All original figures are kept. New: Fig. 6 (by subject and vertebra), Fig. 7
-  (GCZ and GCZ-RL with magnified close-ups of the applied correction), Fig. 8 (expert annotations,
-  calibrated search regions, GCZ-RL landmarks, ALL and PLL margins), Fig. 9 (component analyses),
+  (GCZ and GCZ-RL with magnified close-ups of the applied correction), Fig. 8 (expert attachment
+  footprints, annotations, GCZ-RL landmarks, ALL and PLL margins), Fig. 9 (component analyses),
   Fig. 10 (ten ICP seeds); Supplementary Figs. S4–S5 (method on real data), Section S14 (region
   verification), Section S16 with Fig. S6 (ALL and PLL against the body margins). The previous
   qualitative figure (three methods, seven classes, three views) is unchanged as Supplementary
-  Fig. S7. Audit: `docs/FIGURE_AUDIT.md` and `docs/REGION_VERIFICATION.md` of the code release.
+  Fig. S7; the calibrated search regions are Supplementary Fig. S8 (Section S18). Audit: `docs/FIGURE_AUDIT.md` and `docs/REGION_VERIFICATION.md` of the code release.
 - **Highlights**: two reworded (constrained refinement; predictions on the bone surface).
 
 ## Changes made earlier, relative to the dissertation draft

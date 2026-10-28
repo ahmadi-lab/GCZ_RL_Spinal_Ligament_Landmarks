@@ -39,6 +39,7 @@ GENERATED = {  # manuscript file -> produced by
                                                   "paper/margin_verification.py"),
     "supplementary_figs/fig_qualitative_loso_S03_L4.png": ("paper/outputs/fig6_qualitative_loso_S03_L4.png",
                                                           "paper/fig6_qualitative_loso.py"),
+    "supplementary_figs/fig_search_regions.pdf": (F + "fig_search_regions.pdf", "paper/figures_anatomy.py"),
     "tables/tab_region_verification.tex": ("paper/outputs/region_verification/tab_region_verification.tex",
                                            "paper/region_verification.py"),
     "tables/tab_icp_seeds.tex": ("paper/outputs/icp_seed_sensitivity/tab_icp_seeds.tex",

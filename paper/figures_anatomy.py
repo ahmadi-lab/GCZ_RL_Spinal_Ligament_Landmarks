@@ -4,9 +4,10 @@ held-out vertebra S03 L4 (fold holding out S03; regions calibrated on S01 and S0
   fig_qualitative_insets   Fig. 7: expert reference, GCZ, and GCZ-RL with magnified insets of the
                            classes whose correction is active in this fold, and the per-class errors
                            of GCZ, GCZ-RL, and SLD on this vertebra
-  fig_regions_margins      Fig. 8: expert attachment annotations, calibrated search regions (GCZ
-                           masks), and GCZ-RL landmarks; ALL and PLL with close-ups of the superior
-                           and inferior body margins
+  fig_regions_margins      Fig. 8: expert attachment footprints and annotations, and GCZ-RL landmarks;
+                           ALL and PLL with close-ups of the superior and inferior body margins.
+                           Also Supplementary Fig. S8 (fig_search_regions): the calibrated GCZ search
+                           regions, the masks used for projection, unchanged
 
 One encoding is used in both figures and never mixed:
   expert attachment annotation     black sphere
@@ -460,11 +461,11 @@ def fig_regions_margins():
     exp_l = lambda l, r=r_e: layer("spheres", gt[l], EXPERT_C, r)  # noqa: E731
     rl_l = lambda l: layer("spheres", rl[l], RL_C, r_p)  # noqa: E731
 
-    fig = plt.figure(figsize=(7.2, 6.9))
-    outer = fig.add_gridspec(4, 1, height_ratios=[1.2, 1.45, 1.45, 1.1], hspace=0.3)
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.89, bottom=0.005)
+    fig = plt.figure(figsize=(7.2, 5.75))
+    outer = fig.add_gridspec(3, 1, height_ratios=[1.2, 1.45, 1.45], hspace=0.3)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.915, bottom=0.005)
 
-    # ---- part A: expert footprints, expert points, GCZ-RL landmarks
+    # ---- Fig. 8: expert footprints, expert points, GCZ-RL landmarks
     STRIP_W, STRIP_H = 46.0, 21.0                 # close-up size, mm
     fb = mv.body_only(v, f, walls["y_post"] + 0.5)
     for r, (lig, view, faces) in enumerate((("ALL", "anterior", f), ("PLL", "posterior", fb))):
@@ -516,9 +517,27 @@ def fig_regions_margins():
         if c == 0:
             ax.text(-0.06, 0.5, "Expert footprint,\nexpert points,\nGCZ-RL", transform=ax.transAxes, rotation=90,
                     ha="right", va="center", fontsize=6.8)
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch, Rectangle
+    h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.4, label="Expert annotation"),
+         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL landmark"),
+         Patch(fc=FOOT_S, ec="none", label="Footprint, superior margin"),
+         Patch(fc=FOOT_I, ec="none", label="Footprint, inferior margin"),
+         Patch(fc=FOOT, ec="none", label="Footprint, other classes"),
+         Rectangle((0, 0), 1, 1, fill=False, ec=fs.INK, lw=0.8, label="Close-up frame")]
+    fig.legend(handles=h, loc="upper center", ncol=3, frameon=False, bbox_to_anchor=(0.5, 1.0), fontsize=6.7,
+               handletextpad=0.4, columnspacing=1.2)
+    CHECKS["fig8_rl_inside_region"] = {l: bool(np.isin(np.round(np.atleast_2d(rl[l]), 4),
+                                                       np.round(v[masks[l]], 4)).all(axis=1).all())
+                                       for l in fs.LIGAMENTS}
+    CHECKS["fig8_closeups_are_crops_of_the_whole_view"] = True
+    files = fs.save(fig, OUT, "fig_regions_margins", vector=False)
+    fm.audit("Fig. 8 (new)", files, [fm.P2 / "predictions_gczrl.csv", "raw mesh and annotations of S03 L4"])
 
-    # ---- part B: the calibrated GCZ search regions, exactly as computed (with the expert points)
-    row = outer[3].subgridspec(1, 7, wspace=0.05)
+    # ---- Supplementary Fig. S8: the calibrated GCZ search regions, exactly as computed, with the expert points
+    fig = plt.figure(figsize=(7.2, 1.68))
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.86, bottom=0.01)
+    row = fig.add_gridspec(1, 7, wspace=0.05)
     grey = rgb_of(REGION_C)
     for c, lig in enumerate(fs.LIGAMENTS):
         rgb = np.tile(bone, (len(v), 1))
@@ -536,39 +555,22 @@ def fig_regions_margins():
             img, _, _ = render(v, f, view, [exp_l(lig, 0.75 if lig in ("SSL", "ITL") else 0.6)], rgb=rgb)
         ax = fig.add_subplot(row[0, c])
         show(ax, crop(img, box), boxed=True)
-        letter(ax, "lmnopqr"[c])
+        letter(ax, "abcdefg"[c])
         ax.set_title(lig, loc="left", fontsize=7.0, fontweight="bold", pad=3)
         if c == 0:
             ax.text(-0.06, 0.5, "Calibrated GCZ\nsearch region\n(actual mask)", transform=ax.transAxes,
-                    rotation=90, ha="right", va="center", fontsize=6.8)
+                    rotation=90, ha="right", va="center", fontsize=6.6)
         # the gray vertices of the render input are exactly the mask vertices
         assert np.array_equal(np.all(rgb == grey, axis=1), masks[lig])
-    fig.canvas.draw()
-    first_a, first_b = fig.axes[0], fig.axes[-7]
-    for ax_, t in ((first_a, "A. Expert Attachment Footprints, Expert Annotations, and GCZ-RL Landmarks"),
-                   (first_b, "B. Calibrated GCZ Search Regions (the actual masks used for projection, unchanged)")):
-        top_y = max(a.get_position().y1 for a in fig.axes if abs(a.get_position().y1 - ax_.get_position().y1) < 0.08)
-        fig.text(0.012, top_y + 0.032, t, fontsize=7.6, fontweight="bold", ha="left", va="bottom")
-    from matplotlib.lines import Line2D
-    from matplotlib.patches import Patch, Rectangle
     h = [Line2D([], [], ls="", marker="o", color=EXPERT_C, ms=3.4, label="Expert annotation"),
-         Line2D([], [], ls="", marker="o", color=RL_C, ms=4.8, label="GCZ-RL landmark"),
-         Patch(fc=FOOT_S, ec="none", label="Footprint, superior margin"),
-         Patch(fc=FOOT_I, ec="none", label="Footprint, inferior margin"),
-         Patch(fc=FOOT, ec="none", label="Footprint, other classes"),
-         Patch(fc=REGION_C, ec="none", label="GCZ search region (mask)"),
-         Rectangle((0, 0), 1, 1, fill=False, ec=fs.INK, lw=0.8, label="Close-up frame")]
-    fig.legend(handles=h, loc="upper center", ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0), fontsize=6.7,
-               handletextpad=0.4, columnspacing=1.0)
-    CHECKS["fig8_rl_inside_region"] = {l: bool(np.isin(np.round(np.atleast_2d(rl[l]), 4),
-                                                       np.round(v[masks[l]], 4)).all(axis=1).all())
-                                       for l in fs.LIGAMENTS}
-    CHECKS["fig8_gray_vertices_equal_masks"] = True
-    CHECKS["fig8_closeups_are_crops_of_the_whole_view"] = True
-    files = fs.save(fig, OUT, "fig_regions_margins", vector=False)
-    fm.audit("Fig. 8 (new)", files, [fm.P2 / "predictions_gczrl.csv", "raw mesh and annotations of S03 L4",
-                                     "gcz.build_thresholds / candidate_vertices (fold holding out S03)"])
-    return files
+         Patch(fc=REGION_C, ec="none", label="Calibrated GCZ search region (the actual mask used for projection, unchanged)")]
+    fig.legend(handles=h, loc="upper center", ncol=2, frameon=False, bbox_to_anchor=(0.5, 1.0), fontsize=6.7,
+               handletextpad=0.4, columnspacing=1.4)
+    CHECKS["figS8_gray_vertices_equal_masks"] = True
+    s8 = fs.save(fig, OUT, "fig_search_regions", vector=False)
+    fm.audit("Fig. S8 (new)", s8, ["gcz.build_thresholds / candidate_vertices (fold holding out S03)",
+                                   "raw mesh and annotations of S03 L4"])
+    return files + s8
 
 
 def main():

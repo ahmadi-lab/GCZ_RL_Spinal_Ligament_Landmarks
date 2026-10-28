@@ -108,5 +108,6 @@
       "gczrl_error_mm": 0.632
     }
   ],
-  "fig8_closeups_are_crops_of_the_whole_view": true
+  "fig8_closeups_are_crops_of_the_whole_view": true,
+  "figS8_gray_vertices_equal_masks": true
 }

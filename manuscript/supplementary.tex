@@ -534,6 +534,18 @@ Figure~\ref{fig:qualitative_complete} is the qualitative figure of the previous 
 \caption{Predictions of GCZ, GCZ-RL, and SLD on held-out vertebra S03 L4 of the primary evaluation (fold holding out S03), shown in three orthogonal views. Small dark points are the expert reference landmarks; colored spheres are the predicted landmarks of each class. ITL improves from 8.09 to 0.68~mm, and CL, ISL, and SSL also change, whereas for ALL, PLL, and LF the inner validation of this fold selected $\alpha=0$, so GCZ and GCZ-RL coincide. Macro-averaged errors on this vertebra are 3.263~mm for GCZ, 1.972~mm for GCZ-RL, and 2.771~mm for SLD. All points are read from the saved predictions of the code release.}
 \label{fig:qualitative_complete}
 \end{figure}
+
+\FloatBarrier
+\section*{S18. Calibrated GCZ search regions}
+
+Figure~\ref{fig:search_regions} shows the calibrated GCZ search regions of held-out vertebra S03 L4, the masks used for projection in the primary evaluation, exactly as computed by \texttt{gcz.candidate\_vertices} from the training subjects S01 and S02, together with the expert annotations (\texttt{paper/figures\_anatomy.py}). They are search regions, not attachment footprints: for ALL, PLL, and CL they also cover the surface between the superior and inferior attachment margins, because one band must contain the margins of all training vertebrae (Section~S16). The attachment footprints and the GCZ-RL landmarks, which lie on the margins, are shown in Fig.~8 of the main text.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig_search_regions.pdf}
+\caption{Calibrated GCZ search regions (gray; the actual masks used for projection, unchanged) and expert annotations (black) on held-out vertebra S03 L4 for (a) ALL, anterior view; (b) PLL, posterior view of the vertebral body with the posterior arch removed for display; (c) LF, superior view; (d) ISL, left lateral view; (e) SSL, posterior view of the spinous process tip; (f) ITL, lateral view of the left transverse process tip; (g) CL, posterior view of the left side. Every gray vertex belongs to the region mask of the method. The cameras and crops are those of Fig.~8(g--k).}
+\label{fig:search_regions}
+\end{figure}
 \revend
 
 \FloatBarrier
