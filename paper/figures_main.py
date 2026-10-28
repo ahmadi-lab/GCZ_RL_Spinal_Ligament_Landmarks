@@ -314,7 +314,9 @@ def fig5():
     b.set_xlim(-0.6, len(d) - 0.4)
     b.set_ylim(-0.5, 2.1)
     b.set_ylabel("GCZ minus GCZ-RL (mm)\nabove 0: GCZ-RL lower")
-    fs.panel(b, "b", f"By held-out vertebra: GCZ-RL lower for {int((d > 0).sum())} of {len(d)}", x=-0.1)
+    worse_names = ", ".join(f"{SUBJECT_CODE[subj_of[i]]} {vert.case[i].split('_')[1]}" for i in worse)
+    fs.panel(b, "b", f"All {len(d)} held-out vertebrae: lower error in {int((d > 0).sum())}, "
+                     f"higher in {len(worse)} ({worse_names})", x=-0.1)
     fig.legend(handles=fs.legend_handles([("GCZ", fs.METHOD["GCZ"], "s", 5.0), ("GCZ-RL", fs.METHOD["GCZ-RL"], "o", 5.4)]),
                loc="upper left", ncol=2, frameon=False, bbox_to_anchor=(0.06, 1.0))
     files = fs.save(fig, OUT, "fig5_patient_level")

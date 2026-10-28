@@ -9,7 +9,7 @@ repository. The table numbers below refer to the revised manuscript.
 | Item | Result |
 |---|---|
 | Primary LOSO (Tables 4–5) | All per-ligament and per-subject MAE and Pass@5 values were regenerated exactly. This covers the macro values 2.879 / 2.150 / 2.224 mm and 86.0 / 92.7 / 90.4 %, the reductions of 25.3 % and 38.8 / 10.1 / 15.7 %, and the 741 / 836 / 765 training samples. |
-| Text claims, primary | GCZ-RL beat GCZ for 13 of the 14 vertebrae and for 6 of the 7 classes (PLL unchanged). The two side-empty ITL cases have errors of 4.96 and 5.53 mm; the other twelve lie between 0.6 and 2.3 mm. α = 0 was selected in 7 of 21 class–fold choices. The leakage test left all 424 points unchanged. |
+| Text claims, primary | GCZ-RL had the lower error for 13 of the 14 vertebrae (S03 L1: 0.076 mm higher) and for 6 of the 7 classes (PLL unchanged). The two side-empty ITL cases have errors of 4.96 and 5.53 mm; the other twelve lie between 0.6 and 2.3 mm. α = 0 was selected in 7 of 21 class–fold choices. The leakage test left all 424 points unchanged. |
 | Supplementary S2–S4 | Point accounting, matching-independent metrics, and region feasibility all match. Three region-size medians were truncated in the paper (for example 5254 instead of 5254.5); they are now printed exactly. |
 | Development (Table 6) | All 24 values match. The regenerated GCZ and GCZ-RL predictions are identical to the archived ones (259 / 259 point sets). |
 | Features (Table S1) | All 36 features match `point_features` and `_zone_features`. |

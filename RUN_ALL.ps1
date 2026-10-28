@@ -69,8 +69,14 @@ if ($Part -eq 'all') {
     Run 'Graphical abstract' @('paper\graphical_abstract.py')
     Run 'Revision analyses (component evaluation)' @('paper\revision_analyses.py')
     Run 'Figures' @('paper\figures_main.py')
+    Run 'Region verification (Supplementary S14)' @('paper\region_verification.py')
+    Run 'Margin verification (Supplementary S16, Fig. S6)' @('paper\margin_verification.py')
+    Run 'Anatomical figures (Figs. 7 and 8)' @('paper\figures_anatomy.py')
+    Run 'Development figure (Fig. 11)' @('paper\fig11_development.py')
+    Run 'ICP seed table (from the saved runs)' @('paper\icp_seed_sensitivity.py', 'summary')
     Run 'Revision tables' @('paper\revision_tables.py')
     Run 'Reproducibility check' @('paper\reproducibility_check.py')
+    Run 'Manuscript figures and tables' @('paper\build_manuscript_assets.py')
     Run 'Unit tests' @('-m', 'unittest', 'discover', '-s', 'tests')
 }
 Say 'DONE'
