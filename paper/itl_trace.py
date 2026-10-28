@@ -93,7 +93,7 @@ def main():
                 prev = p
     tab = pd.DataFrame(rows)
     OUT.mkdir(parents=True, exist_ok=True)
-    tab.round(3).to_csv(OUT / "itl_trace_S03_L4.csv", index=False)
+    tab.to_csv(OUT / "itl_trace_S03_L4.csv", index=False)                  # full precision (checked against the text)
     met = pd.read_csv(P2 / "per_vertebra_per_ligament_metrics.csv")
     met = met[(met.case == f"{KEY[0]}_{KEY[1]}") & (met.ligament == LIG)].set_index("method").mae_mm
     err = lambda st: float(tab[tab.stage == st].error_mm.mean())  # noqa: E731

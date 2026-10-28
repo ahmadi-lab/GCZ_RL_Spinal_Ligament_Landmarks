@@ -38,6 +38,7 @@ fi
 "$PY" paper/icp_seed_sensitivity.py summary
 "$PY" paper/revision_tables.py
 "$PY" paper/reproducibility_check.py
+"$PY" paper/check_text_numbers.py
 if [ "${PDF:-0}" = 1 ]; then "$PY" paper/build_manuscript_assets.py --pdf; else "$PY" paper/build_manuscript_assets.py; fi
 "$PY" -m unittest discover -s tests
 echo DONE

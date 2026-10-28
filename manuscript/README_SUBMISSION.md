@@ -14,7 +14,7 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 | File | Purpose | MedIA requirement |
 |---|---|---|
 | `main.tex`, `references.bib`, `figs/`, `tables/` | Manuscript (20 pp., abstract 249 words, 7 keywords). `tables/` holds the rows of the generated tables (Tables 6–8), written by `paper/revision_tables.py` of the code release | Editable source; abstract ≤ 250 words; 1–7 keywords |
-| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S18 (Tables S1–S17, Figs. S1–S8), in the separate supplementary source package | — |
+| `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S19 (Tables S1–S18, Figs. S1–S8), in the separate supplementary source package | — |
 | `highlights.txt` | 5 bullets, each ≤ 85 characters | Required, separate file with "highlights" in its name |
 | `graphical_abstract.pdf` / `.png` | Graphical abstract, 2600 px wide | Required, ≥ 1328 px wide, readable at 13 cm |
 | `submission/Statement_of_Significance.md` / `.docx` | Draft answers to all 18 questions; the Word file is generated from the Markdown with pandoc, so edit the Markdown and regenerate | **Required. A missing or incomplete statement means desk rejection.** |

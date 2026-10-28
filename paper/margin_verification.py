@@ -306,7 +306,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     df, zdf = check()
     df.round(2).to_csv(OUT / "margin_check.csv", index=False)
-    zdf.round(3).to_csv(OUT / "margin_zn_by_vertebra.csv", index=False)
+    zdf.to_csv(OUT / "margin_zn_by_vertebra.csv", index=False)          # full precision (checked against the text)
     summ = {"normalization_matches_direct_computation": True}
     for lig in CLASSES:
         x = df[df.ligament == lig]

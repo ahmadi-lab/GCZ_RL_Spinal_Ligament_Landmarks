@@ -77,6 +77,7 @@ if ($Part -eq 'all') {
     Run 'ICP seed table (from the saved runs)' @('paper\icp_seed_sensitivity.py', 'summary')
     Run 'Revision tables' @('paper\revision_tables.py')
     Run 'Reproducibility check' @('paper\reproducibility_check.py')
+    Run 'Numbers of the text against the outputs' @('paper\check_text_numbers.py')
     Run 'Manuscript figures and tables' @('paper\build_manuscript_assets.py')
     Run 'Unit tests' @('-m', 'unittest', 'discover', '-s', 'tests')
 }

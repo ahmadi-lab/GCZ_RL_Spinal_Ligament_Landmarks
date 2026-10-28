@@ -9,6 +9,7 @@
 \usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
 \usepackage{xcolor}
 \usepackage{placeins}
+\setlength{\emergencystretch}{3em}  % long code paths break the line instead of the margin
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 %% Revision marking, as in main.tex (\highlighttrue marks the sections added in the revision).
 \newif\ifhighlight
@@ -427,7 +428,7 @@ Target & Atlas & Level & Residual & GCZ & GCZ-RL & Atlas & Residual & GCZ & GCZ-
 Table~\ref{tab:repro} compares the main reported values with the values regenerated from the public data by the code release (\texttt{paper/reproducibility\_check.py}). Level A: metrics recomputed from the saved predictions and the annotations. Level B: end-to-end re-run with the stored ICP alignments and SLD output, with every Extra Trees model retrained with its fixed seed. Level C: ICP geometry recomputed from scratch; the leakage test was re-executed in this way, whereas the second-environment values of Section~S5 are archived outputs that were not re-executed. The leakage test with recomputed ICP compared 412 points instead of 424, because the recomputed alignment selected a different atlas for S02 L3 (Section~S11), and again found no difference. The S02 reduction of the submitted draft (10.1\%) had been computed from rounded subject means; the unrounded value is 10.0\%.
 
 {\footnotesize
-\begin{longtable}{@{}P{47mm}rrrP{12mm}P{36mm}P{22mm}@{}}
+\begin{longtable}{@{}P{42mm}rrrP{12mm}P{36mm}P{22mm}@{}}
 \caption{Reproducibility verification of the main reported values.}\label{tab:repro}\\
 \toprule
 Claim & Reported & Reproduced & $|\Delta|$ & Level & Source file & Status \\

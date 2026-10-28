@@ -551,14 +551,14 @@ The learned corrections were directionally consistent with the true residuals an
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.95\textwidth]{fig7_components.pdf}
+\includegraphics[width=0.92\textwidth]{fig7_components.pdf}
 \caption{\rev{Component analyses of the primary evaluation. (a) Macro-averaged MAE of the six configurations of Table~\ref{tab:ablation} in methodological order, from GCZ to the complete GCZ-RL; values to three decimals at the right; the horizontal axis starts at 1.9~mm. The configuration with $\alpha_L=1$ is an ablation; the complete GCZ-RL uses the blend weights $\alpha_L$ selected by the inner validation of each fold. (b) Containment of the reference landmarks against the share of the vertebral surface covered by the projection region, one point per class (Table~\ref{tab:compactness}); the vertical axis starts at 80\%. (c) Grouped permutation importance of the residual regressors: increase in the held-out residual-prediction error when one feature group is permuted; short vertical ticks, the three folds; diamond, their mean; gray line, their range. (d) Quick-ICP residual of the selected atlas against the per-vertebra macro MAE of GCZ (squares) and GCZ-RL (circles); filled markers, same-level atlas; open markers, cross-level atlas; gray segments connect the two methods on each vertebra; thin white marker edges keep coincident values visible, and no value is moved.}}
 \label{fig:components}
 \end{figure*}
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=4.9in]{fig8_icp_seeds.pdf}
+\includegraphics[width=4.7in]{fig8_icp_seeds.pdf}
 \caption{\rev{Sensitivity of the primary evaluation to the ICP atlas selection. Macro-averaged MAE of GCZ (squares) and GCZ-RL (circles), joined for each run. Left of the divider: the stored alignments of the reported results (open markers; GCZ 2.879~mm, GCZ-RL 2.150~mm). Right: ten runs in which all ICP alignments were recomputed with shifted sampling seeds and everything else was unchanged (filled markers; GCZ-RL 2.10--2.92~mm, mean 2.357~mm; GCZ mean 3.226~mm). GCZ-RL improved on GCZ in every run, by 22.8--33.4\% (mean 26.9\%), and for every held-out subject in every run. Dashed line: SLD (2.224~mm), which does not use ICP. The absolute error, and with it the ordering relative to SLD, depends on the selected atlases. This is a computational sensitivity analysis on the same three subjects, not ten independent cohorts (Supplementary Section~S13).}}
 \label{fig:icp_seeds}
 \end{figure*}

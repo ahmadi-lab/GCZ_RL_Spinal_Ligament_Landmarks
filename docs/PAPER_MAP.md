@@ -32,8 +32,11 @@ Numbering follows the revised journal manuscript. Abbreviations: `P1` =
 | Fig. 11 | Development analysis chart (original) | values of Table 9 | `figs/fig_literature_comparison_clean2.png` |
 | Graphical abstract | — | `paper/graphical_abstract.py` | `paper/outputs/graphical_abstract.{png,pdf}` |
 
-Table rows of Tables 6–8 and S10–S15 are written by `paper/revision_tables.py` into
-`manuscript/tables/` and read by the LaTeX source.
+Table rows of Tables 6–8 and S10–S14 are written by `paper/revision_tables.py` into
+`manuscript/tables/`; those of Tables S15–S18 by `reproducibility_check.py`, `icp_seed_sensitivity.py summary`,
+`region_verification.py`, and `itl_trace.py`, copied by `paper/build_manuscript_assets.py`. The LaTeX source
+reads them. `paper/check_text_numbers.py` checks the numbers that the revision added to the captions and
+to Sections 4.3–4.4 and S13–S19 against the regenerated outputs.
 
 ### Numbers in the text
 

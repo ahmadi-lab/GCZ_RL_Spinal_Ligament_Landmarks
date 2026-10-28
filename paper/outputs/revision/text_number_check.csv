@@ -1,0 +1,43 @@
+claim,passage,found
+Fig. 6: per-subject values,"S01 3.784 to 2.315~mm, S02 2.208 to 1.986~mm, S03 2.512 to 2.117~mm",True
+Sec. 4.3: S02 reduction,S02 (\rev{10.0\%}),True
+Fig. 6: S03 L1,"0.076~mm higher error for one, S03 L1 (2.200 against 2.124~mm",True
+Sec. 4.3: S03 L1,its error was 0.076~mm higher (2.200 against 2.124~mm),True
+Fig. 7: right CL superior capsule,"errors 1.886 to 2.311~mm, 1.730 and 0.632~mm unchanged",True
+Fig. 7: CL class,CL class error fell from 3.435 to 2.790~mm,True
+Fig. 7: ISL,ISL (3.318 to 3.032~mm),True
+Fig. 7: SSL,SSL (1.554 to 0.867~mm),True
+Fig. 7: ITL tips,"right 11.508 to 0.590~mm, left 4.682 to 0.765~mm; ITL class error 8.095 to 0.678~mm",True
+Fig. 7: projection only,projection onto the ITL region alone gives 1.133~mm,True
+Fig. 7: inferior CL landmarks,moved them 3.83~mm (right) and 3.61~mm (left),True
+Fig. 7: inferior CL errors,from 11.96 to 8.88~mm and from 6.92 to 3.40~mm,True
+Fig. 7: macro errors,"3.263~mm (GCZ), 1.972~mm (GCZ-RL), and 2.771~mm (SLD)",True
+Fig. 7: cohort means,"cohort means of 2.879, 2.150, and 2.224~mm",True
+Fig. 7: rank,improvement ranks fifth of the 14 held-out vertebrae,True
+Fig. S7: ITL,ITL improves from 8.09 to 0.68~mm,True
+Sec. 4.4: ITL on S03 L4,projection alone reduces the ITL error from 8.095 to 1.133~mm and the complete correction to 0.678~mm,True
+Fig. 10: stored run,"GCZ 2.879~mm, GCZ-RL 2.150~mm",True
+Fig. 10: ten runs,"GCZ-RL 2.10--2.92~mm, mean 2.357~mm; GCZ mean 3.226~mm",True
+Fig. 10: reduction,by 22.8--33.4\% (mean 26.9\%),True
+Sec. 4.4: seeds,GCZ-RL reached 2.10--2.92~mm (mean $2.36\pm0.24$~mm) and GCZ 2.84--3.89~mm (mean $3.23\pm0.31$~mm),True
+Sec. 4.4: atlas changes,Between 2 and 4 of the 14,True
+Sec. 4.4: projection only,2.310~mm,True
+Sec. 4.4: GCZ-RL vs projection only,-0.160,True
+Sec. 4.4: interval,-0.234,True
+Sec. 4.4: alpha = 1,2.132~mm,True
+Table S10: ITL without side constraint,8.279,True
+Sec. 4.4: directional agreement,67.1\%,True
+S14: ITL footprint in region,contains 30\% of its area,True
+S14: ITL points inside,92.9\% of the ITL points,True
+S16: superior above inferior,by a median of 27.5~mm for ALL and 27.4~mm for PLL (minimum 24.4~mm),True
+S16: mesh margins,within 1.6~mm,True
+S16: inferior ALL margin,between $z_n=0.05$ and $0.50$,True
+S16: superior ALL margin,the superior between $0.50$ and $0.97$,True
+S16: middle half,A median of 28\% (ALL) and 35\% (PLL),True
+S16: separate bands,"about 45\% of the PLL region, but 8 ALL and 18 PLL landmarks",True
+S19: right residual,moved the right landmark 8.48~mm towards the tip (error 11.51 to 6.71~mm),True
+S19: left residual,(4.68 to 4.73~mm),True
+S19: radius,radius 15.98~mm,True
+S19: projection only and final,"reduces the class error to 1.133~mm, and the complete correction to 0.678~mm",True
+S19: residual share,the learned residual adds 0.455~mm,True
+S19: configuration,"Extra Trees configuration ET-4, $\alpha_L=1.2$",True
