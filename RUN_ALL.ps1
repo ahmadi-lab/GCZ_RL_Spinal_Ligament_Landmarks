@@ -20,15 +20,18 @@ $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $Root
 $Py = if ($env:PY) { $env:PY } else { Join-Path $Root '.venv\Scripts\python.exe' }
 $env:PYTHONIOENCODING = 'utf-8'; $env:MPLBACKEND = 'Agg'; $env:PYTHONHASHSEED = '0'
+try { [Console]::OutputEncoding = [Text.Encoding]::UTF8 } catch { }   # read Python's UTF-8 output as UTF-8
 New-Item -ItemType Directory -Force (Join-Path $Root 'logs') | Out-Null
 $Log = Join-Path $Root ("logs\run_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
 
-function Say([string]$t) { $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $t; Write-Host $l; Add-Content $Log $l }
+# The log is written as UTF-8 (Tee-Object of Windows PowerShell 5.1 writes UTF-16).
+function LogLine([string]$t) { [IO.File]::AppendAllText($Log, $t + [Environment]::NewLine) }
+function Say([string]$t) { $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $t; Write-Host $l; LogLine $l }
 
 function Run([string]$Name, [string[]]$PyArgs) {
     Say "START $Name"
     $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
-    & $Py @PyArgs 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $Log -Append | Where-Object { $_ -match '^\[|PASS|FAIL|MISMATCH|verified|reproduced|Error|Traceback' }
+    & $Py @PyArgs 2>&1 | ForEach-Object { $s = "$_"; LogLine $s; $s } | Where-Object { $_ -match '^\[|PASS|FAIL|MISMATCH|verified|reproduced|Error|Traceback' }
     $code = $LASTEXITCODE; $ErrorActionPreference = $prev
     if ($code -ne 0) { Say "FAILED $Name (exit $code) - see $Log"; exit $code }
     Say "OK $Name"

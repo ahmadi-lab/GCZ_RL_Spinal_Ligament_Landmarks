@@ -36,7 +36,9 @@ Table rows of Tables 6–8 and S10–S14 are written by `paper/revision_tables.p
 `manuscript/tables/`; those of Tables S15–S18 by `reproducibility_check.py`, `icp_seed_sensitivity.py summary`,
 `region_verification.py`, and `itl_trace.py`, copied by `paper/build_manuscript_assets.py`. The LaTeX source
 reads them. `paper/check_text_numbers.py` checks the numbers that the revision added to the captions and
-to Sections 4.3–4.4 and S13–S19 against the regenerated outputs.
+to Sections 4.3–4.4 and S13–S19 against the regenerated outputs. After a full run
+(`RUN_ALL.ps1` or `run_all.sh`), `scripts/compare_outputs.py` compares every regenerated output
+with its committed version.
 
 ### Numbers in the text
 

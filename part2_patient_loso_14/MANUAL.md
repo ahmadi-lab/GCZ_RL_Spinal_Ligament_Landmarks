@@ -36,6 +36,9 @@ computer.
 
 ## 2. Tables and figures → code → output file
 
+The items below are the output files of this part. Their place in the journal manuscript
+(Tables 4 and 5, the leakage test of Section 4.3, Supplementary Table S9) is listed in `docs/PAPER_MAP.md`.
+
 | Item | What it shows | Produced by | Output file (`outputs/`) |
 |---|---|---|---|
 | Table P2-1 | Folds: training/test subjects and vertebrae, training samples per ligament | `run_part2.py`, `run_fold()` | `table_P2_1_folds.csv` |

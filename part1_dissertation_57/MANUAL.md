@@ -24,6 +24,9 @@ on every run. Only the GCZ geometry (ICP alignment results) can be read from `ch
 
 ## 2. Tables and figures → code → output file
 
+The numbering below is that of the dissertation and of the earlier paper analyzed by the original
+notebook. For the tables and figures of the journal manuscript, see `docs/PAPER_MAP.md`.
+
 | Dissertation item | What it shows | Produced by (`run_part1.py`) | Output file (`outputs/`) |
 |---|---|---|---|
 | Table 4.1 | Dataset composition and split | `table_4_1()` | `table_4_1_dataset.csv`, `table_4_1_dataset_per_vertebra.csv` |
