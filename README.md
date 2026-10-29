@@ -88,25 +88,60 @@ path limit). See [dataset/README.md](dataset/README.md) for the subject mapping 
 
 ## Reproduce the paper
 
-```bash
-python part2_patient_loso_14/run_part2.py          # primary LOSO (Tables 4-5), minutes with stored ICP results
-python part2_patient_loso_14/run_leakage_test.py   # data-leakage test
-python part1_dissertation_57/run_part1.py          # development analysis (Table 9)
-python code/verify_all.py                          # independent checks -> VERIFICATION_REPORT.json
-python paper/make_paper_numbers.py                 # statistics, Table 6, Supplementary S2-S4; checks every quoted value
-python paper/table3_regressor_comparison.py        # Table 3 and Supplementary Table S6 (about 25 min)
-python paper/fig6_qualitative_loso.py              # Fig. 6
-python paper/check_fig6.py                         # Fig. 6 points = saved predictions; caption numbers
-python paper/graphical_abstract.py                 # graphical abstract
-python paper/revision_analyses.py                  # component analyses (Section 4.4, Supplementary S8-S11)
-python paper/figures_main.py                      # all figures of the paper -> paper/outputs/figures (audit CSV)
-python paper/revision_tables.py                    # table rows of Tables 6-8 and S10-S14 -> manuscript/tables
-python paper/reproducibility_check.py              # 68 reported claims vs regenerated values (Table S15)
-python -m unittest discover -s tests               # geometric constraints and metrics
+One command fetches the data if needed, runs every analysis, regenerates every figure and table
+of the paper, checks the manuscript against the regenerated outputs, and runs the unit tests:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File RUN_ALL.ps1 -Pdf    # Windows; -Pdf also compiles the manuscript (needs latexmk, e.g. MiKTeX)
 ```
 
-Or run everything with `powershell -ExecutionPolicy Bypass -File RUN_ALL.ps1` on Windows, or
-`bash run_all.sh` elsewhere.
+```bash
+PDF=1 bash run_all.sh                                       # Linux and macOS
+```
+
+The run takes under an hour. Add `-Slow` (`SLOW=1`) to also recompute Table 3 and
+Supplementary Table S6 (about 25 min), the original notebook (Supplementary Figs. S1–S2,
+Tables S7–S8), and the ten ICP seed runs of Fig. 10 and Supplementary Table S16 (about 100 min);
+without it, these are read from their saved outputs.
+
+Then compare every regenerated output with the committed version:
+
+```bash
+python scripts/compare_outputs.py      # Windows: .venv\Scripts\python.exe scripts\compare_outputs.py
+```
+
+It classifies every changed file as same data (CSV and JSON values within 1e-9), rendering noise
+(images, and PDF pages rasterized at 100 dpi), provenance (logs, run times, SVG dates), or
+CHANGED, and exits with an error if anything is CHANGED.
+
+The individual steps, in the order of the run scripts:
+
+```bash
+python part1_dissertation_57/run_part1.py          # development analysis (Table 9)
+python part2_patient_loso_14/run_part2.py          # primary LOSO (Tables 4-5), minutes with stored ICP results
+python part2_patient_loso_14/run_leakage_test.py   # data-leakage test
+python code/verify_all.py                          # independent checks -> VERIFICATION_REPORT.json
+python paper/make_paper_numbers.py                 # statistics, Table 6, Supplementary S2-S4; checks every quoted value
+python paper/fig6_qualitative_loso.py              # Supplementary Fig. S7 (the previous qualitative figure)
+python paper/check_fig6.py                         # Fig. 7 and S7 points = saved predictions; caption numbers
+python paper/graphical_abstract.py                 # graphical abstract
+python paper/revision_analyses.py                  # component analyses (Section 4.4, Supplementary S8-S11)
+python paper/figures_main.py                       # Figs. 6, 9, 10, S3-S5 -> paper/outputs/figures (audit CSV)
+python paper/region_verification.py                # Supplementary Table S17
+python paper/margin_verification.py                # Supplementary S16, Fig. S6
+python paper/figures_anatomy.py                    # Figs. 7, 8, S8
+python paper/fig11_development.py                  # Fig. 11
+python paper/itl_trace.py                          # Supplementary S19, Table S18
+python paper/itl_double_check.py                   # independent checks of the ITL result (Supplementary S19)
+python paper/icp_seed_sensitivity.py summary       # Table S16 from the saved runs ("run 0 1 ... 9" recomputes them)
+python paper/revision_tables.py                    # table rows of Tables 6-8 and S10-S14 -> manuscript/tables
+python paper/reproducibility_check.py              # 68 reported claims vs regenerated values (Table S15)
+python paper/check_text_numbers.py                 # numbers of the revised text vs regenerated values
+python paper/check_tables.py                       # every cell and bold marking of the typed tables
+python paper/build_manuscript_assets.py --pdf      # figures and tables into manuscript/; compiles the PDFs
+python -m unittest discover -s tests               # geometric constraints and metrics
+python paper/table3_regressor_comparison.py        # Table 3 and Supplementary Table S6 (slow step, about 25 min)
+```
 
 `--fresh` recomputes the stored ICP geometry and, for Part 2, the SLD output. SLD needs the
 SpineLib files, which you fetch with `python scripts/fetch_spinelib.py`.

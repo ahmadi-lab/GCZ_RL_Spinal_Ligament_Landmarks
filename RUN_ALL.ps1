@@ -5,15 +5,20 @@
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Part 2         # primary LOSO only
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Fresh          # also recompute ICP geometry and SLD
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 25 min), the original notebook, and the ICP seed analysis (about 100 min)
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Pdf            # also compile the manuscript and the supplement (needs latexmk, e.g. MiKTeX)
+
+  Afterwards, compare every output with the committed version:
+  .venv\Scripts\python.exe scripts\compare_outputs.py
 
   Raw data: fetched automatically into dataset\raw unless GCZRL_RAW_ROOT points to an existing copy.
+  Python: .venv in this folder (created if missing) unless PY points to another interpreter.
 #>
-param([ValidateSet('1', '2', 'all')][string]$Part = 'all', [switch]$Fresh, [switch]$Slow)
+param([ValidateSet('1', '2', 'all')][string]$Part = 'all', [switch]$Fresh, [switch]$Slow, [switch]$Pdf)
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $Root
-$Py = Join-Path $Root '.venv\Scripts\python.exe'
+$Py = if ($env:PY) { $env:PY } else { Join-Path $Root '.venv\Scripts\python.exe' }
 $env:PYTHONIOENCODING = 'utf-8'; $env:MPLBACKEND = 'Agg'; $env:PYTHONHASHSEED = '0'
 New-Item -ItemType Directory -Force (Join-Path $Root 'logs') | Out-Null
 $Log = Join-Path $Root ("logs\run_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
@@ -64,8 +69,8 @@ if ($Part -in @('2', 'all')) {
 if ($Part -eq 'all') {
     Run 'Verification' @('code\verify_all.py')
     Run 'Paper numbers' @('paper\make_paper_numbers.py')
-    Run 'Figure 6' @('paper\fig6_qualitative_loso.py')
-    Run 'Figure 6 check' @('paper\check_fig6.py')
+    Run 'Supplementary Fig. S7 (previous qualitative figure)' @('paper\fig6_qualitative_loso.py')
+    Run 'Fig. 7 and S7: drawn points = saved predictions' @('paper\check_fig6.py')
     Run 'Graphical abstract' @('paper\graphical_abstract.py')
     Run 'Revision analyses (component evaluation)' @('paper\revision_analyses.py')
     Run 'Figures' @('paper\figures_main.py')
@@ -80,7 +85,9 @@ if ($Part -eq 'all') {
     Run 'Reproducibility check' @('paper\reproducibility_check.py')
     Run 'Numbers of the text against the outputs' @('paper\check_text_numbers.py')
     Run 'Every cell of the typed tables against the outputs' @('paper\check_tables.py')
-    Run 'Manuscript figures and tables' @('paper\build_manuscript_assets.py')
+    if ($Pdf) { Run 'Manuscript figures and tables, PDFs' @('paper\build_manuscript_assets.py', '--pdf') }
+    else { Run 'Manuscript figures and tables' @('paper\build_manuscript_assets.py') }
     Run 'Unit tests' @('-m', 'unittest', 'discover', '-s', 'tests')
 }
 Say 'DONE'
+Say "Compare the outputs with the committed versions: $Py scripts\compare_outputs.py"
