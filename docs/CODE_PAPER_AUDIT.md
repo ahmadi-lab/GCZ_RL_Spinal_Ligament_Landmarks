@@ -1,4 +1,4 @@
-# Code ↔ manuscript audit (October 2026)
+# Code ↔ manuscript audit (October 2026; last updated 2026-10-28)
 
 This audit was run before the journal submission. Every number, equation, and
 method statement of the manuscript was compared with the code and the saved outputs of this

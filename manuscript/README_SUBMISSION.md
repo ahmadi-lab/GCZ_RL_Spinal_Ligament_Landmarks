@@ -73,7 +73,7 @@ computed from rounded means). The method and the reported primary results are un
 ## Changes made earlier, relative to the dissertation draft
 
 - **Template and references.** MedIA template, author-year citations, BibTeX; all DOIs checked
-  against Crossref; SLD cited as published at ISBI 2026.
+  against Crossref (last on 28 October 2026); SLD cited as published at ISBI 2026.
 - **Agreement with the code** (`docs/CODE_PAPER_AUDIT.md` of the code repository). The equations
   match the implementation, the implementation details are stated, and Table 3 was recomputed
   after a validation-indexing bug was fixed (old values in Supplementary Table S6). The matching
