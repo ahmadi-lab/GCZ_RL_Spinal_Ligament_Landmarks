@@ -17,7 +17,7 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 | `supplementary.tex`, `supplementary_figs/`, `tables/` | Supplementary material, Sections S1–S19 (Tables S1–S18, Figs. S1–S8), in the separate supplementary source package | — |
 | `highlights.txt` | 5 bullets, each ≤ 85 characters | Required, separate file with "highlights" in its name |
 | `graphical_abstract.pdf` / `.png` | Graphical abstract, 2600 px wide | Required, ≥ 1328 px wide, readable at 13 cm |
-| `submission/Statement_of_Significance.md` / `.docx` | Draft answers to all 18 questions; the Word file is generated from the Markdown with pandoc, so edit the Markdown and regenerate | **Required. A missing or incomplete statement means desk rejection.** |
+| Statement of Significance | Kept with the submission files, not in this repository | **Required. A missing or incomplete statement means desk rejection.** |
 | `submission/cover_letter.tex` / `.pdf` | Cover letter draft (rebuild the PDF after editing the `.tex`) | — |
 | `submission/author_vitae.md` / `.docx` | Placeholders, ≤ 100 words each (Word file generated from the Markdown) | Requested |
 
@@ -28,14 +28,12 @@ captions, and tables that are new or revised in this revision in blue. Nothing e
 2. **Postal addresses and departments.** Check them in the `\affiliation` blocks.
 3. **CRediT roles.** Every author should confirm their own roles. Dr. Vrionis's "Clinical
    guidance" is not a CRediT role.
-4. **Generative-AI declaration.** The current `main.tex` has none. Check Elsevier's policy and add
-   an accurate declaration if one applies.
-5. **Statement of Significance.** Fill the items marked [AUTHORS], in particular the 3–5
+4. **Statement of Significance.** Fill the items marked [AUTHORS], in particular the 3–5
    Associate Editors (non-US, no conflict of interest).
-6. **Code access during review.** Decide whether reviewers get access to the GitHub repository
-   (it is private until publication). The revision is on the branch `revision-lin-tang`; merging it
-   into `main` awaits approval.
-7. **ICP atlas selection.** The stored alignments reproduce every number exactly. Recomputing all
+5. **Code access during review.** Decide whether reviewers get access to the GitHub repository
+   (it is private until publication). The revision (branch `revision-lin-tang`) is merged into
+   `main`.
+6. **ICP atlas selection.** The stored alignments reproduce every number exactly. Recomputing all
    alignments with ten different ICP seeds (Supplementary S13) changed 2–4 of the 14 atlases per
    run: GCZ-RL improved on GCZ in every run and for every subject (22.8–33.4 %), while its absolute
    error ranged from 2.10 to 2.92 mm (mean 2.36 mm; reported 2.150 mm). This is stated in Results

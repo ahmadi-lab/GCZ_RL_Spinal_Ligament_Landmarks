@@ -58,7 +58,7 @@ paper/                    scripts for every number, table and figure added for t
 scripts/                  fetch_data.py, fetch_spinelib.py
 docs/                     PAPER_MAP.md (paper item -> script -> output), CODE_PAPER_AUDIT.md
 tests/                    unit tests of the geometric constraints and the metrics
-manuscript/               LaTeX source and PDFs of the paper, cover letter, Statement of Significance
+manuscript/               LaTeX source and PDFs of the paper, cover letter
 ```
 
 ## Installation
