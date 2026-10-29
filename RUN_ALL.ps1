@@ -27,8 +27,8 @@ $Log = Join-Path $Root ("logs\run_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss
 # The log is written as UTF-8 (Tee-Object of Windows PowerShell 5.1 writes UTF-16).
 function LogLine([string]$t) { [IO.File]::AppendAllText($Log, $t + [Environment]::NewLine) }
 function Say([string]$t) { $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $t; Write-Host $l; LogLine $l }
-# scikit-learn repeats this warning for every nested parallel Extra Trees fit (over a gigabyte of log
-# with -Slow); it does not affect the results, so only its count is logged
+# scikit-learn sometimes repeats this warning for every nested parallel Extra Trees fit (once over a
+# gigabyte of log with -Slow); it does not affect the results, so only its count is logged
 $Repeated = 'sklearn\.utils\.parallel\.delayed. should be used with'
 
 function Run([string]$Name, [string[]]$PyArgs) {

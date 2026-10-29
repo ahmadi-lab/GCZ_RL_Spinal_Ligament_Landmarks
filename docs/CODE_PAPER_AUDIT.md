@@ -145,6 +145,12 @@ the original notebook prints). Every other regenerated file, every PNG included,
 Changes after `3906add`, none of which changes an analysis or an output: `scripts/compare_outputs.py`
 classifies absolute file paths and notebook cell run times as provenance, matches provenance keys as
 whole words (so that a key such as "Candidate-region relation" is compared), and lists new files;
-`RUN_ALL.ps1` no longer writes a scikit-learn warning that is repeated for every nested parallel
-Extra Trees fit (over 1 GB of log with `-Slow`) and logs only its count; the run times stated in the
-run scripts and the README were corrected.
+`RUN_ALL.ps1` logs only the count of the scikit-learn warning "`sklearn.utils.parallel.delayed`
+should be used with `sklearn.utils.parallel.Parallel`", which in these two runs was repeated
+252,593 times in the ITL checks and filled over 1 GB of log in the ICP runs, but which did not
+appear in the later runs; the run times stated in the run scripts and the README were corrected.
+
+The final commit `bc7a379` was then run in the same clone with `RUN_ALL.ps1 -Pdf` (29 min, without
+the slow steps, whose code is unchanged): every step passed with the same check results, and
+`scripts/compare_outputs.py` found 48 rewritten files and none changed (34 PDFs pixel-identical,
+three CSV files within 8e-15, the rest run provenance).
