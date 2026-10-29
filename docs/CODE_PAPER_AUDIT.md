@@ -1,4 +1,4 @@
-# Code ↔ manuscript audit (October 2026; last updated 2026-10-28)
+# Code ↔ manuscript audit (October 2026; last updated 2026-10-29)
 
 This audit was run before the journal submission. Every number, equation, and
 method statement of the manuscript was compared with the code and the saved outputs of this
@@ -108,3 +108,43 @@ Over the ten offsets, 2–4 of 14 atlases differed from the stored alignments; G
 GCZ in every run (22.8–33.4 %) and for every held-out subject in every run; GCZ-RL ranged from
 2.103 to 2.918 mm (mean 2.357, SD 0.239) and GCZ from 2.844 to 3.888 mm. GCZ-RL was below SLD
 (2.224 mm) in 3 of 10 runs.
+
+## 7. Final verification from a fresh clone (2026-10-29)
+
+Commit `3906add` was cloned into an empty folder and run on Windows 11 with the pinned environment
+(Python 3.11.15, `requirements.txt`) and the public data (`scripts/fetch_data.py`, 1678 / 1678
+files verified): first `RUN_ALL.ps1 -Pdf` (every analysis, figure, table, manuscript check, the
+compiled PDFs, and the unit tests; 60 min), then `RUN_ALL.ps1 -Part 1 -Slow` (Part 1 again, the
+original notebook, Table 3 and Supplementary Table S6, and the ten ICP seed runs, all recomputed;
+4 h, of which 3 h 6 min for the ICP runs). Every step finished without error.
+
+| Check | Result |
+|---|---|
+| `code/verify_all.py` | 9 / 9 checks passed |
+| `paper/make_paper_numbers.py` | 46 / 46 manuscript values reproduced |
+| `run_part1.py` | Table 4.4 exact; 259 / 259 GCZ-RL point sets identical |
+| `run_leakage_test.py` | S02 predictions unchanged with corrupted S02 annotations (0 mm, 412 points with ICP recomputed) |
+| `paper/check_fig6.py` | Drawn points = saved predictions; caption errors 3.263 / 1.972 / 2.771 mm |
+| `paper/reproducibility_check.py` | 68 / 68 reported values |
+| `paper/check_text_numbers.py` | 55 / 55 passages of the revision |
+| `paper/check_tables.py` | 512 / 512 table cells, 35 / 35 bold markings |
+| `paper/itl_double_check.py` | 12 / 12 checks passed |
+| Unit tests | 10 / 10 |
+| Original notebook | 37 code cells without error, 32 with output identical to the saved notebook (the other 5 differ in file paths, library versions, or a figure saved as HTML); 44 / 44 published values |
+| `paper/table3_regressor_comparison.py` | All four output tables byte-identical |
+| `paper/icp_seed_sensitivity.py run 0 … 9`, `summary` | All ten runs identical to the committed results except the recorded run time; summary byte-identical |
+
+`scripts/compare_outputs.py` then compared every output with its committed version. The two runs
+rewrote 70 committed files, and none changed: 35 PDFs (figures, graphical abstract, and the clean
+and highlighted manuscript and the supplement) were pixel-identical on every page; three CSV files of
+the ablation and interpretability analyses differed by at most 8e-15 (last floating-point digits of tree averages computed
+in parallel); the other 32 differed only in run provenance (run times of the ten ICP runs and of the
+notebook cells, time stamps of the run logs, SVG creation dates, and the absolute file paths that
+the original notebook prints). Every other regenerated file, every PNG included, was byte-identical.
+
+Changes after `3906add`, none of which changes an analysis or an output: `scripts/compare_outputs.py`
+classifies absolute file paths and notebook cell run times as provenance, matches provenance keys as
+whole words (so that a key such as "Candidate-region relation" is compared), and lists new files;
+`RUN_ALL.ps1` no longer writes a scikit-learn warning that is repeated for every nested parallel
+Extra Trees fit (over 1 GB of log with `-Slow`) and logs only its count; the run times stated in the
+run scripts and the README were corrected.

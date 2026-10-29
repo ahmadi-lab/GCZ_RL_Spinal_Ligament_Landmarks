@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite the article below and the software itself."
 title: "GCZ-RL: Geometry-calibrated residual learning for spinal ligament landmark localization"
 version: 1.0.0
-date-released: 2026-10-28
+date-released: 2026-10-29
 license: MIT
 repository-code: "https://github.com/ahmadi-lab/GCZ_RL_Spinal_Ligament_Landmarks"
 authors:

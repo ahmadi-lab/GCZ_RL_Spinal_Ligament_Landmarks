@@ -4,7 +4,7 @@
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1                 # Part 1 + Part 2 + checks + paper numbers
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Part 2         # primary LOSO only
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Fresh          # also recompute ICP geometry and SLD
-  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 25 min), the original notebook, and the ICP seed analysis (about 100 min)
+  powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Slow           # also Table 3 (about 30 min), the original notebook, and the ICP seed analysis (2-3 h)
   powershell -ExecutionPolicy Bypass -File .\RUN_ALL.ps1 -Pdf            # also compile the manuscript and the supplement (needs latexmk, e.g. MiKTeX)
 
   Afterwards, compare every output with the committed version:
@@ -27,12 +27,21 @@ $Log = Join-Path $Root ("logs\run_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss
 # The log is written as UTF-8 (Tee-Object of Windows PowerShell 5.1 writes UTF-16).
 function LogLine([string]$t) { [IO.File]::AppendAllText($Log, $t + [Environment]::NewLine) }
 function Say([string]$t) { $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $t; Write-Host $l; LogLine $l }
+# scikit-learn repeats this warning for every nested parallel Extra Trees fit (over a gigabyte of log
+# with -Slow); it does not affect the results, so only its count is logged
+$Repeated = 'sklearn\.utils\.parallel\.delayed. should be used with'
 
 function Run([string]$Name, [string[]]$PyArgs) {
     Say "START $Name"
     $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
-    & $Py @PyArgs 2>&1 | ForEach-Object { $s = "$_"; LogLine $s; $s } | Where-Object { $_ -match '^\[|PASS|FAIL|MISMATCH|verified|reproduced|Error|Traceback' }
+    $script:Skipped = 0
+    & $Py @PyArgs 2>&1 | ForEach-Object {
+        $s = "$_"
+        if ($s -match $Repeated) { $script:Skipped++ } elseif ($s -notmatch '^\s+warnings\.warn\($') { LogLine $s }
+        $s
+    } | Where-Object { $_ -match '^\[|PASS|FAIL|MISMATCH|verified|reproduced|Error|Traceback' }
     $code = $LASTEXITCODE; $ErrorActionPreference = $prev
+    if ($script:Skipped) { LogLine "($($script:Skipped) repeated scikit-learn warnings 'sklearn.utils.parallel.delayed should be used with sklearn.utils.parallel.Parallel' not logged)" }
     if ($code -ne 0) { Say "FAILED $Name (exit $code) - see $Log"; exit $code }
     Say "OK $Name"
 }
@@ -61,7 +70,7 @@ if ($Part -in @('1', 'all')) {
         Run 'Original notebook (matching diagnostic, alignment)' @('part1_dissertation_57\original_notebook\run_original_notebook.py')
         Run 'Original notebook tables' @('part1_dissertation_57\original_notebook\extract_tables.py')
         Run 'Table 3 regressor comparison' @('paper\table3_regressor_comparison.py')
-        Run 'ICP seed sensitivity (10 runs, about 100 min)' @('paper\icp_seed_sensitivity.py', 'run', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+        Run 'ICP seed sensitivity (10 runs, 2-3 h)' @('paper\icp_seed_sensitivity.py', 'run', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
         Run 'ICP seed sensitivity summary' @('paper\icp_seed_sensitivity.py', 'summary')
     }
 }

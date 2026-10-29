@@ -8,7 +8,10 @@ prediction was changed for a figure. `paper/outputs/figures/figure_audit.csv` li
 per figure, and `paper/outputs/figures/anatomy_checks.json` holds the automatic checks of the
 anatomical figures. Before-and-after previews of every changed figure, and the compiled pages
 before and after, are in `paper/outputs/figure_audit/` and in the PDF report
-`GCZ_RL_Figure_Audit.pdf` of the submission package.
+`GCZ_RL_Figure_Audit.pdf` of the submission package. On 2026-10-29 every figure was regenerated
+once more from a fresh clone (`docs/CODE_PAPER_AUDIT.md`, Section 7): all figure PDFs and the
+three compiled manuscript PDFs were pixel-identical to the committed ones, and every PNG was
+byte-identical.
 
 ## Numbering: compiled figure, source file, script
 

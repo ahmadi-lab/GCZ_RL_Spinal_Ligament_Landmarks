@@ -99,10 +99,11 @@ powershell -ExecutionPolicy Bypass -File RUN_ALL.ps1 -Pdf    # Windows; -Pdf als
 PDF=1 bash run_all.sh                                       # Linux and macOS
 ```
 
-The run takes under an hour. Add `-Slow` (`SLOW=1`) to also recompute Table 3 and
-Supplementary Table S6 (about 25 min), the original notebook (Supplementary Figs. S1–S2,
-Tables S7–S8), and the ten ICP seed runs of Fig. 10 and Supplementary Table S16 (about 100 min);
-without it, these are read from their saved outputs.
+The run takes about an hour. Add `-Slow` (`SLOW=1`) to also recompute Table 3 and
+Supplementary Table S6 (about 30 min), the original notebook (Supplementary Figs. S1–S2,
+Tables S7–S8), and the ten ICP seed runs of Fig. 10 and Supplementary Table S16 (2–3 hours);
+without it, these are read from their saved outputs. The original notebook also writes about
+1.5 GB of interactive HTML figures, which are not part of the repository; keep at least 3 GB free.
 
 Then compare every regenerated output with the committed version:
 
@@ -111,8 +112,9 @@ python scripts/compare_outputs.py      # Windows: .venv\Scripts\python.exe scrip
 ```
 
 It classifies every changed file as same data (CSV and JSON values within 1e-9), rendering noise
-(images, and PDF pages rasterized at 100 dpi), provenance (logs, run times, SVG dates), or
-CHANGED, and exits with an error if anything is CHANGED.
+(images, and PDF pages rasterized at 100 dpi), provenance (logs, run times, SVG dates, and the
+absolute file paths that the original notebook prints), or CHANGED, and exits with an error if
+anything is CHANGED.
 
 The individual steps, in the order of the run scripts:
 

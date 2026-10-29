@@ -9,9 +9,11 @@ It lists every committed file that the run changed and classifies the change:
   same data        CSV and JSON values equal within 1e-9 (last-digit floating-point noise)
   rendering noise  PNG/JPG images and PDF pages (rasterized with pdftoppm at 100 dpi) in which
                    fewer than 0.2 % of the pixels differ by more than 24/255
-  provenance       run logs, run times and dates, SVG files (their PDF and PNG twins are compared)
+  provenance       run logs, run times and dates, absolute file paths in printed output (the
+                   folder of the computer), SVG files (their PDF and PNG twins are compared)
   CHANGED          anything else
 
+New files that are not in the repository are listed but not compared.
 Exit code 0 if nothing is CHANGED, 1 otherwise.
 """
 import io
@@ -30,9 +32,15 @@ from PIL import Image
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[1]
 TOL = 1e-9
-# JSON keys that record when or where a run happened, not what it computed
-PROVENANCE_KEYS = re.compile(r"time|date|elapsed|duration|seconds|started|finished|host|platform|"
-                             r"python|version|gcz_geometry|status|log", re.I)
+# JSON keys that record when or where a run happened, not what it computed (whole words only, so
+# that a key such as "Candidate-region relation" is still compared)
+PROVENANCE_KEYS = re.compile(r"(?<![a-z])(time|timestamp|date|elapsed|duration|seconds|started|finished|host|"
+                             r"platform|python|version|gcz_geometry|status|log)(?![a-z])", re.I)
+# CSV columns of the notebook runner that record how a cell ran: its run time, and the length of
+# its printed output, which contains the absolute paths of the computer
+RUN_COLUMNS = {"seconds", "new_output_chars"}
+# absolute file paths printed by a run (Windows, also JSON-escaped, and POSIX home or temp folders)
+ABS_PATH = re.compile(rb"(?:\b[A-Za-z]:(?:\\\\|\\|/)|(?<![\w.])/(?:home|Users|tmp|mnt|root)/)[^\s\"'<>|]*")
 PDFTOPPM = shutil.which("pdftoppm")
 
 
@@ -94,22 +102,24 @@ def json_diff(a, b, path=""):
 
 
 def csv_diff(a, b):
-    """Largest numeric difference, or a reason why the tables differ."""
+    """(largest numeric difference, reason why the tables differ or None, run columns that differ)."""
     x, y = pd.read_csv(io.BytesIO(a)), pd.read_csv(io.BytesIO(b))
     if list(x.columns) != list(y.columns) or x.shape != y.shape:
-        return None, f"shape or columns changed {x.shape} -> {y.shape}"
-    big = 0.0
+        return None, f"shape or columns changed {x.shape} -> {y.shape}", []
+    big, run = 0.0, []
     for c in x.columns:
         u, v = x[c], y[c]
-        if pd.api.types.is_numeric_dtype(u) and pd.api.types.is_numeric_dtype(v):
+        if c in RUN_COLUMNS:
+            run += [] if u.astype(str).equals(v.astype(str)) else [c]
+        elif pd.api.types.is_numeric_dtype(u) and pd.api.types.is_numeric_dtype(v):
             u, v = u.to_numpy(float), v.to_numpy(float)
             if not np.array_equal(np.isnan(u), np.isnan(v)):
-                return None, f"column {c}: missing values changed"
+                return None, f"column {c}: missing values changed", run
             d = np.abs(u - v)[~np.isnan(u)]
             big = max(big, float(d.max()) if d.size else 0.0)
         elif not u.astype(str).equals(v.astype(str)):
-            return None, f"column {c}: text changed"
-    return big, None
+            return None, f"column {c}: text changed", run
+    return big, None, run
 
 
 def classify(f):
@@ -140,10 +150,14 @@ def classify(f):
             return "CHANGED", "page size changed"
         return ("rendering noise" if max(fr) < 0.002 else "CHANGED"), f"{len(a)} pages, {100 * max(fr):.3f} % of pixels differ"
     if suf == ".csv":
-        big, why = csv_diff(old, new)
+        big, why, run = csv_diff(old, new)
         if why:
             return "CHANGED", why
-        return ("same data" if big <= TOL else "CHANGED"), f"largest difference {big:.1e}"
+        if big > TOL:
+            return "CHANGED", f"largest difference {big:.1e}"
+        if run and big == 0:
+            return "provenance", "only the run columns " + ", ".join(run)
+        return "same data", f"largest difference {big:.1e}" + (f"; run columns {', '.join(run)}" if run else "")
     if suf == ".json":
         big, bad, prov = json_diff(json.loads(old), json.loads(new))
         if bad:
@@ -151,8 +165,11 @@ def classify(f):
         if prov and big <= TOL:
             return "provenance", "only " + ", ".join(sorted(set(re.sub(r"\[\d+\]", "[]", q) for q in prov))[:4])
         return "same data", f"largest difference {big:.1e}"
-    if old.replace(b"\r\n", b"\n") == new.replace(b"\r\n", b"\n"):
+    a, b = old.replace(b"\r\n", b"\n"), new.replace(b"\r\n", b"\n")
+    if a == b:
         return "same data", "line endings only"
+    if ABS_PATH.sub(b"<path>", a) == ABS_PATH.sub(b"<path>", b):
+        return "provenance", "absolute file paths only"
     return "CHANGED", (git("diff", "--stat", "--", f).strip().splitlines() or ["text changed"])[-1].strip()
 
 
@@ -160,6 +177,7 @@ def main():
     status = git("status", "--porcelain", "-z").split("\0")
     changed = [s[3:] for s in status if s[:2] in (" M", "M ", "MM")]
     deleted = [s[3:] for s in status if s[:2] in (" D", "D ")]
+    new = [s[3:] for s in status if s[:2] == "??"]
     groups = {"CHANGED": [], "same data": [], "rendering noise": [], "provenance": []}
     for f in changed:
         kind, note = classify(f)
@@ -170,6 +188,10 @@ def main():
         print(f"\n{kind}: {len(groups[kind])}")
         for line in groups[kind]:
             print("  " + line)
+    if new:
+        print(f"\nnew files or folders, not in the repository (not compared): {len(new)}")
+        for f in new:
+            print("  " + f)
     ok = not groups["CHANGED"]
     print("\nRESULT: " + ("every output equals the committed version (within the tolerances above)" if ok
                           else "some outputs differ from the committed versions (see CHANGED)"))
